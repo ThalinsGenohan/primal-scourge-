@@ -1,1 +1,1 @@
-# primal-scourge-
+# primal-scourge-tool
