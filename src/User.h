@@ -3,20 +3,33 @@
 
 #include <string>
 #include <SFML/Network.hpp>
+#include <SFML/Graphics.hpp>
 
 class User
 {
 public:
   User();
+  User(int id, std::string username, sf::Color color = sf::Color::White);
 
-  bool operator == (sf::IpAddress& ip);
-  bool operator == (User& u);
+  int getId() const;
+  std::string getUsername() const;
+  sf::Color getColor() const;
+
+  friend std::ostream& operator<<(std::ostream& o, const User& user);
+
+  friend sf::Packet& operator<<(sf::Packet& packet, const User& user);
+  friend sf::Packet& operator>>(sf::Packet& packet, User& user);
   
-private:
-  sf::IpAddress ipAddress;
-  std::string username;
-  sf::Color color;
+protected:
+  int _id;
+  std::string _username;
+  sf::Color _color;
   
 };
+
+std::ostream& operator<<(std::ostream& o, const User& user);
+
+sf::Packet& operator<<(sf::Packet& packet, const User& user);
+sf::Packet& operator>>(sf::Packet& packet, User& user);
 
 #endif
