@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
-#include "CONSTANTS.h"
 
 class ClientWindow
 {

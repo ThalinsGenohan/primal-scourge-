@@ -16,14 +16,14 @@ ClientWindow::ClientWindow() : _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT
   this->_lTabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
   this->_lTabs->setTextSize(TEXT_SIZE);
   this->_lTabs->setPosition(MARGIN, MARGIN);
-  for (int i = 0; i < int(this->_lChannels.size()); i++)
+  for (auto i = 0; i < int(this->_lChannels.size()); i++)
   {
     this->_lTabs->add(this->_lChannels[i]);
   }
   this->_lTabs->select(this->_lChannels[0]);
   this->_gui.add(this->_lTabs);
 
-  for (int i = 0; i < int(this->_lChannels.size()); i++)
+  for (auto i = 0; i < int(this->_lChannels.size()); i++)
   {
     this->_lChatBox[this->_lChannels[i]] = tgui::ChatBox::create();
     this->_lChatBox[this->_lChannels[i]]->setRenderer(this->_theme.getRenderer("ChatBox"));
@@ -44,14 +44,14 @@ ClientWindow::ClientWindow() : _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT
   this->_rTabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
   this->_rTabs->setTextSize(TEXT_SIZE);
   this->_rTabs->setPosition(MARGIN + CHATBOX_WIDTH + PADDING, MARGIN);
-  for (int i = 0; i < int(this->_rChannels.size()); i++)
+  for (auto i = 0; i < int(this->_rChannels.size()); i++)
   {
     this->_rTabs->add(this->_rChannels[i]);
   }
   this->_rTabs->select(this->_rChannels[0]);
   this->_gui.add(this->_rTabs);
 
-  for (int i = 0; i < int(this->_rChannels.size()); i++)
+  for (auto i = 0; i < int(this->_rChannels.size()); i++)
   {
     this->_rChatBox[this->_rChannels[i]] = tgui::ChatBox::create();
     this->_rChatBox[this->_rChannels[i]]->setRenderer(this->_theme.getRenderer("ChatBox"));
@@ -104,14 +104,14 @@ void ClientWindow::run()
       }
 
       this->_gui.handleEvent(event);
-      for (int i = 0; i < int(this->_lChannels.size()); i++)
+      for (auto i = 0; i < int(this->_lChannels.size()); i++)
       {
         if (this->_lChannels[i] != this->_lTabs->getSelected())
         {
           this->_lChatBox[this->_lChannels[i]]->setVisible(false);
         }
       }
-      for (int i = 0; i < int(this->_rChannels.size()); i++)
+      for (auto i = 0; i < int(this->_rChannels.size()); i++)
       {
         if (this->_rChannels[i] != this->_rTabs->getSelected())
         {

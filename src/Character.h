@@ -2,9 +2,9 @@
 #define CHARACTER_H
 
 #include <string>
-#include "src/CONSTANTS.h"
 #include <map>
 #include <TGUI/TGUI.hpp>
+#include "CONSTANTS.h"
 
 class Character
 {
