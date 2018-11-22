@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHANNEL_H
+#define CHANNEL_H
 
 #include <string>
 #include "CONSTANTS.h"
@@ -27,3 +28,5 @@ private:
   ChannelType _type;
   std::vector<Message> _messages;
 };
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DISCORD_H
+#define DISCORD_H
+
 #include <string>
 #include <discord_rpc.h>
 
@@ -14,3 +16,5 @@ namespace discord
   void initDiscord();
   void updatePresence(std::wstring status);
 }
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef EN_US_H
+#define EN_US_H
+
 #include <string>
 #include <map>
 
@@ -9,3 +11,5 @@ namespace lang
     { "SEND_BUTTON", L"Send" }
   };
 }
+
+#endif

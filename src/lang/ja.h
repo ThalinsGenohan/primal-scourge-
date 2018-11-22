@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef JA_H
+#define JA_H
+
 #include <string>
 #include <map>
 
@@ -9,3 +11,5 @@ namespace lang
     { "SEND_BUTTON", L"送る" }
   };
 }
+
+#endif

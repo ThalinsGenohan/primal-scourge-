@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTMANAGER_H
+#define TEXTMANAGER_H
+
 #include <SFML/Graphics.hpp>
 
 class TextManager
@@ -26,3 +28,5 @@ private:
   std::map<std::string, std::wstring> _active;
 };
 typedef std::shared_ptr<TextManager> TextManagerRef;
+
+#endif
