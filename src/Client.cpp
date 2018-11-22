@@ -3,15 +3,18 @@
 #include "CONSTANTS.h"
 #include "Message.h"
 #include "ClientWindow.h"
+#include "discord.h"
 
 Client::Client(): _window(new ClientWindow(*this))
 {
+  discord::updatePresence(L"Connecting...");
   if (this->_socket.connect(IP_ADDRESS, PORT) != sf::Socket::Done)
   {
     std::cout << "Server connection error!\n";
     return;
   }
   this->_socket.setBlocking(false);
+  discord::updatePresence(L"In Chat Room");
   this->_window->run();
 }
 
