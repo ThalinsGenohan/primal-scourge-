@@ -2,13 +2,14 @@
 #define CLIENT_H
 
 #include "User.h"
+#include "TextManager.h"
 
 class Client
 {
 public:
   class ClientWindow;
 
-  Client();
+  explicit Client(TextManagerRef textManager);
 
   User getUser() const { return this->_user; }
 
@@ -20,6 +21,8 @@ private:
 
   ClientWindow* _window;
   sf::TcpSocket _socket;
+
+  TextManagerRef _textManager;
 };
 
 #endif

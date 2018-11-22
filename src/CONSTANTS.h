@@ -8,7 +8,6 @@
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define WINDOW_TITLE std::string("Primal Scourge Tool v") + VERSION
 
 #define MARGIN 50
 #define PADDING 10

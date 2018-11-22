@@ -1,9 +1,12 @@
 #include "ClientWindow.h"
 
 #include "CONSTANTS.h"
+#include "TextManager.h"
 
-Client::ClientWindow::ClientWindow(Client& client) : _client(client), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Close | sf::Style::Titlebar), _gui(this->_window)
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _gui(this->_window)
 {
+  this->_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), /*_client._textManager.getText("GAME_TITLE")*/"", sf::Style::Close | sf::Style::Titlebar);
+
   this->_lChannels.push_back(Channel("ic_1", "IC Channel 1", PUBLIC_IC));
   this->_rChannels.push_back(Channel("ooc_1", "OOC Channel 1"));
 
@@ -69,7 +72,7 @@ Client::ClientWindow::ClientWindow(Client& client) : _client(client), _window(sf
   this->_memberList->setRenderer(this->_theme.getRenderer("ListBox"));
   this->_memberList->setSize(MEMBERLIST_WIDTH, CHATBOX_HEIGHT + TAB_HEIGHT);
   this->_memberList->setTextSize(TEXT_SIZE);
-  this->_memberList->setPosition(MARGIN + 2 * CHATBOX_WIDTH + 1.5 * PADDING, MARGIN);
+  this->_memberList->setPosition(float(MARGIN + 2 * CHATBOX_WIDTH + 1.5f * PADDING), MARGIN);
   this->_gui.add(this->_memberList);
 
   this->_typeBox = tgui::TextBox::create();
@@ -84,7 +87,7 @@ Client::ClientWindow::ClientWindow(Client& client) : _client(client), _window(sf
   this->_sendButton->setRenderer(this->_theme.getRenderer("Button"));
   this->_sendButton->setSize(TYPEBOX_HEIGHT, TYPEBOX_HEIGHT);
   this->_sendButton->setTextSize(TEXT_SIZE);
-  this->_sendButton->setText("Send");
+  this->_sendButton->setText(sf::String(this->_textManager->getText("SEND_BUTTON")));
   this->_sendButton->setPosition(MARGIN + TYPEBOX_WIDTH + PADDING, MARGIN + CHATBOX_HEIGHT + TAB_HEIGHT + PADDING);
   this->_gui.add(this->_sendButton);
 }

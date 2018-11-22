@@ -11,7 +11,7 @@
 class Client::ClientWindow
 {
 public:
-  explicit ClientWindow(Client& client);
+  explicit ClientWindow(Client& client, TextManagerRef textManager);
 
   std::vector<Channel> getLChannels() const { return this->_lChannels; }
   std::vector<Channel> getRChannels() const { return this->_rChannels; }
@@ -31,6 +31,7 @@ public:
 
 private:
   Client& _client;
+  TextManagerRef _textManager;
 
   sf::RenderWindow _window;
 

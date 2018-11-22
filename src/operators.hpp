@@ -19,6 +19,15 @@ std::vector<T> operator+(std::vector<T> vector1, std::vector<T> vector2)
   return v;
 }
 
+inline std::wostream& operator<<(std::wostream& os, std::map<std::string, std::wstring> m)
+{
+  for (auto it = m.begin(); it != m.end(); ++it)
+  {
+    os << std::wstring(it->first.begin(), it->first.end()) << " - " << it->second << std::endl;
+  }
+  return os;
+}
+
 inline sf::Packet& operator<<(sf::Packet& packet, const sf::IpAddress& ip)
 {
   return packet << ip.toString();

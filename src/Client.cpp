@@ -5,7 +5,7 @@
 #include "ClientWindow.h"
 #include "discord.h"
 
-Client::Client(): _window(new ClientWindow(*this))
+Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {
   discord::updatePresence(L"Connecting...");
   if (this->_socket.connect(IP_ADDRESS, PORT) != sf::Socket::Done)
