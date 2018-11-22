@@ -3,17 +3,9 @@
 #include "User.h"
 #include "operators.hpp"
 
-Message::Message() {}
-Message::Message(User user, std::string message) : _user(user), _message(message) {}
+Message::Message(): _id(0), _channel(nullptr) {}
 
-User Message::getUser() const
-{
-  return this->_user;
-}
-std::string Message::getMessage() const
-{
-  return this->_message;
-}
+Message::Message(User user, Channel* channel, std::string message, MessageType type) : _id(0), _user(user), _channel(channel), _message(message), _type(type) {}
 
 std::ostream& operator<<(std::ostream& o, const Message& msg)
 {

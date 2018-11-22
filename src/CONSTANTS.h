@@ -19,6 +19,15 @@
 
 #define TEXT_SIZE 13
 
+const enum ChannelType
+{
+  NO_CHANNEL,
+  PUBLIC_OOC,
+  PRIVATE_OOC,
+  PUBLIC_IC,
+  PRIVATE_IC
+};
+
 const enum Species
 {
   NO_SPECIES,
@@ -187,7 +196,9 @@ const enum Type
   DRAGON,
   DARK,
   STEEL,
-  FAIRY
+  FAIRY,
+
+  TYPE_COUNT
 };
 
 const enum Status
@@ -207,5 +218,7 @@ const enum Status
 
   CONFUSE,
   STAGGER,
-  FAINT
+  FAINT,
+
+  STATUS_COUNT
 };

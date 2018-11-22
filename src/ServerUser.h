@@ -11,8 +11,8 @@ public:
   ServerUser();
   explicit ServerUser(User user);
 
-  sf::TcpSocket* getSocket() const;
-  sf::IpAddress getIpAddress() const;
+  sf::TcpSocket* getSocket() const { return this->_socket; }
+  sf::IpAddress getIpAddress() const { return this->_ipAddress; }
 
 private:
   sf::TcpSocket* _socket;

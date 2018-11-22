@@ -1,9 +1,8 @@
-#include "ClientWindow.h"
+#include "Client.h"
 
 int main()
 {
-  ClientWindow cw;
-  cw.run();
+  Client client;
 
   return 0;
 }

@@ -4,6 +4,21 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 
+template <typename T>
+std::vector<T> operator+(std::vector<T> vector1, std::vector<T> vector2)
+{
+  std::vector<T> v;
+  for (auto i = 0; i < int(vector1.size()); i++)
+  {
+    v.push_back(vector1[i]);
+  }
+  for (auto i = 0; i < int(vector2.size()); i++)
+  {
+    v.push_back(vector2[i]);
+  }
+  return v;
+}
+
 inline sf::Packet& operator<<(sf::Packet& packet, const sf::IpAddress& ip)
 {
   return packet << ip.toString();

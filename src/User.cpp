@@ -8,21 +8,6 @@ User::User() : _id(0), _username("") {}
 
 User::User(int id, std::string username, sf::Color color) : _id(id), _username(username), _color(color) {}
 
-int User::getId() const
-{
-  return this->_id;
-}
-
-std::string User::getUsername() const
-{
-  return this->_username;
-}
-
-sf::Color User::getColor() const
-{
-  return this->_color;
-}
-
 std::ostream& operator<<(std::ostream& o, const User& user)
 {
   return o << user._username << "#" << user._id;

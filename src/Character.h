@@ -1,12 +1,13 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <string>
+#include <array>
 #include <map>
+#include <string>
 #include <TGUI/TGUI.hpp>
 #include "CONSTANTS.h"
 
-class Character
+class Character : public sf::Drawable
 {
 public:
   struct Stat
@@ -18,34 +19,85 @@ public:
 
     int cost;
   };
+  class HUD : public Drawable
+  {
+  public:
+    struct Label : Drawable
+    {
+      sf::RectangleShape background;
+      sf::Text text;
+
+      std::string str;
+
+    private:
+      sf::Font _font;
+
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    };
+    struct Bar : Drawable
+    {
+      sf::RectangleShape background;
+      sf::RectangleShape bar;
+      sf::Text valueText;
+      sf::Text maxText;
+
+      int value;
+      int max;
+
+    private:
+      sf::Font _font;
+
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    };
+
+    HUD();
+
+  private:
+    sf::Font _font;
+    sf::Texture _portraitTexture;
+
+    sf::Text _name;
+    sf::Sprite _portrait;
+    Label _type1;
+    Label _type2;
+    Bar _hpBar;
+    Label _strength;
+    Label _dexterity;
+    Label _special;
+    Label _vitality;
+    std::array<sf::RectangleShape, 5> _primality;
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  };
 
   Character();
 
-  std::string getName() const;
-  Species getSpecies() const;
-  int getHp() const;
-  int getMaxHp() const;
-  Type getType1() const;
-  Type getType2() const;
-  Stat getStrength() const;
-  Stat getDexterity() const;
-  Stat getSpecial() const;
-  Stat getVitality() const;
-  int getPrimality() const;
-  bool isAsleep() const;
-  bool isBurned() const;
-  bool isConfused() const;
-  bool isEntangled() const;
-  bool isFlinching() const;
-  bool isFrozen() const;
-  bool isParalyzed() const;
-  bool isPoisoned() const;
-  bool isBadlyPoisoned() const;
-  bool isScared() const;
-  bool isTerrified() const;
-  bool isStaggered() const;
-  bool isFainted() const;
-  int getExp() const;
+  std::string getName() const { return this->_name; }
+  Species getSpecies() const { return this->_species; }
+  int getHp() const { return this->_hp; }
+  int getMaxHp() const { return this->_maxHp; }
+  Type getType1() const { return this->_type1; }
+  Type getType2() const { return this->_type2; }
+  Stat getStrength() const { return this->_strength; }
+  Stat getDexterity() const { return this->_dexterity; }
+  Stat getSpecial() const { return this->_special; }
+  Stat getVitality() const { return this->_vitality; }
+  int getPrimality() const { return this->_primality; }
+  bool isAsleep() const { return this->_statuses.at(SLEEP); }
+  bool isBleeding() const { return this->_statuses.at(BLEED); }
+  bool isBurned() const { return this->_statuses.at(BURN); }
+  bool isConfused() const { return this->_statuses.at(CONFUSE); }
+  bool isEntangled() const { return this->_statuses.at(ENTANGLE); }
+  bool isFlinching() const { return this->_statuses.at(FLINCH); }
+  bool isFrozen() const { return this->_statuses.at(FREEZE); }
+  bool isParalyzed() const { return this->_statuses.at(PARALYZE); }
+  bool isPoisoned() const { return this->_statuses.at(POISON_STATUS); }
+  bool isBadlyPoisoned() const { return this->_statuses.at(BAD_POISON); }
+  bool isScared() const { return this->_statuses.at(SCARE); }
+  bool isTerrified() const { return this->_statuses.at(TERRIFY); }
+  bool isStaggered() const { return this->_statuses.at(STAGGER); }
+  bool isFainted() const { return this->_statuses.at(FAINT); }
+  int getExp() const { return this->_exp; }
 
 private:
   std::string _name;
@@ -62,27 +114,9 @@ private:
   std::map<Status, bool> _statuses;
   int _exp;
 
-  sf::Font _font;
-  sf::Text _nameLabel;
-  sf::RectangleShape _portraitOutline;
-  sf::Texture _portraitTexture;
-  sf::Sprite _portrait;
-  sf::RectangleShape _type1LabelBg;
-  sf::Text _type1Label;
-  sf::RectangleShape _type2LabelBg;
-  sf::Text _type2Label;
-  sf::RectangleShape _hpBarOutline;
-  sf::RectangleShape _hpBar;
-  sf::RectangleShape _strLabelBg;
-  sf::Text _strLabel;
-  sf::RectangleShape _dexLabelBg;
-  sf::Text _dexLabel;
-  sf::RectangleShape _speLabelBg;
-  sf::Text _speLabel;
-  sf::RectangleShape _vitLabelBg;
-  sf::Text _vitLabel;
-  std::vector<sf::RectangleShape> _primalityMeter;
+  HUD _hud;
   
+  void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
 #endif

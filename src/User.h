@@ -11,9 +11,12 @@ public:
   User();
   User(int id, std::string username, sf::Color color = sf::Color::White);
 
-  int getId() const;
-  std::string getUsername() const;
-  sf::Color getColor() const;
+  int getId() const { return this->_id; }
+  std::string getUsername() const { return this->_username; }
+  sf::Color getColor() const { return this->_color; }
+
+  void setUsername(std::string username) { this->_username = username; }
+  void setColor(sf::Color color) { this->_color = color; }
 
   friend std::ostream& operator<<(std::ostream& o, const User& user);
 
