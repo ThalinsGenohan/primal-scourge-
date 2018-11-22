@@ -3,7 +3,9 @@
 #include "User.h"
 #include "operators.hpp"
 
-Message::Message(): _id(0), _channel(nullptr) {}
+Message::Message(): _id(0), _channel(nullptr), _type(MESSAGE)
+{
+}
 
 Message::Message(User user, Channel* channel, std::string message, MessageType type) : _id(0), _user(user), _channel(channel), _message(message), _type(type) {}
 

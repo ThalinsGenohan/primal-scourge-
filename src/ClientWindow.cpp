@@ -90,6 +90,88 @@ Client::ClientWindow::ClientWindow(Client& client) : _client(client), _window(sf
 }
 
 
+void Client::ClientWindow::addChannel(Channel channel)
+{
+  switch (channel.getType())
+  {
+  case PUBLIC_OOC:
+  case PRIVATE_OOC:
+    this->_rChannels.push_back(channel);
+    this->_rChatBox[channel.getName()] = tgui::ChatBox::create();
+    this->_rChatBox[this->_rChannels.back().getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
+    this->_rChatBox[this->_rChannels.back().getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
+    this->_rChatBox[this->_rChannels.back().getName()]->setTextSize(TEXT_SIZE);
+    this->_rChatBox[this->_rChannels.back().getName()]->setPosition(MARGIN + CHATBOX_WIDTH + PADDING, MARGIN + TAB_HEIGHT);
+    this->_rChatBox[this->_rChannels.back().getName()]->setLinesStartFromTop();
+    this->_rChatBox[this->_rChannels.back().getName()]->addLine("This is " + this->_rChannels.back().getId(), sf::Color::White);
+    for (auto i = 0; i < int(_rChannels.size()) - 1; i++)
+    {
+      this->_rChatBox[this->_rChannels[i].getName()]->setVisible(false);
+    }
+    this->_rChatBox[this->_rChannels.back().getName()]->setVisible(true);
+    this->_gui.add(this->_rChatBox[this->_rChannels.back().getName()]);
+    this->_rTabs->add(this->_rChannels.back().getName());
+
+    break;
+  case PUBLIC_IC:
+  case PRIVATE_IC:
+    this->_lChannels.push_back(channel);
+    this->_lChatBox[channel.getName()] = tgui::ChatBox::create();
+    this->_lChatBox[this->_lChannels.back().getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
+    this->_lChatBox[this->_lChannels.back().getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
+    this->_lChatBox[this->_lChannels.back().getName()]->setTextSize(TEXT_SIZE);
+    this->_lChatBox[this->_lChannels.back().getName()]->setPosition(MARGIN + CHATBOX_WIDTH + PADDING, MARGIN + TAB_HEIGHT);
+    this->_lChatBox[this->_lChannels.back().getName()]->setLinesStartFromTop();
+    this->_lChatBox[this->_lChannels.back().getName()]->addLine("This is " + this->_lChannels.back().getId(), sf::Color::White);
+    for (auto i = 0; i < int(_lChannels.size()) - 1; i++)
+    {
+      this->_lChatBox[this->_lChannels[i].getName()]->setVisible(false);
+    }
+    this->_lChatBox[this->_lChannels.back().getName()]->setVisible(true);
+    this->_gui.add(this->_lChatBox[this->_lChannels.back().getName()]);
+    this->_lTabs->add(this->_lChannels.back().getName());
+    break;
+  default: ;
+  }
+}
+
+void Client::ClientWindow::removeChannel(std::string id)
+{
+  for (auto i = 0; i < int(this->_lChannels.size()); i++)
+  {
+    if (this->_lChannels[i].getId() == id)
+    {
+      this->_lChatBox.erase(this->_lChatBox.find(this->_lChannels[i].getName()));
+      this->_lTabs->remove(this->_lChannels[i].getName());
+      this->_lChannels.erase(this->_lChannels.begin() + i);
+    }
+  }
+  for (auto i = 0; i < int(this->_rChannels.size()); i++)
+  {
+    if (this->_rChannels[i].getId() == id)
+    {
+      this->_rChatBox.erase(this->_rChatBox.find(this->_rChannels[i].getName()));
+      this->_rTabs->remove(this->_rChannels[i].getName());
+      this->_rChannels.erase(this->_rChannels.begin() + i);
+    }
+  }
+}
+
+void Client::ClientWindow::removeChannel(Channel channel)
+{
+  this->removeChannel(channel.getId());
+}
+
+void Client::ClientWindow::addUser(std::string username) const
+{
+  this->_memberList->addItem(username);
+}
+
+void Client::ClientWindow::removeUser(std::string username) const
+{
+  this->_memberList->removeItem(username);
+}
+
 void Client::ClientWindow::addMessage(Message message)
 {
   for (auto i = 0; i < int(this->_lChannels.size()); i++)

@@ -11,7 +11,7 @@
 class Client::ClientWindow
 {
 public:
-  ClientWindow(Client& client);
+  explicit ClientWindow(Client& client);
 
   std::vector<Channel> getLChannels() const { return this->_lChannels; }
   std::vector<Channel> getRChannels() const { return this->_rChannels; }
@@ -21,8 +21,8 @@ public:
   void addChannel(Channel channel);
   void removeChannel(std::string id);
   void removeChannel(Channel channel);
-  void addUser(std::string username);
-  void removeUser(std::string username);
+  void addUser(std::string username) const;
+  void removeUser(std::string username) const;
   void addMessage(Message message);
 
   void sendButtonClick();
