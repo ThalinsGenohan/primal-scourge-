@@ -37,6 +37,8 @@
 *.vcxproj*
 Debug/
 Release/
+
+# Libs
 lib/SFML/build/
 lib/TGUI/build/
 lib/discord-rpc/build/
