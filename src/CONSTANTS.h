@@ -21,7 +21,7 @@
 
 #define TEXT_SIZE 13
 
-const enum ChannelType
+enum ChannelType
 {
   NO_CHANNEL,
   PUBLIC_OOC,
@@ -30,7 +30,7 @@ const enum ChannelType
   PRIVATE_IC
 };
 
-const enum Species
+enum Species
 {
   NO_SPECIES,
   BULBASAUR,
@@ -178,7 +178,7 @@ const enum Species
   ZERAORA
 };
 
-const enum Type
+enum Type
 {
   NO_TYPE,
   NORMAL,
@@ -203,7 +203,7 @@ const enum Type
   TYPE_COUNT
 };
 
-const enum Status
+enum Status
 {
   BLEED,
   BURN,
