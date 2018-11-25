@@ -13,6 +13,8 @@ public:
 
   User getUser() const { return this->_user; }
 
+  bool connect(std::string ipAddress);
+
   bool send(sf::Packet& packet);
   bool receive();
 

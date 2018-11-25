@@ -8,7 +8,8 @@
 Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {
   discord::updatePresence(L"Connecting...");
-  if (this->_socket.connect(IP_ADDRESS, PORT) != sf::Socket::Done)
+  //if (this->_socket.connect(IP_ADDRESS, PORT) != sf::Socket::Done)
+  if (!this->connect(IP_ADDRESS.toString()))
   {
     std::cout << "Server connection error!\n";
     return;
@@ -16,6 +17,15 @@ Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, text
   this->_socket.setBlocking(false);
   discord::updatePresence(L"In Chat Room");
   this->_window->run();
+}
+
+bool Client::connect(std::string ipAddress)
+{
+  if (this->_socket.connect(ipAddress, PORT) != sf::Socket::Done)
+  {
+    return false;
+  }
+  return true;
 }
 
 bool Client::send(sf::Packet& packet)

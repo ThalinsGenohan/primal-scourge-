@@ -19,6 +19,15 @@ std::vector<T> operator+(std::vector<T> vector1, std::vector<T> vector2)
   return v;
 }
 
+inline std::ostream& operator<<(std::ostream& os, sf::Color c)
+{
+  return os << int(c.r) << "/" << int(c.g) << "/" << int(c.b) << "/" << int(c.a);
+}
+inline std::istream& operator>>(std::istream& is, sf::Color& c)
+{
+  return is >> c.r >> c.g >> c.b >> c.a;
+}
+
 inline std::wostream& operator<<(std::wostream& os, std::map<std::string, std::wstring> m)
 {
   for (auto it = m.begin(); it != m.end(); ++it)

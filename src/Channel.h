@@ -29,4 +29,6 @@ private:
   std::vector<Message> _messages;
 };
 
+extern Channel* generalChannel;
+
 #endif

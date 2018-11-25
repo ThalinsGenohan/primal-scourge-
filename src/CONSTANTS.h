@@ -5,7 +5,7 @@
 #define IP_ADDRESS sf::IpAddress("174.56.242.113")
 #define PORT 51130
 
-#define DISCORD_DETAILS "Discord Testing"
+#define DISCORD_DETAILS "Writing Server Code..."
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600

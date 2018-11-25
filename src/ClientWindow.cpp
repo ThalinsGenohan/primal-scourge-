@@ -2,10 +2,11 @@
 
 #include "CONSTANTS.h"
 #include "TextManager.h"
+#include <iostream>
 
 Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _gui(this->_window)
 {
-  this->_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), /*_client._textManager.getText("GAME_TITLE")*/"", sf::Style::Close | sf::Style::Titlebar);
+  this->_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar);
 
   this->_lChannels.push_back(Channel("ic_1", "IC Channel 1", PUBLIC_IC));
   this->_rChannels.push_back(Channel("ooc_1", "OOC Channel 1"));
