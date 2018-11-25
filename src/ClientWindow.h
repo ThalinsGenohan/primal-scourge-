@@ -5,7 +5,7 @@
 #include <TGUI/TGUI.hpp>
 #include "Message.h"
 #include "Channel.h"
-#include "operators.hpp"
+#include "operators.h"
 #include "Client.h"
 
 class Client::ClientWindow

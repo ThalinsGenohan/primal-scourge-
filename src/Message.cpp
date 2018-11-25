@@ -1,7 +1,7 @@
 #include "Message.h"
 
 #include "User.h"
-#include "operators.hpp"
+#include "operators.h"
 
 Message::Message(): _id(0), _channel(nullptr), _type(MESSAGE)
 {

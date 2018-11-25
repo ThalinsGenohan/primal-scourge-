@@ -1,6 +1,6 @@
 #include "discord.h"
 #include "TextManager.h"
-#include "operators.hpp"
+#include "operators.h"
 #include "Server.h"
 
 int main()

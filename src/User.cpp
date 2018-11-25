@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "operators.hpp"
+#include "operators.h"
 
 User::User() : _id(0), _username("") {}
 
