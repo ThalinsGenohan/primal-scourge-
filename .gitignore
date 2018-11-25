@@ -42,3 +42,6 @@ Release/
 lib/SFML/build/
 lib/TGUI/build/
 lib/discord-rpc/build/
+
+# Misc
+users/
