@@ -1,16 +1,11 @@
 #include "Message.h"
 
-#include <ostream>
 #include <string>
 #include <SFML/Network.hpp>
 
 #include "operators.h"
 #include "User.h"
 
-std::ostream& operator<<(std::ostream& o, Message& msg)
-{
-  return o << msg._user << ": " << msg._message << std::endl;
-}
 sf::Packet& operator<<(sf::Packet& packet, Message& msg)
 {
   return packet << msg._user << msg._message;

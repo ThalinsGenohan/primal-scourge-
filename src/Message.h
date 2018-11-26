@@ -15,7 +15,6 @@ namespace sf
 class Channel;
 
 class Message;
-std::ostream& operator<<(std::ostream& o, Message& msg);
 sf::Packet& operator<<(sf::Packet& packet, Message& msg);
 sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
@@ -45,7 +44,6 @@ public:
   void setMessage(std::string message) { this->_message = message; }
   void setType(MessageType type) { this->_type = type; }
 
-  friend std::ostream& operator<<(std::ostream& o, Message& msg);
   friend sf::Packet& operator<<(sf::Packet& packet, Message& msg);
   friend sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 

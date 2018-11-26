@@ -47,7 +47,6 @@ bool Server::disconnectUser(ServerUser user)
 
 bool Server::send(Message msg)
 {
-  std::cout << msg;
   sf::Packet packet;
   packet << msg;
   for (auto i = 0; i < int(this->_users.size()); i++)
