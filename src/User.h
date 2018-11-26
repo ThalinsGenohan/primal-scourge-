@@ -5,6 +5,8 @@
 #include <string>
 #include <SFML/Graphics/Color.hpp>
 
+template class std::basic_string<char>;
+
 namespace sf
 {
   class Packet;
