@@ -1,5 +1,6 @@
 #include "Message.h"
 
+#include <ostream>
 #include <string>
 #include <SFML/Network.hpp>
 
