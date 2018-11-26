@@ -1,5 +1,6 @@
 #include "User.h"
 
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 
