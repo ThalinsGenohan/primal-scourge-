@@ -9,11 +9,11 @@
 
 template class std::basic_string<char>;
 
-std::ostream& operator<<(std::ostream& o, User& user)
+std::ostream& operator<<(std::ostream& o, const User& user)
 {
   return o << user._username << "#" << user._id;
 }
-sf::Packet& operator<<(sf::Packet& packet, User& user)
+sf::Packet& operator<<(sf::Packet& packet, const User& user)
 {
   packet << user._id << user._username << user._color;
   return packet;
