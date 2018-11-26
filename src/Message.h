@@ -6,7 +6,6 @@
 
 #include "User.h"
 
-
 namespace sf
 {
   class Packet;
@@ -15,7 +14,7 @@ namespace sf
 class Channel;
 
 class Message;
-sf::Packet& operator<<(sf::Packet& packet, Message& msg);
+sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
 sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
 class Message
@@ -44,7 +43,7 @@ public:
   void setMessage(std::string message) { this->_message = message; }
   void setType(MessageType type) { this->_type = type; }
 
-  friend sf::Packet& operator<<(sf::Packet& packet, Message& msg);
+  friend sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
   friend sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
 private:
