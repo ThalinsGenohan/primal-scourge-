@@ -2,12 +2,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <experimental/filesystem>
+//#include <experimental/filesystem>
 #include "operators.h"
 #include <array>
 #include <sstream>
 
-namespace fs = std::experimental::filesystem;
+//namespace fs = std::experimental::filesystem;
 
 ServerUser::ServerUser(): _socket(nullptr)
 {
@@ -19,15 +19,11 @@ ServerUser::ServerUser(): _socket(nullptr)
 
 ServerUser::ServerUser(User user) : User(user), _socket(nullptr) {}
 
-ServerUser::ServerUser(sf::TcpSocket* socket): _socket(socket), _ipAddress(this->_socket->getRemoteAddress())
+ServerUser::ServerUser(sf::TcpSocket* socket) : _socket(socket), _ipAddress(this->_socket->getRemoteAddress())
 {
   const auto file = "users/" + std::to_string(this->_ipAddress.toInteger()) + ".txt";
-  if (fs::exists(file))
-  {
-    std::ifstream ifs(file);
-    ifs >> *this;
-  }
-  else
+  std::ifstream ifs(file);
+  if (!(ifs >> *this))
   {
     this->_id = rand() % 9999;
     this->_color = sf::Color::White;
@@ -37,10 +33,10 @@ ServerUser::ServerUser(sf::TcpSocket* socket): _socket(socket), _ipAddress(this-
 
 bool ServerUser::saveUser() const
 {
-  if (!fs::is_directory("users") || !fs::exists("users"))
+  /*if (!fs::is_directory("users") || !fs::exists("users"))
   {
     fs::create_directory("users");
-  }
+  }*/
 
   std::ofstream of("users/" + std::to_string(this->_ipAddress.toInteger()) + ".txt");
   if(!(of << *this))
