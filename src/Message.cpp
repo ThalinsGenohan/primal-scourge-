@@ -6,7 +6,7 @@
 #include "operators.h"
 #include "User.h"
 
-sf::Packet& operator<<(sf::Packet& packet, Message& msg)
+sf::Packet& operator<<(sf::Packet& packet, const Message& msg)
 {
   return packet << msg._user << msg._message;
 }
