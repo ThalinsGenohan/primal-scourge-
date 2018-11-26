@@ -1,8 +1,10 @@
 #include "operators.h"
 
+#include <SFML/Network.hpp>
+#include <SFML/Graphics.hpp>
 
 template <typename T>
-std::vector<T> operator+(std::vector<T> vector1, std::vector<T> vector2)
+std::vector<T> operator+(const std::vector<T>& vector1, const std::vector<T>& vector2)
 {
   std::vector<T> v;
   for (auto i = 0; i < int(vector1.size()); i++)
@@ -16,7 +18,7 @@ std::vector<T> operator+(std::vector<T> vector1, std::vector<T> vector2)
   return v;
 }
 
-std::ostream& operator<<(std::ostream& os, sf::Color c)
+std::ostream& operator<<(std::ostream& os, const sf::Color& c)
 {
   return os << int(c.r) << "/" << int(c.g) << "/" << int(c.b) << "/" << int(c.a);
 }
@@ -25,7 +27,7 @@ std::istream& operator>>(std::istream& is, sf::Color& c)
   return is >> c.r >> c.g >> c.b >> c.a;
 }
 
-std::wostream& operator<<(std::wostream& os, std::map<std::string, std::wstring> m)
+std::wostream& operator<<(std::wostream& os, const std::map<std::string, std::wstring>& m)
 {
   for (auto it = m.begin(); it != m.end(); ++it)
   {
@@ -33,6 +35,7 @@ std::wostream& operator<<(std::wostream& os, std::map<std::string, std::wstring>
   }
   return os;
 }
+
 sf::Packet& operator<<(sf::Packet& packet, const sf::IpAddress& ip)
 {
   return packet << ip.toString();
@@ -44,6 +47,7 @@ sf::Packet& operator>>(sf::Packet& packet, sf::IpAddress& ip)
   ip = str;
   return packet;
 }
+
 sf::Packet& operator<<(sf::Packet& packet, const sf::Color& color)
 {
   return packet << color.r << color.g << color.b << color.a;

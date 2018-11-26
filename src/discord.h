@@ -2,7 +2,8 @@
 #define DISCORD_H
 
 #include <string>
-#include <discord_rpc.h>
+
+class DiscordUser;
 
 namespace discord
 {

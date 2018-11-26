@@ -2,8 +2,12 @@
 #define USER_H
 
 #include <string>
-#include <SFML/Network.hpp>
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
+
+namespace sf
+{
+  class Packet;
+}
 
 class User
 {

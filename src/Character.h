@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <TGUI/TGUI.hpp>
+
 #include "CONSTANTS.h"
 
 class Character : public sf::Drawable

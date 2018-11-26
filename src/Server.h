@@ -1,6 +1,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <vector>
+#include <SFML/Network/IpAddress.hpp>
+#include <SFML/Network/SocketSelector.hpp>
+#include <SFML/Network/TcpListener.hpp>
+
 #include "ServerUser.h"
 
 class Message;

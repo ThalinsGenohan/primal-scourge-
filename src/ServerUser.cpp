@@ -1,11 +1,12 @@
 #include "ServerUser.h"
 
-#include <iostream>
-#include <fstream>
-//#include <experimental/filesystem>
-#include "operators.h"
 #include <array>
+#include <fstream>
+#include <iostream>
 #include <sstream>
+#include <SFML/Network.hpp>
+
+#include "operators.h"
 
 //namespace fs = std::experimental::filesystem;
 

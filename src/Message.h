@@ -2,8 +2,13 @@
 #define MESSAGE_H
 
 #include <string>
-#include <SFML/Network.hpp>
+
 #include "User.h"
+
+namespace sf
+{
+  class Packet;
+}
 
 class Channel;
 

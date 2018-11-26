@@ -1,6 +1,7 @@
 #include "User.h"
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 
 #include "operators.h"
 

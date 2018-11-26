@@ -1,7 +1,8 @@
+#include <discord_rpc.h>
+
 #include "discord.h"
-#include "TextManager.h"
-#include "operators.h"
 #include "Server.h"
+#include "TextManager.h"
 
 int main()
 {

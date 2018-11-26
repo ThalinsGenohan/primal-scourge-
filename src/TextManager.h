@@ -1,7 +1,11 @@
 #ifndef TEXTMANAGER_H
 #define TEXTMANAGER_H
 
-#include <SFML/Graphics.hpp>
+#include <map>
+#include <memory>
+#include <string>
+#include <SFML/Graphics/Font.hpp>
+
 
 class TextManager
 {

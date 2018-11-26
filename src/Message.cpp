@@ -1,7 +1,9 @@
 #include "Message.h"
 
-#include "User.h"
+#include <SFML/Network.hpp>
+
 #include "operators.h"
+#include "User.h"
 
 Message::Message(): _id(0), _channel(nullptr), _type(MESSAGE)
 {

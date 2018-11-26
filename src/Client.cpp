@@ -1,9 +1,12 @@
 #include <iostream>
-#include "Client.h"
+
+#include <SFML/Network.hpp>
+
 #include "CONSTANTS.h"
-#include "Message.h"
-#include "ClientWindow.h"
 #include "discord.h"
+#include "Client.h"
+#include "ClientWindow.h"
+#include "Message.h"
 
 Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {

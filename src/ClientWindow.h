@@ -1,12 +1,12 @@
 #ifndef CLIENTWINDOW_H
 #define CLIENTWINDOW_H
 
-#include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
-#include "Message.h"
-#include "Channel.h"
+
 #include "operators.h"
+#include "Channel.h"
 #include "Client.h"
+#include "Message.h"
 
 class Client::ClientWindow
 {

@@ -2,6 +2,8 @@
 #define CHANNEL_H
 
 #include <string>
+#include <vector>
+
 #include "CONSTANTS.h"
 #include "Message.h"
 

@@ -1,8 +1,12 @@
 #include "Server.h"
-#include "CONSTANTS.h"
-#include "Message.h"
+
 #include <iostream>
+#include <SFML/Network.hpp>
+
+#include "CONSTANTS.h"
 #include "Channel.h"
+#include "Message.h"
+
 
 Server::Server(): _serverUser(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
