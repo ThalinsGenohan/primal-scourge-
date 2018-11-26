@@ -12,15 +12,12 @@ namespace sf
 }
 
 template <typename T>
-std::vector<T> operator+(const std::vector<T>& vector1, const std::vector<T>& vector2);
+std::vector<T>& operator+(const std::vector<T>& vector1, const std::vector<T>& vector2);
 
 std::ostream& operator<<(std::ostream& os, const sf::Color& c);
 std::istream& operator>>(std::istream& is, sf::Color& c);
 
 std::wostream& operator<<(std::wostream& os, const std::map<std::string, std::wstring>& m);
-
-sf::Packet& operator<<(sf::Packet& packet, const sf::IpAddress& ip);
-sf::Packet& operator>>(sf::Packet& packet, sf::IpAddress& ip);
 
 sf::Packet& operator<<(sf::Packet& packet, const sf::Color& color);
 sf::Packet& operator>>(sf::Packet& packet, sf::Color& color);

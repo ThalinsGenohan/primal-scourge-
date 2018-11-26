@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 template <typename T>
-std::vector<T> operator+(const std::vector<T>& vector1, const std::vector<T>& vector2)
+std::vector<T>& operator+(const std::vector<T>& vector1, const std::vector<T>& vector2)
 {
   std::vector<T> v;
   for (auto i = 0; i < int(vector1.size()); i++)
@@ -34,18 +34,6 @@ std::wostream& operator<<(std::wostream& os, const std::map<std::string, std::ws
     os << std::wstring(it->first.begin(), it->first.end()) << " - " << it->second << std::endl;
   }
   return os;
-}
-
-sf::Packet& operator<<(sf::Packet& packet, const sf::IpAddress& ip)
-{
-  return packet << ip.toString();
-}
-sf::Packet& operator>>(sf::Packet& packet, sf::IpAddress& ip)
-{
-  std::string str;
-  packet >> str;
-  ip = str;
-  return packet;
 }
 
 sf::Packet& operator<<(sf::Packet& packet, const sf::Color& color)
