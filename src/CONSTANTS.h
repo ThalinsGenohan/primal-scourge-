@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define SERVER_MODE true
+
 #define VERSION std::string("A.2.0")
 #define IP_ADDRESS sf::IpAddress("174.56.242.113")
 #define PORT 51130
