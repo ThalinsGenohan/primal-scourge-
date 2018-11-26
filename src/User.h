@@ -9,6 +9,11 @@ namespace sf
   class Packet;
 }
 
+class User;
+std::ostream& operator<<(std::ostream& o, const User& user);
+sf::Packet& operator<<(sf::Packet& packet, const User& user);
+sf::Packet& operator>>(sf::Packet& packet, User& user);
+
 class User
 {
 public:
@@ -33,9 +38,5 @@ protected:
   sf::Color _color;
   
 };
-
-std::ostream& operator<<(std::ostream& o, const User& user);
-sf::Packet& operator<<(sf::Packet& packet, const User& user);
-sf::Packet& operator>>(sf::Packet& packet, User& user);
 
 #endif
