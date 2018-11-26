@@ -1,6 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+#include <ostream>
 #include <string>
 
 #include "User.h"

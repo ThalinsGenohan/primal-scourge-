@@ -1,6 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
+#include <ostream>
 #include <string>
 #include <SFML/Graphics/Color.hpp>
 
