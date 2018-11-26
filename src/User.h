@@ -10,8 +10,8 @@ namespace sf
 }
 
 class User;
-std::ostream& operator<<(std::ostream& o, const User& user);
-sf::Packet& operator<<(sf::Packet& packet, const User& user);
+std::ostream& operator<<(std::ostream& o, User& user);
+sf::Packet& operator<<(sf::Packet& packet, User& user);
 sf::Packet& operator>>(sf::Packet& packet, User& user);
 
 class User
@@ -28,8 +28,8 @@ public:
   void setUsername(std::string username) { this->_username = username; }
   void setColor(sf::Color color) { this->_color = color; }
 
-  friend std::ostream& operator<<(std::ostream& o, const User& user);
-  friend sf::Packet& operator<<(sf::Packet& packet, const User& user);
+  friend std::ostream& operator<<(std::ostream& o, User& user);
+  friend sf::Packet& operator<<(sf::Packet& packet, User& user);
   friend sf::Packet& operator>>(sf::Packet& packet, User& user);
   
 protected:

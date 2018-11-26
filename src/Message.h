@@ -5,12 +5,18 @@
 
 #include "User.h"
 
+
 namespace sf
 {
   class Packet;
 }
 
 class Channel;
+
+class Message;
+std::ostream& operator<<(std::ostream& o, Message& msg);
+sf::Packet& operator<<(sf::Packet& packet, Message& msg);
+sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
 class Message
 {
@@ -38,8 +44,8 @@ public:
   void setMessage(std::string message) { this->_message = message; }
   void setType(MessageType type) { this->_type = type; }
 
-  friend std::ostream& operator<<(std::ostream& o, const Message& msg);
-  friend sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
+  friend std::ostream& operator<<(std::ostream& o, Message& msg);
+  friend sf::Packet& operator<<(sf::Packet& packet, Message& msg);
   friend sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
 private:
@@ -49,9 +55,5 @@ private:
   std::string _message;
   MessageType _type;
 };
-
-std::ostream& operator<<(std::ostream& o, const Message& msg);
-sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
-sf::Packet& operator>>(sf::Packet& packet, Message& msg);
 
 #endif

@@ -5,11 +5,11 @@
 
 #include "operators.h"
 
-std::ostream& operator<<(std::ostream& o, const User& user)
+std::ostream& operator<<(std::ostream& o, User& user)
 {
   return o << user._username << "#" << user._id;
 }
-sf::Packet& operator<<(sf::Packet& packet, const User& user)
+sf::Packet& operator<<(sf::Packet& packet, User& user)
 {
   packet << user._id << user._username << user._color;
   return packet;
