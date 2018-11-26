@@ -7,13 +7,15 @@
 
 #include "operators.h"
 
+template class std::basic_string<char>;
+
 std::ostream& operator<<(std::ostream& o, User& user)
 {
-  return o << user._username << std::string("#") << std::to_string(user._id);
+  return o << user._username << "#" << user._id;
 }
 sf::Packet& operator<<(sf::Packet& packet, User& user)
 {
-  packet << std::to_string(user._id) << user._username << user._color;
+  packet << user._id << user._username << user._color;
   return packet;
 }
 sf::Packet& operator>>(sf::Packet& packet, User& user)
