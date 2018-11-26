@@ -7,8 +7,6 @@
 
 #include "operators.h"
 
-template class std::basic_string<char>;
-
 std::ostream& operator<<(std::ostream& o, const User& user)
 {
   return o << user._username << "#" << user._id;

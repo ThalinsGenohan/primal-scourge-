@@ -5,6 +5,7 @@
 #include "CONSTANTS.h"
 #include "Channel.h"
 #include "Message.h"
+#include "ServerUser.h"
 
 
 Server::Server(): _serverUser(0, "[Server]", sf::Color::Cyan), _userCount(0)
