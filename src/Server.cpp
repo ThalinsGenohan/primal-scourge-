@@ -8,7 +8,6 @@
 #include "Message.h"
 #include "ServerUser.h"
 
-
 Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
   this->_listener.listen(PORT);
@@ -93,12 +92,8 @@ void Server::run()
         const auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
+          std::cout << "Client connecting..." << std::endl;
           connectUser(client);
-          /*this->_users.push_back(new ServerUser(client));
-          this->_selector.add(*client);
-
-          const auto username = this->_users.back()->getUsername();
-          this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));*/
         }
         else
         {
