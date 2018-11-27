@@ -13,7 +13,7 @@ sf::Packet& operator<<(sf::Packet& packet, const Message& msg)
 }
 sf::Packet& operator>>(sf::Packet& packet, Message& msg)
 {
-  return packet >> msg._user >> msg._channel << msg._message;
+  return packet >> msg._user >> msg._channel >> msg._message;
 }
 
 Message::Message(): _id(0), _type(MESSAGE)
