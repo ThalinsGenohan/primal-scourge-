@@ -71,13 +71,13 @@ void Server::run()
     {
       if (this->_selector.isReady(this->_listener))
       {
-        const auto client = new sf::TcpSocket;
+        auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
           this->_users.push_back(new ServerUser(client));
-          this->_selector.add(*this->_users.back()->getSocket());
+          this->_selector.add(*client);
 
-          const std::string username = this->_users.back()->getUsername();
+          const auto username = this->_users.back()->getUsername();
           this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
         }
         else
