@@ -9,7 +9,7 @@
 #include "ServerUser.h"
 
 
-Server::Server(): _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
+Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
   this->_listener.listen(PORT);
   this->_selector.add(this->_listener);

@@ -2,7 +2,8 @@
 #define SERVER_H
 
 #include <vector>
-#include <SFML/Network.hpp>
+#include <SFML/Network/TcpListener.hpp>
+#include <SFML/Network/SocketSelector.hpp>
 
 #include "ServerUser.h"
 
