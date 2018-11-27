@@ -1,7 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <vector>
+#include <list>
 #include <SFML/Network.hpp>
 
 #include "ServerUser.h"
@@ -28,7 +28,7 @@ private:
   sf::SocketSelector _selector;
 
   int _userCount;
-  std::vector<ServerUser*> _users;
+  std::list<ServerUser*> _users;
 
 };
 

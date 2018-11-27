@@ -18,7 +18,7 @@ Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 bool Server::connectUser(sf::TcpSocket* socket)
 {
   this->_users.push_back(new ServerUser(socket));
-  this->_selector.add(this->_users.back()->getSocket());
+  this->_selector.add(*this->_users.back()->getSocket());
 
   const auto username = this->_users.back()->getUsername();
   this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
@@ -38,8 +38,8 @@ bool Server::disconnectUser(ServerUser user)
     if (u.getIpAddress() == user.getIpAddress())
     {
       u.saveUser();
-      u.getSocket().disconnect();
-      this->_selector.remove(u.getSocket());
+      u.getSocket()->disconnect();
+      this->_selector.remove(*u.getSocket());
       this->_users.erase(it);
     }
   }
@@ -52,10 +52,10 @@ bool Server::send(Message msg)
   std::cout << msg.getUser().getUsername() << msg.getMessage() << std::endl;
   sf::Packet packet;
   packet << msg;
-  for (auto i = 0; i < int(this->_users.size()); i++)
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
-    auto& user = *this->_users[i];
-    user.getSocket().send(packet);
+    auto& user = **it;
+    user.getSocket()->send(packet);
   }
   return false;
 }
@@ -75,9 +75,9 @@ void Server::run()
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
           this->_users.push_back(new ServerUser(client));
-          //this->_selector.add(this->_users.back()->getSocket());
+          this->_selector.add(*this->_users.back()->getSocket());
 
-          const std::string username = "test";//this->_users.back()->getUsername();
+          const std::string username = this->_users.back()->getUsername();
           this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
         }
         else
@@ -87,13 +87,13 @@ void Server::run()
       }
       else
       {
-        for (auto i = 0; i < int(this->_users.size()); i++)
+        for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
         {
-          auto& u = *this->_users[i];
-          if (this->_selector.isReady(u.getSocket()))
+          auto& u = **it;
+          if (this->_selector.isReady(*u.getSocket()))
           {
             sf::Packet packet;
-            if (u.getSocket().receive(packet) == sf::Socket::Done)
+            if (u.getSocket()->receive(packet) == sf::Socket::Done)
             {
               Message msg;
               if (packet >> msg)
@@ -119,9 +119,10 @@ void Server::run()
       }
     }
   }
-  for (auto i = 0; i < int(this->_users.size()); i++)
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
-    this->_users[i]->getSocket().disconnect();
+    auto& u = **it;
+    u.getSocket()->disconnect();
   }
   this->_selector.clear();
   this->_listener.close();
