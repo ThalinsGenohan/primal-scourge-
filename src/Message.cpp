@@ -3,12 +3,13 @@
 #include <string>
 #include <SFML/Network.hpp>
 
-#include "operators.h"
+#include  "Channel.h"
 #include "User.h"
+#include "operators.h"
 
 sf::Packet& operator<<(sf::Packet& packet, const Message& msg)
 {
-  return packet << msg._user << msg._message;
+  return packet << msg._user << msg._channel << msg._message;
 }
 sf::Packet& operator>>(sf::Packet& packet, Message& msg)
 {

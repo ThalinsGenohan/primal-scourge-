@@ -21,15 +21,6 @@
 
 #define TEXT_SIZE 13
 
-enum ChannelType
-{
-  NO_CHANNEL,
-  PUBLIC_OOC,
-  PRIVATE_OOC,
-  PUBLIC_IC,
-  PRIVATE_IC
-};
-
 enum Species
 {
   NO_SPECIES,

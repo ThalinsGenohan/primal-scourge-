@@ -29,7 +29,7 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
   this->_lTabs->setPosition(MARGIN, MARGIN);
   //this->_lTabs->select(this->_lChannels[0].getName());
   this->_gui.add(this->_lTabs);
-  this->addChannel(Channel("ic1", "IC 1", PUBLIC_IC));
+  this->addChannel(Channel("ic1", "IC 1", Channel::PUBLIC_IC));
 
   this->_rTabs = tgui::Tabs::create();
   this->_rTabs->setRenderer(this->_theme.getRenderer("Tabs"));
@@ -70,8 +70,8 @@ void Client::ClientWindow::addChannel(Channel channel)
 {
   switch (channel.getType())
   {
-  case PUBLIC_OOC:
-  case PRIVATE_OOC:
+  case Channel::PUBLIC_OOC:
+  case Channel::PRIVATE_OOC:
     this->_rChannels.push_back(channel);
     this->_rChatBox[channel.getName()] = tgui::ChatBox::create();
     this->_rChatBox[channel.getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
@@ -89,8 +89,8 @@ void Client::ClientWindow::addChannel(Channel channel)
     this->_gui.add(this->_rChatBox[channel.getName()]);
 
     break;
-  case PUBLIC_IC:
-  case PRIVATE_IC:
+  case Channel::PUBLIC_IC:
+  case Channel::PRIVATE_IC:
     this->_lChannels.push_back(channel);
     this->_lChatBox[channel.getName()] = tgui::ChatBox::create();
     this->_lChatBox[channel.getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
@@ -151,7 +151,7 @@ void Client::ClientWindow::removeUser(std::string username) const
 
 void Client::ClientWindow::addMessage(Message message)
 {
-  std::cout << message.getChannel().getId() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId();
+  std::cout << message.getChannel().getName() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId() << "\n";
   for (auto i = 0; i < int(this->_lChannels.size()); i++)
   {
     if (message.getChannel().getId() == this->_lChannels[i].getId())

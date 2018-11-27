@@ -68,6 +68,7 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
+    std::cout << message.getChannel().getName();
     switch (message.getType())
     {
     case Message::MESSAGE:
