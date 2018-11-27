@@ -16,7 +16,7 @@ public:
   bool connectUser(sf::TcpSocket* socket);
   bool disconnectUser(ServerUser user);
 
-  void parseMessage(Message msg);
+  bool parseMessage(Message msg);
   bool send(Message msg);
 
   void run();

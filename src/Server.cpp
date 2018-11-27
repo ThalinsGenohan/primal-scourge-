@@ -47,15 +47,14 @@ bool Server::disconnectUser(ServerUser user)
   return true;
 }
 
-void Server::parseMessage(Message msg)
+bool Server::parseMessage(Message msg)
 {
   if (msg.getMessage()[0] == '/')
   {
     switch (msg.getMessage()[1])
     {
     case 'd':
-      disconnectUser(u);
-      break;
+      return false;
     default:;
     }
   }
@@ -63,6 +62,7 @@ void Server::parseMessage(Message msg)
   {
     this->send(msg);
   }
+  return true;
 }
 
 bool Server::send(Message msg)
@@ -105,7 +105,7 @@ void Server::run()
       }
       else
       {
-        for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+        /*for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
         {
           auto& u = **it;
           if (this->_selector.isReady(*u.getSocket()))
@@ -116,10 +116,13 @@ void Server::run()
               Message msg;
               if (packet >> msg)
               {
-                
+                if (!parseMessage(msg))
+                {
+                  disconnectUser(u);
+                }
               }
             }
-          }
+          }*/
         }
       }
     }
