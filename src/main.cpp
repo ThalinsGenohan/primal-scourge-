@@ -1,22 +1,23 @@
 #include "CONSTANTS.h"
 
-#if SERVER_MODE == false
+#ifdef _CLIENT
 #include <discord_rpc.h>
 #include "discord.h"
 #include "TextManager.h"
 #include "Client.h"
-#else
+#elif defined(_SERVER)
 #include "Server.h"
 #endif
 
 int main()
 {
-#if SERVER_MODE == false
+#ifdef _CLIENT
   const auto textManager = std::make_shared<TextManager>();
   discord::initDiscord();
   Client client(textManager);
+  client.disconnect();
   Discord_Shutdown();
-#else
+#elif defined(_SERVER)
   Server server;
   server.run();
 #endif

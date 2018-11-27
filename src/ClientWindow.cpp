@@ -4,12 +4,23 @@
 #include "TextManager.h"
 #include <iostream>
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _gui(this->_window)
+struct ArgsContainer
 {
-  this->_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar);
+  ArgsContainer(Client& c, tgui::TextBox::Ptr& t) : client(c), textbox(t) {}
 
+  Client& client;
+  tgui::TextBox::Ptr& textbox;
+};
+
+void sendToClient(ArgsContainer a)
+{
+  a.client.send(a.textbox);
+  a.textbox->setText("");
+}
+
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window)
+{
   this->_lChannels.push_back(Channel("ic_1", "IC Channel 1", PUBLIC_IC));
-  this->_rChannels.push_back(Channel("ooc_1", "OOC Channel 1"));
 
   this->_theme.load("themes/Black.txt");
 
@@ -41,33 +52,15 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
     this->_gui.add(this->_lChatBox[this->_lChannels[i].getName()]);
   }
 
+
   this->_rTabs = tgui::Tabs::create();
   this->_rTabs->setRenderer(this->_theme.getRenderer("Tabs"));
   this->_rTabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
   this->_rTabs->setTextSize(TEXT_SIZE);
   this->_rTabs->setPosition(MARGIN + CHATBOX_WIDTH + PADDING, MARGIN);
-  for (auto i = 0; i < int(this->_rChannels.size()); i++)
-  {
-    this->_rTabs->add(this->_rChannels[i].getName());
-  }
+  this->addChannel(*generalChannel);
   this->_rTabs->select(this->_rChannels[0].getName());
   this->_gui.add(this->_rTabs);
-
-  for (auto i = 0; i < int(this->_rChannels.size()); i++)
-  {
-    this->_rChatBox[this->_rChannels[i].getName()] = tgui::ChatBox::create();
-    this->_rChatBox[this->_rChannels[i].getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
-    this->_rChatBox[this->_rChannels[i].getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
-    this->_rChatBox[this->_rChannels[i].getName()]->setTextSize(TEXT_SIZE);
-    this->_rChatBox[this->_rChannels[i].getName()]->setPosition(MARGIN + CHATBOX_WIDTH + PADDING, MARGIN + TAB_HEIGHT);
-    this->_rChatBox[this->_rChannels[i].getName()]->setLinesStartFromTop();
-    this->_rChatBox[this->_rChannels[i].getName()]->addLine("This is " + this->_rChannels[i].getId(), sf::Color::White);
-    if (i > 0)
-    {
-      this->_rChatBox[this->_rChannels[i].getName()]->setVisible(false);
-    }
-    this->_gui.add(this->_rChatBox[this->_rChannels[i].getName()]);
-  }
 
   this->_memberList = tgui::ListBox::create();
   this->_memberList->setRenderer(this->_theme.getRenderer("ListBox"));
@@ -90,6 +83,7 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
   this->_sendButton->setTextSize(TEXT_SIZE);
   this->_sendButton->setText(sf::String(this->_textManager->getText("SEND_BUTTON")));
   this->_sendButton->setPosition(MARGIN + TYPEBOX_WIDTH + PADDING, MARGIN + CHATBOX_HEIGHT + TAB_HEIGHT + PADDING);
+  this->_sendButton->connect("pressed", sendToClient, ArgsContainer(this->_client, this->_typeBox));
   this->_gui.add(this->_sendButton);
 }
 

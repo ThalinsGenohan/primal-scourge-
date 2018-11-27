@@ -3,7 +3,7 @@
 
 #include <string>
 
-class DiscordUser;
+struct DiscordUser;
 
 namespace discord
 {

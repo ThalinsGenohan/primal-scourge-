@@ -37,6 +37,8 @@
 *.vcxproj*
 Debug/
 Release/
+Debug Server/
+Release Server/
 
 # Libs
 lib/SFML/build/

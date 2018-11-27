@@ -23,14 +23,14 @@ public:
   void run();
 
 private:
-  User _serverUser;
+  User _serverProfile;
 
   sf::IpAddress _ipAddress;
   sf::TcpListener _listener;
   sf::SocketSelector _selector;
 
   int _userCount;
-  std::vector<ServerUser> _users;
+  std::vector<ServerUser*> _users;
 
 };
 

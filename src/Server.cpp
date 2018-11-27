@@ -1,5 +1,6 @@
 #include "Server.h"
 
+#include <iostream>
 #include <SFML/Network.hpp>
 
 #include "CONSTANTS.h"
@@ -8,7 +9,7 @@
 #include "ServerUser.h"
 
 
-Server::Server(): _serverUser(0, "[Server]", sf::Color::Cyan), _userCount(0)
+Server::Server(): _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
   this->_listener.listen(PORT);
   this->_selector.add(this->_listener);
@@ -16,11 +17,11 @@ Server::Server(): _serverUser(0, "[Server]", sf::Color::Cyan), _userCount(0)
 
 bool Server::connectUser(sf::TcpSocket* socket)
 {
-  this->_users.push_back(ServerUser(socket));
-  this->_selector.add(*this->_users.back().getSocket());
+  this->_users.push_back(new ServerUser(socket));
+  this->_selector.add(*this->_users.back()->getSocket());
 
-  const auto username = this->_users.back().getUsername();
-  this->send(Message(this->_serverUser, generalChannel, username + " has joined!", Message::SERVER));
+  const auto username = this->_users.back()->getUsername();
+  this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
 
   return true;
 }
@@ -29,15 +30,16 @@ bool Server::disconnectUser(ServerUser user)
 {
   const auto username = user.getUsername();
 
-  this->send(Message(this->_serverUser, generalChannel, username + " has disconnected!", Message::SERVER));
+  this->send(Message(this->_serverProfile, generalChannel, username + " has disconnected!", Message::SERVER));
 
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
-    if (it->getIpAddress() == user.getIpAddress())
+    auto& u = **it;
+    if (u.getIpAddress() == user.getIpAddress())
     {
-      it->saveUser();
-      it->getSocket()->disconnect();
-      this->_selector.remove(*it->getSocket());
+      u.saveUser();
+      u.getSocket()->disconnect();
+      this->_selector.remove(*u.getSocket());
       this->_users.erase(it);
     }
   }
@@ -47,11 +49,12 @@ bool Server::disconnectUser(ServerUser user)
 
 bool Server::send(Message msg)
 {
+  std::cout << msg.getUser().getUsername() << msg.getMessage() << std::endl;
   sf::Packet packet;
   packet << msg;
   for (auto i = 0; i < int(this->_users.size()); i++)
   {
-    auto& user = this->_users[i];
+    auto& user = *this->_users[i];
     user.getSocket()->send(packet);
   }
   return false;
@@ -59,6 +62,8 @@ bool Server::send(Message msg)
 
 void Server::run()
 {
+  std::cout << "Server connected!" << std::endl;
+
   auto loop = true;
   while (loop)
   {
@@ -80,14 +85,14 @@ void Server::run()
       {
         for (auto i = 0; i < int(this->_users.size()); i++)
         {
-          auto& u = this->_users[i];
+          auto& u = *this->_users[i];
           if (this->_selector.isReady(*u.getSocket()))
           {
             sf::Packet packet;
             if (u.getSocket()->receive(packet) == sf::Socket::Done)
             {
               Message msg;
-              if (!(packet >> msg))
+              if (packet >> msg)
               {
                 if (msg.getMessage()[0] == '/')
                 {
@@ -96,7 +101,7 @@ void Server::run()
                   case 'd':
                     disconnectUser(u);
                     break;
-                  default: ;
+                  default:;
                   }
                 }
                 else
@@ -112,7 +117,7 @@ void Server::run()
   }
   for (auto i = 0; i < int(this->_users.size()); i++)
   {
-    this->_users[i].getSocket()->disconnect();
+    this->_users[i]->getSocket()->disconnect();
   }
   this->_selector.clear();
   this->_listener.close();

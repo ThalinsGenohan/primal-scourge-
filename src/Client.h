@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <SFML/Network/TcpSocket.hpp>
+#include <TGUI/Widgets/TextBox.hpp>
 
 #include "User.h"
 #include "TextManager.h"
@@ -16,8 +17,10 @@ public:
   User getUser() const { return this->_user; }
 
   bool connect(std::string ipAddress);
+  void disconnect();
 
   bool send(sf::Packet& packet);
+  bool send(tgui::TextBox::Ptr& textbox);
   bool receive();
 
 private:

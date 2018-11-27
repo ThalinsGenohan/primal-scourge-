@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <SFML/Network.hpp>
+#include <TGUI/TGUI.hpp>
 
 #include "CONSTANTS.h"
 #include "discord.h"
@@ -31,6 +32,14 @@ bool Client::connect(std::string ipAddress)
   return true;
 }
 
+void Client::disconnect()
+{
+  sf::Packet packet;
+  packet << Message(this->_user, generalChannel, "/d", Message::SERVER_COMMAND);
+  this->send(packet);
+  this->_socket.disconnect();
+}
+
 bool Client::send(sf::Packet& packet)
 {
   if (this->_socket.send(packet) != sf::Socket::Done)
@@ -38,6 +47,14 @@ bool Client::send(sf::Packet& packet)
     return false;
   }
   return true;
+}
+
+bool Client::send(tgui::TextBox::Ptr& textbox)
+{
+  sf::Packet packet;
+  packet << Message(this->_user, generalChannel, textbox->getText());
+
+  return this->send(packet);
 }
 
 bool Client::receive()
