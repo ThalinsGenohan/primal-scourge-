@@ -4,9 +4,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <vector>
 #include <SFML/Network.hpp>
-
-#include "operators.h"
 
 //namespace fs = std::experimental::filesystem;
 
@@ -49,26 +49,35 @@ bool ServerUser::saveUser() const
   return false;
 }
 
-std::ostream& operator<<(std::ostream & os, ServerUser u)
+std::ostream & operator<<(std::ostream & os, const sf::Color & c)
 {
-  return os << "IP: " << u._ipAddress << std::endl << "ID: " << u.getIdString() << std::endl << "Username: " << u._username << std::endl << "Color: " << u._color << std::endl;
+  return os << c.r << "/" << c.g << "/" << c.b << "/" << c.a;
 }
 
-std::ofstream & operator<<(std::ofstream & ofs, ServerUser u)
+std::ostream & operator<<(std::ostream & os, const std::vector<std::string> v)
 {
-  ofs << u.getIdString() << std::endl << u._username << std::endl << u._color;
-  return ofs;
+  os << int(v.size()) << "/";
+  for (auto i = 0; i < int(v.size()); i++)
+  {
+    os << "/" << v[i];
+  }
+  return os;
 }
 
-std::istream& operator>>(std::istream & is, ServerUser & u)
+std::ostream & operator<<(std::ostream & os, const ServerUser & su)
+{
+  return os << su._id << std::endl << su._username << std::endl << su._color << std::endl << su._channels;
+}
+
+std::istream & operator>>(std::istream & is, ServerUser & su)
 {
   std::string buf;
   getline(is, buf, '\n');
   std::istringstream istr(buf);
-  istr >> u._id;
+  istr >> su._id;
 
-  getline(is, u._username, '\n');
-
+  getline(is, su._username, '\n');
+  
   std::array<int, 4> c;
   for (auto i = 0; i < int(c.size()); i++)
   {
@@ -77,10 +86,19 @@ std::istream& operator>>(std::istream & is, ServerUser & u)
     std::istringstream iss(buf);
     iss >> c[i];
   }
-  u._color.r = c[0];
-  u._color.g = c[1];
-  u._color.b = c[2];
-  u._color.a = c[3];
+  su._color = sf::Color(c[0], c[1], c[2], c[3]);
+
+  buf = "";
+  getline(is, buf, '/');
+  std::istringstream iss(buf);
+  int size;
+  iss >> size;
+  for (auto i = 0; i < size; i++)
+  {
+    buf = "";
+    getline(is, buf, '/');
+    su._channels.push_back(buf);
+  }
 
   return is;
 }

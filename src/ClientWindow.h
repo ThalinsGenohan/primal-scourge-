@@ -3,7 +3,6 @@
 
 #include <TGUI/TGUI.hpp>
 
-#include "operators.h"
 #include "Channel.h"
 #include "Message.h"
 #include "Client.h"
@@ -15,7 +14,6 @@ public:
 
   std::vector<Channel> getLChannels() const { return this->_lChannels; }
   std::vector<Channel> getRChannels() const { return this->_rChannels; }
-  std::vector<Channel> getChannels() const { return  this->_lChannels + this->_rChannels; }
   std::vector<User> getUsers() const { return this->_users; }
 
   void addChannel(Channel channel);

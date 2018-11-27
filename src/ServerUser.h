@@ -22,9 +22,8 @@ public:
 
   bool saveUser() const;
 
-  friend std::ostream& operator<<(std::ostream& os, ServerUser u);
-  friend std::ofstream& operator<<(std::ofstream& ofs, ServerUser u);
-  friend std::istream& operator>>(std::istream& is, ServerUser& u);
+  friend std::ostream& operator<<(std::ostream& fs, const ServerUser& su);
+  friend std::istream& operator>>(std::istream& fs, ServerUser& su);
 
 private:
   sf::TcpSocket* _socket;
@@ -32,8 +31,9 @@ private:
 
 };
 
-std::ostream& operator<<(std::ostream& os, ServerUser u);
-std::ofstream& operator<<(std::ofstream& ofs, ServerUser u);
-std::istream& operator>>(std::istream& is, ServerUser& u);
+std::ostream& operator<<(std::ostream& os, const sf::Color& c);
+std::ostream& operator<<(std::ostream& os, const std::vector<std::string> v);
+std::ostream& operator<<(std::ostream& os, const ServerUser& su);
+std::istream& operator>>(std::istream& is, ServerUser& su);
 
 #endif

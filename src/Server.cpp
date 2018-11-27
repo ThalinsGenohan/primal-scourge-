@@ -66,7 +66,7 @@ bool Server::parseMessage(Message msg)
 
 bool Server::send(Message msg)
 {
-  std::cout << msg.getUser().getUsername() << msg.getMessage() << std::endl;
+  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
   sf::Packet packet;
   packet << msg;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)

@@ -151,7 +151,7 @@ void Client::ClientWindow::removeUser(std::string username) const
 
 void Client::ClientWindow::addMessage(Message message)
 {
-  std::cout << message.getChannel().getName() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId() << "\n";
+  std::cout << message.getChannel().getId() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId() << "\n";
   for (auto i = 0; i < int(this->_lChannels.size()); i++)
   {
     if (message.getChannel().getId() == this->_lChannels[i].getId())

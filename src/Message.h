@@ -11,10 +11,6 @@ namespace sf
   class Packet;
 }
 
-class Message;
-sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
-sf::Packet& operator>>(sf::Packet& packet, Message& msg);
-
 class Message
 {
 public:
@@ -41,8 +37,8 @@ public:
   void setMessage(std::string message) { this->_message = message; }
   void setType(MessageType type) { this->_type = type; }
 
-  friend sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
-  friend sf::Packet& operator>>(sf::Packet& packet, Message& msg);
+  friend sf::Packet& operator<<(sf::Packet& p, const Message& m);
+  friend sf::Packet& operator>>(sf::Packet& p, Message& m);
 
 private:
   int _id;
@@ -51,5 +47,10 @@ private:
   std::string _message;
   MessageType _type;
 };
+
+sf::Packet& operator<<(sf::Packet& p, const Message::MessageType& t);
+sf::Packet& operator>>(sf::Packet& p, Message::MessageType& t);
+sf::Packet& operator<<(sf::Packet& p, const Message& m);
+sf::Packet& operator>>(sf::Packet& p, Message& m);
 
 #endif

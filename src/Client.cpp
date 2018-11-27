@@ -52,7 +52,7 @@ bool Client::send(sf::Packet& packet)
 bool Client::send(tgui::TextBox::Ptr& textbox)
 {
   sf::Packet packet;
-  packet << Message(this->_user, generalChannel, textbox->getText());
+  packet << Message(this->_user, Channel("general", "General"), textbox->getText());
 
   return this->send(packet);
 }
@@ -68,7 +68,6 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
-    std::cout << message.getChannel().getName();
     switch (message.getType())
     {
     case Message::MESSAGE:

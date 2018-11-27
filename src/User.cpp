@@ -1,25 +1,8 @@
 #include "User.h"
 
-#include <ostream>
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-
-#include "operators.h"
-
-std::ostream& operator<<(std::ostream& o, const User& user)
-{
-  return o << user._username << "#" << user._id;
-}
-sf::Packet& operator<<(sf::Packet& packet, const User& user)
-{
-  packet << user._id << user._username << user._color;
-  return packet;
-}
-sf::Packet& operator>>(sf::Packet& packet, User& user)
-{
-  return packet >> user._id >> user._username >> user._color;
-}
 
 User::User() : _id(0), _username("") {}
 
@@ -44,4 +27,40 @@ std::string User::getIdString() const
   return str;
 }
 
-
+sf::Packet & operator<<(sf::Packet & p, const sf::Color & c)
+{
+  return p << c.r << c.g << c.b << c.a;
+}
+sf::Packet & operator>>(sf::Packet & p, sf::Color & c)
+{
+  return p >> c.r >> c.g >> c.b >> c.a;
+}
+sf::Packet & operator<<(sf::Packet & p, const std::vector<std::string>& v)
+{
+  p << static_cast<sf::Uint32>(v.size());
+  for (auto it = v.begin(); it != v.end(); ++it)
+  {
+    p << *it;
+  }
+  return p;
+}
+sf::Packet & operator>>(sf::Packet & p, std::vector<std::string>& v)
+{
+  sf::Uint32 size;
+  p >> size;
+  for (sf::Uint32 i = 0; i < size; ++i)
+  {
+    std::string item;
+    p >> item;
+    v.push_back(item);
+  }
+  return p;
+}
+sf::Packet & operator<<(sf::Packet & p, const User & u)
+{
+  return p << u._id << u._username << u._color << u._channels;
+}
+sf::Packet & operator>>(sf::Packet & p, User & u)
+{
+  return p >> u._id >> u._username >> u._color >> u._channels;
+}

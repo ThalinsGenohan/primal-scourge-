@@ -32,8 +32,8 @@ public:
   void setName(std::string name) { this->_name = name; }
   void setType(ChannelType type) { this->_type = type; }
 
-  friend sf::Packet& operator<<(sf::Packet& packet, const Channel& ch);
-  friend sf::Packet& operator>>(sf::Packet& packet, Channel& ch);
+  friend sf::Packet& operator<<(sf::Packet& p, const Channel& c);
+  friend sf::Packet& operator>>(sf::Packet& p, Channel& c);
 
 private:
   std::string _id;
@@ -41,9 +41,11 @@ private:
   ChannelType _type;
 };
 
-sf::Packet& operator>>(sf::Packet& packet, Channel::ChannelType& t);
-sf::Packet& operator<<(sf::Packet& packet, const Channel& ch);
-sf::Packet& operator>>(sf::Packet& packet, Channel& ch);
+sf::Packet& operator<<(sf::Packet& p, const Channel::ChannelType& t);
+sf::Packet& operator>>(sf::Packet& p, Channel::ChannelType& t);
+sf::Packet& operator<<(sf::Packet& p, const Channel& c);
+sf::Packet& operator>>(sf::Packet& p, Channel& c);
+
 extern Channel generalChannel;
 
 #endif

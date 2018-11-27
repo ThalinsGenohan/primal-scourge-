@@ -8,17 +8,22 @@ Channel::Channel(std::string id, std::string name, ChannelType type) : _id(id), 
 
 Channel generalChannel("general", "General");
 
-sf::Packet & operator>>(sf::Packet& packet, Channel::ChannelType& t)
+sf::Packet & operator<<(sf::Packet & p, const Channel::ChannelType & t)
 {
-  return packet << t;
+  return p << int(t);
 }
-
-sf::Packet & operator<<(sf::Packet& packet, const Channel& ch)
+sf::Packet & operator>>(sf::Packet & p, Channel::ChannelType& t)
 {
-  return packet << ch._id << ch._name << ch._type;
+  int x;
+  p >> x;
+  t = Channel::ChannelType(x);
+  return p;
 }
-
-sf::Packet & operator>>(sf::Packet& packet, Channel& ch)
+sf::Packet & operator<<(sf::Packet & p, const Channel & c)
 {
-  return packet >> ch._id >> ch._name >> ch._type;
+  return p << c._id << c._name << c._type;
+}
+sf::Packet & operator>>(sf::Packet & p, Channel & c)
+{
+  return p >> c._id >> c._name >> c._type;
 }

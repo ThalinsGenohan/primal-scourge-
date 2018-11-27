@@ -1,8 +1,8 @@
 #ifndef USER_H
 #define USER_H
 
-#include <ostream>
 #include <string>
+#include <vector>
 #include <SFML/Graphics/Color.hpp>
 
 template class std::basic_string<char>;
@@ -11,11 +11,6 @@ namespace sf
 {
   class Packet;
 }
-
-class User;
-std::ostream& operator<<(std::ostream& o, const User& user);
-sf::Packet& operator<<(sf::Packet& packet, const User& user);
-sf::Packet& operator>>(sf::Packet& packet, User& user);
 
 class User
 {
@@ -31,15 +26,21 @@ public:
   void setUsername(std::string username) { this->_username = username; }
   void setColor(sf::Color color) { this->_color = color; }
 
-  friend std::ostream& operator<<(std::ostream& o, const User& user);
-  friend sf::Packet& operator<<(sf::Packet& packet, const User& user);
-  friend sf::Packet& operator>>(sf::Packet& packet, User& user);
-  
+  friend sf::Packet& operator<<(sf::Packet& p, const User& u);
+  friend sf::Packet& operator>>(sf::Packet& p, User& u);
+
 protected:
   int _id;
   std::string _username;
   sf::Color _color;
-  
+  std::vector<std::string> _channels;
 };
+
+sf::Packet& operator<<(sf::Packet& p, const sf::Color& c);
+sf::Packet& operator>>(sf::Packet& p, sf::Color& c);
+sf::Packet& operator<<(sf::Packet& p, const std::vector<std::string>& v);
+sf::Packet& operator>>(sf::Packet& p, std::vector<std::string>& v);
+sf::Packet& operator<<(sf::Packet& p, const User& u);
+sf::Packet& operator>>(sf::Packet& p, User& u);
 
 #endif
