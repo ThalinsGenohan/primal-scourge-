@@ -4,13 +4,14 @@
 #include <ostream>
 #include <string>
 
+#include "User.h"
+
 namespace sf
 {
   class Packet;
 }
 
 class Channel;
-class User;
 
 class Message;
 sf::Packet& operator<<(sf::Packet& packet, const Message& msg);
