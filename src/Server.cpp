@@ -105,7 +105,7 @@ void Server::run()
       }
       else
       {
-        /*for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+        for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
         {
           auto& u = **it;
           if (this->_selector.isReady(*u.getSocket()))
@@ -122,7 +122,7 @@ void Server::run()
                 }
               }
             }
-          }*/
+          }
         }
       }
     }
