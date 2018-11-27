@@ -35,7 +35,7 @@ bool Server::disconnectUser(ServerUser user)
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
-    if (u.getIpAddress() == user.getIpAddress())
+    if (u.getSocket() == user.getSocket())
     {
       u.saveUser();
       u.getSocket()->disconnect();
