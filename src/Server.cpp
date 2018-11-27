@@ -92,11 +92,11 @@ void Server::run()
         const auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
-          this->_users.push_back(new ServerUser(client));
+          /*this->_users.push_back(new ServerUser(client));
           this->_selector.add(*client);
 
           const auto username = this->_users.back()->getUsername();
-          this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
+          this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));*/
         }
         else
         {
@@ -105,7 +105,7 @@ void Server::run()
       }
       else
       {
-        /*for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+        for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
         {
           auto& u = **it;
           if (this->_selector.isReady(*u.getSocket()))
@@ -123,7 +123,7 @@ void Server::run()
               }
             }
           }
-        }*/
+        }
       }
     }
   }
