@@ -5,8 +5,8 @@
 
 #include "operators.h"
 #include "Channel.h"
-#include "Client.h"
 #include "Message.h"
+#include "Client.h"
 
 class Client::ClientWindow
 {

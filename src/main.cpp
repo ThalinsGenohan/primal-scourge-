@@ -1,5 +1,3 @@
-#include "CONSTANTS.h"
-
 #ifdef _CLIENT
 #include <discord_rpc.h>
 #include "discord.h"
