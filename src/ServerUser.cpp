@@ -20,8 +20,9 @@ ServerUser::ServerUser(): _socket(nullptr)
 
 ServerUser::ServerUser(User user) : User(user), _socket(nullptr) {}
 
-ServerUser::ServerUser(sf::TcpSocket* socket) : _socket(socket), _ipAddress(this->_socket->getRemoteAddress())
+ServerUser::ServerUser(sf::TcpSocket* socket) : _socket(socket)
 {
+  this->_ipAddress = this->_socket->getRemoteAddress();
   const auto file = "users/" + std::to_string(this->_ipAddress.toInteger()) + ".txt";
   std::ifstream ifs(file);
   if (!(ifs >> *this))
