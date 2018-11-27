@@ -2,8 +2,7 @@
 #define CONSTANTS_H
 
 #define VERSION std::string("A.2.0")
-//#define IP_ADDRESS sf::IpAddress("174.56.242.113")
-#define IP_ADDRESS sf::IpAddress::getLocalAddress()
+#define IP_ADDRESS sf::IpAddress("174.56.242.113")
 #define PORT 51130
 
 #define DISCORD_DETAILS "Writing Server Code..."

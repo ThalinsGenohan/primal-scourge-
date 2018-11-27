@@ -18,7 +18,7 @@ Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 bool Server::connectUser(sf::TcpSocket* socket)
 {
   this->_users.push_back(new ServerUser(socket));
-  this->_selector.add(*this->_users.back()->getSocket());
+  this->_selector.add(this->_users.back()->getSocket());
 
   const auto username = this->_users.back()->getUsername();
   this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
@@ -38,8 +38,8 @@ bool Server::disconnectUser(ServerUser user)
     if (u.getIpAddress() == user.getIpAddress())
     {
       u.saveUser();
-      u.getSocket()->disconnect();
-      this->_selector.remove(*u.getSocket());
+      u.getSocket().disconnect();
+      this->_selector.remove(u.getSocket());
       this->_users.erase(it);
     }
   }
@@ -55,7 +55,7 @@ bool Server::send(Message msg)
   for (auto i = 0; i < int(this->_users.size()); i++)
   {
     auto& user = *this->_users[i];
-    user.getSocket()->send(packet);
+    user.getSocket().send(packet);
   }
   return false;
 }
@@ -74,7 +74,11 @@ void Server::run()
         const auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
-          connectUser(client);
+          this->_users.push_back(new ServerUser(client));
+          this->_selector.add(this->_users.back()->getSocket());
+
+          const auto username = this->_users.back()->getUsername();
+          this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
         }
         else
         {
@@ -86,10 +90,10 @@ void Server::run()
         for (auto i = 0; i < int(this->_users.size()); i++)
         {
           auto& u = *this->_users[i];
-          if (this->_selector.isReady(*u.getSocket()))
+          if (this->_selector.isReady(u.getSocket()))
           {
             sf::Packet packet;
-            if (u.getSocket()->receive(packet) == sf::Socket::Done)
+            if (u.getSocket().receive(packet) == sf::Socket::Done)
             {
               Message msg;
               if (packet >> msg)
@@ -117,7 +121,7 @@ void Server::run()
   }
   for (auto i = 0; i < int(this->_users.size()); i++)
   {
-    this->_users[i]->getSocket()->disconnect();
+    this->_users[i]->getSocket().disconnect();
   }
   this->_selector.clear();
   this->_listener.close();
