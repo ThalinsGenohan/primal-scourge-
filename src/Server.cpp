@@ -47,6 +47,24 @@ bool Server::disconnectUser(ServerUser user)
   return true;
 }
 
+void Server::parseMessage(Message msg)
+{
+  if (msg.getMessage()[0] == '/')
+  {
+    switch (msg.getMessage()[1])
+    {
+    case 'd':
+      disconnectUser(u);
+      break;
+    default:;
+    }
+  }
+  else
+  {
+    this->send(msg);
+  }
+}
+
 bool Server::send(Message msg)
 {
   std::cout << msg.getUser().getUsername() << msg.getMessage() << std::endl;
@@ -71,7 +89,7 @@ void Server::run()
     {
       if (this->_selector.isReady(this->_listener))
       {
-        auto client = new sf::TcpSocket;
+        const auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
           this->_users.push_back(new ServerUser(client));
@@ -98,20 +116,7 @@ void Server::run()
               Message msg;
               if (packet >> msg)
               {
-                if (msg.getMessage()[0] == '/')
-                {
-                  switch (msg.getMessage()[1])
-                  {
-                  case 'd':
-                    disconnectUser(u);
-                    break;
-                  default:;
-                  }
-                }
-                else
-                {
-                  this->send(msg);
-                }
+                
               }
             }
           }
