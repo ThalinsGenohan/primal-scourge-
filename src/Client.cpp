@@ -13,7 +13,6 @@
 Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {
   discord::updatePresence(L"Connecting...");
-  //if (this->_socket.connect(IP_ADDRESS, PORT) != sf::Socket::Done)
   if (!this->connect(IP_ADDRESS.toString()))
   {
     std::cout << "Server connection error!\n";
@@ -61,27 +60,25 @@ bool Client::send(tgui::TextBox::Ptr& textbox)
 bool Client::receive()
 {
   sf::Packet packet;
-  if (this->_socket.receive(packet) != sf::Socket::Done)
+  if (this->_socket.receive(packet) == sf::Socket::Done)
   {
-    std::cout << "Packet receive error!\n";
-    return false;
+    Message message;
+    if (!(packet >> message))
+    {
+      std::cout << "Packet receive error!\n";
+      return false;
+    }
+    switch (message.getType())
+    {
+    case Message::MESSAGE:
+    case Message::SERVER:
+      this->_window->addMessage(message);
+      break;
+    case Message::CLIENT_COMMAND: break;
+    case Message::SERVER_COMMAND: break;
+    default:;
+    }
+    return true;
   }
-  Message message;
-  if (!(packet >> message))
-  {
-    std::cout << "Packet receive error!\n";
-    return false;
-  }
-  switch(message.getType())
-  {
-  case Message::MESSAGE:
-    this->_window->addMessage(message);
-    break;
-  case Message::SERVER: break;
-  case Message::CLIENT_COMMAND: break;
-  case Message::SERVER_COMMAND: break;
-  default: ;
-  }
-
-  return true;
+  return false;
 }

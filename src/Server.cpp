@@ -29,7 +29,6 @@ bool Server::connectUser(sf::TcpSocket* socket)
 bool Server::disconnectUser(ServerUser user)
 {
   const auto username = user.getUsername();
-
   this->send(Message(this->_serverProfile, generalChannel, username + " has disconnected!", Message::SERVER));
 
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
