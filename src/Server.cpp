@@ -17,11 +17,13 @@ Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 bool Server::connectUser(sf::TcpSocket* socket)
 {
   this->_users.push_back(new ServerUser(socket));
+  std::cout << "Added to list..." << std::endl;
   this->_selector.add(*this->_users.back()->getSocket());
+  std::cout << "Added to selector" << std::endl;
 
   const auto username = this->_users.back()->getUsername();
   const auto str = username + " has joined!";
-  std::cout << str;
+  std::cout << str << std::endl;
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
   return true;
