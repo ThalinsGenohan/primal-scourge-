@@ -21,7 +21,9 @@ bool Server::connectUser(sf::TcpSocket* socket)
   this->_selector.add(*this->_users.back()->getSocket());
 
   const auto username = this->_users.back()->getUsername();
-  this->send(Message(this->_serverProfile, generalChannel, username + " has joined!", Message::SERVER));
+  const auto str = username + " has joined!";
+  std::cout << str;
+  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
   return true;
 }

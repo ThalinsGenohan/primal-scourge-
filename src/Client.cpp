@@ -44,6 +44,7 @@ bool Client::send(sf::Packet& packet)
 {
   if (this->_socket.send(packet) != sf::Socket::Done)
   {
+    std::cout << "Send error!" << std::endl;
     return false;
   }
   return true;
@@ -68,6 +69,7 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
+    std::cout << "In: " << message.getMessage() << std::endl;
     switch (message.getType())
     {
     case Message::MESSAGE:
