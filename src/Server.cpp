@@ -37,6 +37,7 @@ bool Server::disconnectUser(ServerUser user)
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
   std::cout << "Finding user in list..." << std::endl;
+  std::list<ServerUser*>::iterator ux;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
@@ -48,10 +49,11 @@ bool Server::disconnectUser(ServerUser user)
       u.getSocket()->disconnect();
       this->_selector.remove(*u.getSocket());
       std::cout << "Deleting user in list..." << std::endl;
-      this->_users.erase(it);
-      std::cout << "User disconnected!" << std::endl;
+      ux = it;
     }
   }
+  this->_users.erase(ux);
+  std::cout << "User disconnected!" << std::endl;
 
   return true;
 }
