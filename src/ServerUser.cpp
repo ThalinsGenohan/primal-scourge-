@@ -71,13 +71,16 @@ std::ostream & operator<<(std::ostream & os, const ServerUser & su)
 
 std::istream & operator>>(std::istream & is, ServerUser & su)
 {
+  std::cout << "Loading ID..." << std::endl;
   std::string buf;
   getline(is, buf, '\n');
   std::istringstream istr(buf);
   istr >> su._id;
 
+  std::cout << "Loading username..." << std::endl;
   getline(is, su._username, '\n');
-  
+
+  std::cout << "Loading color..." << std::endl;
   std::array<int, 4> c;
   for (auto i = 0; i < int(c.size()); i++)
   {
@@ -88,6 +91,7 @@ std::istream & operator>>(std::istream & is, ServerUser & su)
   }
   su._color = sf::Color(c[0], c[1], c[2], c[3]);
 
+  std::cout << "Loading channels..." << std::endl;
   buf = "";
   getline(is, buf, '/');
   std::istringstream iss(buf);

@@ -4,9 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 
-User::User() : _id(0), _username("") {}
+User::User() : _id(0), _username(""), _channels({ "general" }) {}
 
-User::User(int id, std::string username, sf::Color color) : _id(id), _username(username), _color(color) {}
+User::User(int id, std::string username, sf::Color color) : _id(id), _username(username), _color(color), _channels({ "general" }) {}
 
 std::string User::getIdString() const
 {
