@@ -95,7 +95,7 @@ std::istream & operator>>(std::istream & is, ServerUser & su)
   buf = "";
   getline(is, buf, '/');
   std::istringstream iss(buf);
-  int size;
+  int size = 0;
   iss >> size;
   std::cout << "Loading channels..." << std::endl;
   for (auto i = 0; i < size; i++)
