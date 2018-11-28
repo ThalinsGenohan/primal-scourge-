@@ -49,6 +49,7 @@ bool Server::disconnectUser(ServerUser user)
       this->_selector.remove(*u.getSocket());
       std::cout << "Deleting user in list..." << std::endl;
       this->_users.erase(it);
+      std::cout << "User disconnected!" << std::endl;
     }
   }
 
