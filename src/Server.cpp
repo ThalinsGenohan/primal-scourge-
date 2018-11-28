@@ -126,6 +126,7 @@ void Server::run()
               {
                 if (!parseMessage(msg))
                 {
+                  std::cout << "Client disconnecting..." << std::endl;
                   disconnectUser(u);
                 }
               }
