@@ -31,17 +31,23 @@ bool Server::connectUser(sf::TcpSocket* socket)
 
 bool Server::disconnectUser(ServerUser user)
 {
+  std::cout << "Disconnecting user..." << std::endl;
   const auto username = user.getUsername();
-  this->send(Message(this->_serverProfile, generalChannel, username + " has disconnected!", Message::SERVER));
+  const auto str = username + " has disconnected!";
+  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
+  std::cout << "Finding user in list..." << std::endl;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
     if (u.getSocket() == user.getSocket())
     {
+      std::cout << "Saving user info..." << std::endl;
       u.saveUser();
+      std::cout << "Disconnecting socket..." << std::endl;
       u.getSocket()->disconnect();
       this->_selector.remove(*u.getSocket());
+      std::cout << "Deleting user in list..." << std::endl;
       this->_users.erase(it);
     }
   }
