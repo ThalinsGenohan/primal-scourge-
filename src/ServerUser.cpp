@@ -91,12 +91,13 @@ std::istream & operator>>(std::istream & is, ServerUser & su)
   }
   su._color = sf::Color(c[0], c[1], c[2], c[3]);
 
-  std::cout << "Loading channels..." << std::endl;
+  std::cout << "Loading channel number..." << std::endl;
   buf = "";
   getline(is, buf, '/');
   std::istringstream iss(buf);
   int size;
   iss >> size;
+  std::cout << "Loading channels..." << std::endl;
   for (auto i = 0; i < size; i++)
   {
     buf = "";
