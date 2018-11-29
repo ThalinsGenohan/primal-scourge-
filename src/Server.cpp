@@ -29,7 +29,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
   return true;
 }
 
-bool Server::disconnectUser(ServerUser user)
+bool Server::disconnectUser(ServerUser& user)
 {
   std::cout << "Disconnecting user..." << std::endl;
   const auto username = user.getUsername();
