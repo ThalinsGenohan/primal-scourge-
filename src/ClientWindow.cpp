@@ -159,7 +159,7 @@ void Client::ClientWindow::addMessage(Message message)
       if (message.getUser().getUsername() != this->_lLastUser)
       {
         this->_lLastUser = message.getUser().getUsername();
-        this->_lChatBox[message.getChannel().getName()]->addLine(message.getUser().getUsername(), message.getUser().getColor());
+        this->_lChatBox[message.getChannel().getName()]->addLine("\n" + message.getUser().getUsername(), message.getUser().getColor());
       }
       this->_lChatBox[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
     }
@@ -171,7 +171,7 @@ void Client::ClientWindow::addMessage(Message message)
       if (message.getUser().getUsername() != this->_rLastUser)
       {
         this->_rLastUser = message.getUser().getUsername();
-        this->_rChatBox[message.getChannel().getName()]->addLine(message.getUser().getUsername(), message.getUser().getColor());
+        this->_rChatBox[message.getChannel().getName()]->addLine("\n" + message.getUser().getUsername(), message.getUser().getColor());
       }
       this->_rChatBox[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
     }
