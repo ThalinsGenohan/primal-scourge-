@@ -49,10 +49,8 @@ bool Server::disconnectUser(ServerUser& user)
       u.getSocket()->disconnect();
       this->_selector.remove(*u.getSocket());
       std::cout << "Deleting user in list..." << std::endl;
-      ux = it;
     }
   }
-  this->_users.erase(ux);
   std::cout << "User disconnected!" << std::endl;
 
   return true;
@@ -94,8 +92,15 @@ void Server::run()
   std::cout << "Server connected!" << std::endl;
 
   auto loop = true;
+  auto discon = false;
+  std::list<ServerUser*>::iterator disconUser;
   while (loop)
   {
+    if (discon)
+    {
+      this->_users.erase(disconUser);
+    }
+
     if (this->_selector.wait())
     {
       if (this->_selector.isReady(this->_listener))
@@ -129,6 +134,8 @@ void Server::run()
                 {
                   std::cout << "Client disconnecting..." << std::endl;
                   disconnectUser(u);
+                  discon = true;
+                  disconUser = it;
                 }
               }
             }
