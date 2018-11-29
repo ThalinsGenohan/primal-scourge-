@@ -18,7 +18,7 @@ void sendToClient(ArgsContainer a)
   a.textbox->setText("");
 }
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window)
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _lLastUser(""), _rLastUser("")
 {
   this->_theme.load("themes/Black.txt");
 
@@ -151,19 +151,29 @@ void Client::ClientWindow::removeUser(std::string username) const
 
 void Client::ClientWindow::addMessage(Message message)
 {
-  std::cout << message.getChannel().getId() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId() << "\n";
+  std::cout << message.getChannel().getId() << " " << this->_lChannels.back().getId() << " " << this->_rChannels.back().getId() << std::endl;
   for (auto i = 0; i < int(this->_lChannels.size()); i++)
   {
     if (message.getChannel().getId() == this->_lChannels[i].getId())
     {
-      this->_lChatBox[message.getChannel().getName()]->addLine(message.getMessage());
+      if (message.getUser().getUsername() != this->_lLastUser)
+      {
+        this->_lLastUser = message.getUser().getUsername();
+        this->_lChatBox[message.getChannel().getName()]->addLine(message.getUser().getUsername(), message.getUser().getColor());
+      }
+      this->_lChatBox[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
     }
   }
   for (auto i = 0; i < int(this->_rChannels.size()); i++)
   {
     if (message.getChannel().getId() == this->_rChannels[i].getId())
     {
-      this->_rChatBox[message.getChannel().getName()]->addLine(message.getMessage());
+      if (message.getUser().getUsername() != this->_rLastUser)
+      {
+        this->_rLastUser = message.getUser().getUsername();
+        this->_rChatBox[message.getChannel().getName()]->addLine(message.getUser().getUsername(), message.getUser().getColor());
+      }
+      this->_rChatBox[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
     }
   }
 }

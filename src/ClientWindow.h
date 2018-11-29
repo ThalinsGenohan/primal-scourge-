@@ -48,6 +48,9 @@ private:
   tgui::ListBox::Ptr _memberList;
   tgui::TextBox::Ptr _typeBox;
   tgui::Button::Ptr _sendButton;
+
+  std::string _lLastUser;
+  std::string _rLastUser;
 };
 
 #endif

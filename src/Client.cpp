@@ -18,6 +18,10 @@ Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, text
     std::cout << "Server connection error!\n";
     return;
   }
+  this->_socket.setBlocking(true);
+  sf::Packet p;
+  this->_socket.receive(p);
+  p >> this->_user;
   this->_socket.setBlocking(false);
   discord::updatePresence(L"In Chat Room");
   this->_window->run();
