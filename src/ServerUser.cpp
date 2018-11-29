@@ -56,7 +56,7 @@ std::ostream & operator<<(std::ostream & os, const sf::Color & c)
 
 std::ostream & operator<<(std::ostream & os, const std::vector<std::string> v)
 {
-  os << int(v.size()) << "/";
+  os << int(v.size());
   for (auto i = 0; i < int(v.size()); i++)
   {
     os << "/" << v[i];
