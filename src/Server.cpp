@@ -105,6 +105,7 @@ void Server::run()
     {
       if (this->_selector.isReady(this->_listener))
       {
+        std::cout << "Listener ready." << std::endl;
         const auto client = new sf::TcpSocket;
         if (this->_listener.accept(*client) == sf::Socket::Done)
         {
