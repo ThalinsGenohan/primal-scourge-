@@ -9,6 +9,7 @@
 
 int main()
 {
+  srand(unsigned(time(nullptr)));
 #ifdef _CLIENT
   const auto textManager = std::make_shared<TextManager>();
   discord::initDiscord();
