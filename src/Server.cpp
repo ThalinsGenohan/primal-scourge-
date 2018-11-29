@@ -28,28 +28,18 @@ bool Server::connectUser(sf::TcpSocket* socket)
   return true;
 }
 
-bool Server::disconnectUser(ServerUser& user)
+bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
 {
+  auto& u = **user;
   std::cout << "Disconnecting user..." << std::endl;
-  const auto username = user.getUsername();
-  const auto str = username + " has disconnected!";
+  const auto str = u.getUsername() + " has disconnected!";
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
-
-  std::cout << "Finding user in list..." << std::endl;
-  std::list<ServerUser*>::iterator ux;
-  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-  {
-    auto& u = **it;
-    if (u.getSocket() == user.getSocket())
-    {
-      std::cout << "Saving user info..." << std::endl;
-      u.saveUser();
-      std::cout << "Disconnecting socket..." << std::endl;
-      u.getSocket()->disconnect();
-      this->_selector.remove(*u.getSocket());
-      std::cout << "Deleting user in list..." << std::endl;
-    }
-  }
+  std::cout << "Saving user info..." << std::endl;
+  u.saveUser();
+  std::cout << "Disconnecting socket..." << std::endl;
+  this->_selector.remove(*u.getSocket());
+  u.getSocket()->disconnect();
+  std::cout << "Deleting user in list..." << std::endl;
   std::cout << "User disconnected!" << std::endl;
 
   return true;
@@ -134,7 +124,7 @@ void Server::run()
                 if (!parseMessage(msg))
                 {
                   std::cout << "Client disconnecting..." << std::endl;
-                  disconnectUser(u);
+                  disconnectUser(it);
                   discon = true;
                   disconUser = it;
                 }
