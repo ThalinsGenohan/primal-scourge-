@@ -121,6 +121,7 @@ void Server::run()
             sf::Packet packet;
             if (u.getSocket()->receive(packet) == sf::Socket::Done)
             {
+              std::cout << "Incoming message!" << std::endl;
               Message msg;
               if (packet >> msg)
               {
