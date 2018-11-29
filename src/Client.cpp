@@ -37,7 +37,6 @@ bool Client::connect(std::string ipAddress)
     std::cout << "User info receive error!" << std::endl;
   }
   p >> this->_user;
-  std::cout << this->_user;
   std::cout << "User info received!" << std::endl;
   return true;
 }
