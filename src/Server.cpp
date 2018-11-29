@@ -99,6 +99,7 @@ void Server::run()
     if (discon)
     {
       this->_users.erase(disconUser);
+      discon = false;
     }
 
     if (this->_selector.wait())
