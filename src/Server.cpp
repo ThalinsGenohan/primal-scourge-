@@ -22,8 +22,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
   std::cout << "Added to selector" << std::endl;
 
   const auto username = this->_users.back()->getUsername();
-  const auto str = username + " has joined!";
-  std::cout << str << std::endl;
+  std::string str = username + " has joined!";
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
   return true;
