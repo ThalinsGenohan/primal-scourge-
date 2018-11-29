@@ -31,7 +31,6 @@ private:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const sf::Color& c);
 std::ostream& operator<<(std::ostream& os, const std::vector<std::string> v);
 std::ostream& operator<<(std::ostream& os, const ServerUser& su);
 std::istream& operator>>(std::istream& is, ServerUser& su);

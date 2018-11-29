@@ -36,6 +36,7 @@ protected:
   std::vector<std::string> _channels;
 };
 
+std::ostream& operator<<(std::ostream& os, const sf::Color& c);
 sf::Packet& operator<<(sf::Packet& p, const sf::Color& c);
 sf::Packet& operator>>(sf::Packet& p, sf::Color& c);
 sf::Packet& operator<<(sf::Packet& p, const std::vector<std::string>& v);

@@ -49,11 +49,6 @@ bool ServerUser::saveUser() const
   return false;
 }
 
-std::ostream & operator<<(std::ostream & os, const sf::Color & c)
-{
-  return os << c.r << "/" << c.g << "/" << c.b << "/" << c.a;
-}
-
 std::ostream & operator<<(std::ostream & os, const std::vector<std::string> v)
 {
   os << int(v.size());

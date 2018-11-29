@@ -78,7 +78,7 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
-    std::cout << "In: " << message.getMessage() << std::endl;
+    std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     const std::string jStr = " has joined!";
     const std::string cStr = " has changed their username to ";
     const std::string dStr = " has disconnected!";

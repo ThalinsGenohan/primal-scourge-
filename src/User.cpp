@@ -27,6 +27,10 @@ std::string User::getIdString() const
   return str;
 }
 
+std::ostream & operator<<(std::ostream & os, const sf::Color & c)
+{
+  return os << int(c.r) << "/" << int(c.g) << "/" << int(c.b) << "/" << int(c.a);
+}
 sf::Packet & operator<<(sf::Packet & p, const sf::Color & c)
 {
   return p << c.r << c.g << c.b << c.a;
