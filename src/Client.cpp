@@ -18,10 +18,6 @@ Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, text
     std::cout << "Server connection error!\n";
     return;
   }
-  this->_socket.setBlocking(true);
-  sf::Packet p;
-  this->_socket.receive(p);
-  p >> this->_user;
   this->_socket.setBlocking(false);
   discord::updatePresence(L"In Chat Room");
   this->_window->run();
@@ -33,6 +29,16 @@ bool Client::connect(std::string ipAddress)
   {
     return false;
   }
+  std::cout << "Receiving User info..." << std::endl;
+  this->_socket.setBlocking(true);
+  sf::Packet p;
+  if (this->_socket.receive(p) != sf::Socket::Done)
+  {
+    std::cout << "User info receive error!" << std::endl;
+  }
+  p >> this->_user;
+  std::cout << this->_user;
+  std::cout << "User info received!" << std::endl;
   return true;
 }
 
