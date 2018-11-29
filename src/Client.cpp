@@ -78,7 +78,7 @@ bool Client::receive()
     case Message::SERVER:
       if (message.getMessage().find(jStr) != std::string::npos)
       {
-        this->_window->addUser(message.getMessage().substr(0, std::string(jStr).size()));
+        this->_window->addUser(message.getMessage().substr(0, message.getMessage().find(jStr)));
       }
       if (message.getMessage().find(cStr) != std::string ::npos)
       {
@@ -87,7 +87,7 @@ bool Client::receive()
       }
       if (message.getMessage().find(dStr) != std::string::npos)
       {
-        this->_window->removeUser(message.getMessage().substr(0, dStr.size()));
+        this->_window->removeUser(message.getMessage().substr(0, message.getMessage().find(dStr)));
       }
     case Message::MESSAGE:
       this->_window->addMessage(message);
