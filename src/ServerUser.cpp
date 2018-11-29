@@ -23,7 +23,7 @@ ServerUser::ServerUser(User user) : User(user), _socket(nullptr) {}
 ServerUser::ServerUser(sf::TcpSocket* socket) : _socket(socket)
 {
   this->_ipAddress = this->_socket->getRemoteAddress();
-  const auto file = "users/" + std::to_string(this->_ipAddress.toInteger()) + ".txt";
+  const auto file = "users/" + std::to_string(this->_ipAddress.toInteger()) + ".user";
   std::ifstream ifs(file);
   if (!(ifs >> *this))
   {
@@ -40,7 +40,7 @@ bool ServerUser::saveUser() const
     fs::create_directory("users");
   }*/
 
-  std::ofstream of("users/" + std::to_string(this->_ipAddress.toInteger()) + ".txt");
+  std::ofstream of("users/" + std::to_string(this->_ipAddress.toInteger()) + ".user");
   if(!(of << *this))
   {
     std::cout << "Error writing to file!" << std::endl;
