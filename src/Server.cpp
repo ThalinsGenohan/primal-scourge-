@@ -68,6 +68,10 @@ char Server::parseMessage(Message msg)
       this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + " has changed their username to " + msg.getMessage().substr(3)));
       return 'u';
     }
+    if (s == "c")
+    {
+      return 'c';
+    }
   }
   else
   {
@@ -145,6 +149,9 @@ void Server::run()
                   break;
                 case 'u':
                   u.setUsername(msg.getMessage().substr(3));
+                  break;
+                case 'c':
+                  u.setColor(msg.getMessage().substr(3));
                   break;
                 default:;
                 }

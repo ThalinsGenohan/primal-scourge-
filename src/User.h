@@ -25,6 +25,7 @@ public:
 
   void setUsername(std::string username) { this->_username = username; }
   void setColor(sf::Color color) { this->_color = color; }
+  void setColor(std::string color);
 
   friend sf::Packet& operator<<(sf::Packet& p, const User& u);
   friend sf::Packet& operator>>(sf::Packet& p, User& u);

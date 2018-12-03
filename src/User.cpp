@@ -3,6 +3,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
+#include <sstream>
+#include <array>
 
 User::User() : _id(0), _username(""), _channels({ "general" }) {}
 
@@ -25,6 +27,61 @@ std::string User::getIdString() const
   }
   str += std::to_string(this->_id);
   return str;
+}
+
+int hexCharToInt(char c)
+{
+  switch (c)
+  {
+  case '1':
+    return 1;
+  case '2':
+    return 2;
+  case '3':
+    return 3;
+  case '4':
+    return 4;
+  case '5':
+    return 5;
+  case '6':
+    return 6;
+  case '7':
+    return 7;
+  case '8':
+    return 8;
+  case '9':
+    return 9;
+  case 'A':
+  case 'a':
+    return 10;
+  case 'B':
+  case 'b':
+    return 11;
+  case 'C':
+  case 'c':
+    return 12;
+  case 'D':
+  case 'd':
+    return 13;
+  case 'E':
+  case 'e':
+    return 14;
+  case 'F':
+  case 'f':
+    return 15;
+  default:
+    return 0;
+  }
+}
+
+void User::setColor(std::string color)
+{
+  std::array<int, 3> c;
+  for (auto i = 0; i < 6; i++)
+  {
+    c[i / 3] = hexCharToInt(color[i]);
+  }
+  this->setColor(sf::Color(c[0], c[1], c[2]));
 }
 
 std::ostream & operator<<(std::ostream & os, const sf::Color & c)
