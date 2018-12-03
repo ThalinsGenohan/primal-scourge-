@@ -31,47 +31,64 @@ std::string User::getIdString() const
 
 int hexCharToInt(char c)
 {
+  auto r = 0;
   switch (c)
   {
   case '1':
-    return 1;
+    r = 1;
+    break;
   case '2':
-    return 2;
+    r = 2;
+    break;
   case '3':
-    return 3;
+    r = 3;
+    break;
   case '4':
-    return 4;
+    r = 4;
+    break;
   case '5':
-    return 5;
+    r = 5;
+    break;
   case '6':
-    return 6;
+    r = 6;
+    break;
   case '7':
-    return 7;
+    r = 7;
+    break;
   case '8':
-    return 8;
+    r = 8;
+    break;
   case '9':
-    return 9;
+    r = 9;
+    break;
   case 'A':
   case 'a':
-    return 10;
+    r = 10;
+    break;
   case 'B':
   case 'b':
-    return 11;
+    r = 11;
+    break;
   case 'C':
   case 'c':
-    return 12;
+    r = 12;
+    break;
   case 'D':
   case 'd':
-    return 13;
+    r = 13;
+    break;
   case 'E':
   case 'e':
-    return 14;
+    r = 14;
+    break;
   case 'F':
   case 'f':
-    return 15;
+    r = 15;
+    break;
   default:
-    return 0;
+    r = 0;
   }
+  return r;
 }
 
 void User::setColor(std::string color)
