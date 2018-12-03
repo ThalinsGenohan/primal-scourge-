@@ -3,7 +3,6 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-#include <sstream>
 #include <array>
 
 User::User() : _id(0), _username(""), _channels({ "general" }) {}

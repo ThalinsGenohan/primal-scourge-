@@ -83,24 +83,28 @@ bool Client::receive()
       this->_user = message.getUser();
     }
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
+    User u;
     switch (message.getType())
     {
     case Message::SERVER:
       if (message.getMessage().find(J_STR) != std::string::npos)
       {
         std::cout << "User join!" << std::endl;
-        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(J_STR))));
+        packet >> u;
+        this->_window->addUser(u);
       }
       if (message.getMessage().find(C_STR) != std::string::npos)
       {
         std::cout << "Username change!" << std::endl;
-        this->_window->removeUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(C_STR))));
-        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(message.getMessage().find(C_STR) + std::string(C_STR).size(), message.getMessage().size() - message.getMessage().find(C_STR) + std::string(C_STR).size())));
+        packet >> u;
+        this->_window->removeUser(u);
+        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(message.getMessage().find(C_STR) + std::string(C_STR).size())));
       }
       if (message.getMessage().find(D_STR) != std::string::npos)
       {
         std::cout << "User disconnect!" << std::endl;
-        this->_window->removeUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(D_STR))));
+        packet >> u;
+        this->_window->removeUser(u);
       }
     case Message::MESSAGE:
       this->_window->addMessage(message);

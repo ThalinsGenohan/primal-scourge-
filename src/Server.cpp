@@ -65,7 +65,7 @@ char Server::parseMessage(Message msg)
     }
     if (s == "u")
     {
-      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3), Message::SERVER));
+      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3), Message::SERVER), User(msg.getUser().getId(), msg.getMessage().substr(3), msg.getUser().getColor()));
       return 'u';
     }
     if (s == "c")
@@ -78,19 +78,6 @@ char Server::parseMessage(Message msg)
     this->send(msg);
   }
   return true;
-}
-
-bool Server::send(Message msg)
-{
-  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-  sf::Packet packet;
-  packet << msg;
-  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-  {
-    auto& user = **it;
-    user.getSocket()->send(packet);
-  }
-  return false;
 }
 
 void Server::run()

@@ -1,5 +1,7 @@
 #include "ChatDisplay.h"
 #include "CONSTANTS.h"
+#include <iostream>
+#include <list>
 
 struct ArgsContainer
 {
@@ -49,9 +51,10 @@ void Client::ClientWindow::ChatDisplay::setPosition(const sf::Vector2f position)
   this->_tabs->setPosition(position);
   if (int(this->_channels.size()) > 0)
   {
-    for (auto i = 0; i < int(this->_channels.size()); i++)
+    for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
     {
-      this->_chatBoxes[this->_channels[i].getName()]->setPosition(position.x, position.y + this->_tabs->getSize().y);
+      auto& c = **it;
+      this->_chatBoxes[c.getName()]->setPosition(position.x, position.y + this->_tabs->getSize().y);
     }
   }
   this->_label->setPosition(this->_tabs->getPosition().x + this->_tabs->getSize().x / 2.f - this->_label->getSize().x / 2.f, this->_tabs->getPosition().y - this->_label->getSize().y);
@@ -65,9 +68,10 @@ void Client::ClientWindow::ChatDisplay::setTheme(const tgui::Theme theme)
 {
   this->_theme = theme;
   this->_tabs->setRenderer(this->_theme.getRenderer("Tabs"));
-  for (auto i = 0; i < int(this->_channels.size()); i++)
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
-    this->_chatBoxes[this->_channels[i].getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
+    auto& c = **it;
+    this->_chatBoxes[c.getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
   }
   this->_label->setRenderer(this->_theme.getRenderer("Label"));
   this->_memberList->setRenderer(this->_theme.getRenderer("ListBox"));
@@ -82,27 +86,31 @@ void Client::ClientWindow::ChatDisplay::setTitle(const std::string title)
   this->_label->setText(title);
 }
 
-void Client::ClientWindow::ChatDisplay::setChannels(const std::vector<Channel> channels)
+void Client::ClientWindow::ChatDisplay::setChannels(const std::list<Channel*> channels)
 {
-  for (auto i = 0; i < int(this->_channels.size()); i++)
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
-    this->removeChannel(this->_channels[i]);
+    auto& c = **it;
+    this->removeChannel(new Channel(c));
   }
-  for (auto i = 0; i < int(channels.size()); i++)
+  for (auto it = channels.begin(); it != channels.end(); ++it)
   {
-    this->addChannel(channels[i]);
+    auto& c = **it;
+    this->addChannel(new Channel(c));
   }
 }
 
-void Client::ClientWindow::ChatDisplay::setUsers(const std::vector<User> users)
+void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User*> users)
 {
-  for (auto i = 0; i < int(this->_users.size()); i++)
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
-    this->removeUser(this->_users[i]);
+    auto& u = **it;
+    this->removeUser(new User(u));
   }
-  for (auto i = 0; i < int(users.size()); i++)
+  for (auto it = users.begin(); it != users.end(); ++it)
   {
-    this->addUser(users[i]);
+    auto& u = **it;
+    this->addUser(new User(u));
   }
 }
 
@@ -116,15 +124,15 @@ void Client::ClientWindow::ChatDisplay::addMessage(Message message)
   this->_chatBoxes[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
 }
 
-void Client::ClientWindow::ChatDisplay::addChannel(Channel channel)
+void Client::ClientWindow::ChatDisplay::addChannel(Channel* channel)
 {
   this->_channels.push_back(channel);
-  this->_chatBoxes[channel.getName()] = tgui::ChatBox::create();
-  this->_chatBoxes[channel.getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
-  this->_chatBoxes[channel.getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
-  this->_chatBoxes[channel.getName()]->setTextSize(TEXT_SIZE);
-  this->_chatBoxes[channel.getName()]->setPosition(this->_position.x, this->_position.y + TAB_HEIGHT);
-  this->_tabs->add(channel.getName());
+  this->_chatBoxes[channel->getName()] = tgui::ChatBox::create();
+  this->_chatBoxes[channel->getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
+  this->_chatBoxes[channel->getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
+  this->_chatBoxes[channel->getName()]->setTextSize(TEXT_SIZE);
+  this->_chatBoxes[channel->getName()]->setPosition(this->_position.x, this->_position.y + TAB_HEIGHT);
+  this->_tabs->add(channel->getName());
 }
 
 bool operator==(const Channel c1, const Channel c2)
@@ -132,24 +140,24 @@ bool operator==(const Channel c1, const Channel c2)
   return c1.getName() == c2.getName() && c1.getId() == c2.getId();
 }
 
-void Client::ClientWindow::ChatDisplay::removeChannel(Channel channel)
+void Client::ClientWindow::ChatDisplay::removeChannel(Channel* channel)
 {
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
-    auto& c = *it;
-    if (c == channel)
+    auto& c = **it;
+    if (c == *channel)
     {
       this->_channels.erase(it);
-      this->_chatBoxes.erase(it->getName());
-      this->_tabs->remove(it->getName());
+      this->_chatBoxes.erase(c.getName());
+      this->_tabs->remove(c.getName());
     }
   }
 }
 
-void Client::ClientWindow::ChatDisplay::addUser(User user)
+void Client::ClientWindow::ChatDisplay::addUser(User* user)
 {
   this->_users.push_back(user);
-  this->_memberList->addItem(user.getUsername());
+  this->_memberList->addItem(user->getUsername());
 }
 
 bool operator==(const User u1, const User u2)
@@ -157,27 +165,43 @@ bool operator==(const User u1, const User u2)
   return u1.getUsername() == u2.getUsername() && u1.getId() == u2.getId();
 }
 
-void Client::ClientWindow::ChatDisplay::removeUser(User user)
+void Client::ClientWindow::ChatDisplay::removeUser(User* user)
 {
-  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+  auto b = false;
+  std::list<User*>::iterator ue;
+  for (auto it = this->_users.begin(); it != prev(this->_users.end()); ++it)
   {
-    auto& u = *it;
-    if (u == user)
+    auto& u = **it;
+    std::cout << u.getId();
+    if (u.getId() == user->getId())
     {
-      this->_users.erase(it);
-      this->_memberList->removeItem(user.getUsername());
+      b = true;
+      ue = it;
     }
+  }
+  if (b)
+  {
+    auto& u = **ue;
+    this->_users.erase(ue);
+    this->_memberList->removeItem(u.getUsername());
   }
 }
 
 void Client::ClientWindow::ChatDisplay::switchChatBox()
 {
   this->_focusedChat = this->_tabs->getSelectedIndex();
-  for (auto i = 0; i < int(this->_channels.size()) && i != this->_focusedChat; i++)
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
-    this->_chatBoxes[this->_channels[i].getName()]->setVisible(false);
+    auto& c = **it;
+    if (c.getName() == this->_tabs->getSelected())
+    {
+      this->_chatBoxes[c.getName()]->setVisible(true);
+    }
+    else
+    {
+      this->_chatBoxes[c.getName()]->setVisible(false);
+    }
   }
-  this->_chatBoxes[this->_channels[this->_focusedChat].getName()]->setVisible(true);
 }
 
 void Client::ClientWindow::ChatDisplay::checkInput(sf::Event event)
@@ -195,9 +219,10 @@ void Client::ClientWindow::ChatDisplay::checkInput(sf::Event event)
 std::vector<tgui::Widget::Ptr> Client::ClientWindow::ChatDisplay::getWidgets() const
 {
   std::vector<tgui::Widget::Ptr> v = { this->_tabs };
-  for (auto i = 0; i < int(this->_channels.size()); i++)
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
-    v.push_back(this->_chatBoxes.at(this->_channels[i].getName()));
+    auto& c = **it;
+    v.push_back(this->_chatBoxes.at(c.getName()));
   }
   v.push_back(_label);
   v.push_back(_memberList);

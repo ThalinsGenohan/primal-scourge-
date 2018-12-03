@@ -32,13 +32,13 @@ void Client::ClientWindow::addChannel(Channel channel)
   {
   case Channel::PUBLIC_OOC:
   case Channel::PRIVATE_OOC:
-    this->_ooc->addChannel(channel);
+    this->_ooc->addChannel(new Channel(channel));
     this->_gui.add(this->_ooc->getChatBoxes()[channel.getName()]);
     break;
 
   case Channel::PUBLIC_IC:
   case Channel::PRIVATE_IC:
-    this->_ic->addChannel(channel);
+    this->_ic->addChannel(new Channel(channel));
     this->_gui.add(this->_ic->getChatBoxes()[channel.getName()]);
     break;
   default:;
@@ -47,12 +47,12 @@ void Client::ClientWindow::addChannel(Channel channel)
 
 void Client::ClientWindow::addUser(User user) const
 {
-  this->_ooc->addUser(user);
+  this->_ooc->addUser(new User(user));
 }
 
 void Client::ClientWindow::removeUser(User user) const
 {
-  this->_ooc->removeUser(user);
+  this->_ooc->removeUser(new User(user));
 }
 
 void Client::ClientWindow::addMessage(Message message) const
