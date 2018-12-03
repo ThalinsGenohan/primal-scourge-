@@ -83,24 +83,24 @@ bool Client::receive()
       this->_user = message.getUser();
     }
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
-    const std::string jStr = " has joined!";
-    const std::string cStr = " has changed their username to ";
-    const std::string dStr = " has disconnected!";
     switch (message.getType())
     {
     case Message::SERVER:
-      if (message.getMessage().find(jStr) != std::string::npos)
+      if (message.getMessage().find(J_STR) != std::string::npos)
       {
-        this->_window->addUser(User(0, message.getMessage().substr(0, message.getMessage().find(jStr))));
+        std::cout << "User join!" << std::endl;
+        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(J_STR))));
       }
-      if (message.getMessage().find(cStr) != std::string ::npos)
+      if (message.getMessage().find(C_STR) != std::string::npos)
       {
-        this->_window->removeUser(User(0, message.getMessage().substr(0, message.getMessage().find(cStr))));
-        this->_window->addUser(User(0,message.getMessage().substr(message.getMessage().find(cStr) + cStr.size(), message.getMessage().size() - message.getMessage().find(cStr) + cStr.size())));
+        std::cout << "Username change!" << std::endl;
+        this->_window->removeUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(C_STR))));
+        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(message.getMessage().find(C_STR) + std::string(C_STR).size(), message.getMessage().size() - message.getMessage().find(C_STR) + std::string(C_STR).size())));
       }
-      if (message.getMessage().find(dStr) != std::string::npos)
+      if (message.getMessage().find(D_STR) != std::string::npos)
       {
-        this->_window->removeUser(User(0, message.getMessage().substr(0, message.getMessage().find(dStr))));
+        std::cout << "User disconnect!" << std::endl;
+        this->_window->removeUser(User(message.getUser().getId(), message.getMessage().substr(0, message.getMessage().find(D_STR))));
       }
     case Message::MESSAGE:
       this->_window->addMessage(message);

@@ -30,7 +30,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
   std::cout << "User info sent!";
 
   const auto username = su->getUsername();
-  const auto str = username + " has joined!";
+  const auto str = username + J_STR;
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
 
   return true;
@@ -40,7 +40,7 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
 {
   auto& u = **user;
   std::cout << "Disconnecting user..." << std::endl;
-  const auto str = u.getUsername() + " has disconnected!";
+  const auto str = u.getUsername() + D_STR;
   this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
   std::cout << "Saving user info..." << std::endl;
   u.saveUser();
@@ -65,7 +65,7 @@ char Server::parseMessage(Message msg)
     }
     if (s == "u")
     {
-      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + " has changed their username to " + msg.getMessage().substr(3)));
+      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3), Message::SERVER));
       return 'u';
     }
     if (s == "c")

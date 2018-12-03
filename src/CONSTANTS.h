@@ -22,6 +22,10 @@
 
 #define TEXT_SIZE 13
 
+#define J_STR " has joined!"
+#define C_STR " has changed their username to "
+#define D_STR " has disconnected!"
+
 enum Species
 {
   NO_SPECIES,

@@ -76,12 +76,12 @@ int hexCharToInt(char c)
 
 void User::setColor(std::string color)
 {
-  std::array<int, 3> c;
+  auto c = 0;
   for (auto i = 0; i < 6; i++)
   {
-    c[i / 3] = hexCharToInt(color[i]);
+    c += hexCharToInt(color[i]);
   }
-  this->setColor(sf::Color(c[0], c[1], c[2]));
+  this->setColor(sf::Color(c));
 }
 
 std::ostream & operator<<(std::ostream & os, const sf::Color & c)
