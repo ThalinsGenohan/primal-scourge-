@@ -96,7 +96,7 @@ void User::setColor(std::string color)
   auto c = 0;
   for (auto i = 0; i < 6; i++)
   {
-    c += hexCharToInt(color[i]) * int(pow(16, 8 - i));
+    c += hexCharToInt(color[i]) * (8 - i * (16 * 16));
     std::cout << c << std::endl;
   }
   this->setColor(sf::Color(c + 255));
