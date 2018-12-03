@@ -78,6 +78,10 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
+    if (this->_user.getId() == message.getUser().getId())
+    {
+      this->_user = message.getUser();
+    }
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     const std::string jStr = " has joined!";
     const std::string cStr = " has changed their username to ";
