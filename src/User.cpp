@@ -93,13 +93,11 @@ int hexCharToInt(char c)
 
 void User::setColor(std::string color)
 {
-  auto c = 0;
-  for (auto i = 0; i < 6; i++)
-  {
-    c += hexCharToInt(color[i]) * ((8 - i) * (16 * 16));
-    std::cout << c << std::endl;
-  }
-  this->setColor(sf::Color(c + 255));
+  const auto r = hexCharToInt(color[0]) * 16 + hexCharToInt(color[1]);
+  const auto g = hexCharToInt(color[2]) * 16 + hexCharToInt(color[3]);
+  const auto b = hexCharToInt(color[4]) * 16 + hexCharToInt(color[5]);
+  std::cout << r << "/" << g << "/" << b << std::endl;
+  this->setColor(sf::Color(r, g, b, 255));
 }
 
 std::ostream & operator<<(std::ostream & os, const sf::Color & c)
