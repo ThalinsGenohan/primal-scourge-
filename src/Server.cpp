@@ -41,7 +41,7 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   auto& u = **user;
   std::cout << "Disconnecting user..." << std::endl;
   const auto str = u.getUsername() + D_STR;
-  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
+  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER), User(u.getId(), u.getUsername(), u.getColor()));
   std::cout << "Saving user info..." << std::endl;
   u.saveUser();
   std::cout << "Disconnecting socket..." << std::endl;
@@ -78,6 +78,32 @@ char Server::parseMessage(Message msg)
     this->send(msg);
   }
   return true;
+}
+
+bool Server::send(Message msg)
+{
+  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
+  sf::Packet packet;
+  packet << msg;
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+  {
+    auto& user = **it;
+    user.getSocket()->send(packet);
+  }
+  return false;
+}
+
+bool Server::send(Message msg, User u)
+{
+  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
+  sf::Packet packet;
+  packet << msg << u;
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+  {
+    auto& user = **it;
+    user.getSocket()->send(packet);
+  }
+  return false;
 }
 
 void Server::run()

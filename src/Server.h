@@ -19,23 +19,8 @@ public:
   bool disconnectUser(std::list<ServerUser*>::iterator user);
 
   char parseMessage(Message msg);
-  template<typename T>
-  bool send(Message msg, T extra = nullptr)
-  {
-    std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-    sf::Packet packet;
-    packet << msg;
-    if (extra != nullptr)
-    {
-      packet << extra;
-    }
-    for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-    {
-      auto& user = **it;
-      user.getSocket()->send(packet);
-    }
-    return false;
-  }
+  bool send(Message msg);
+  bool send(Message msg, User u);
 
   void run();
 
