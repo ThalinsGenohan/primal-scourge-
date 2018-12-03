@@ -57,7 +57,7 @@ char Server::parseMessage(Message msg)
 {
   if (msg.getMessage()[0] == '/')
   {
-    const auto s = msg.getMessage().substr(1, msg.getMessage().find_first_of(" "));
+    const auto s = msg.getMessage().substr(1, msg.getMessage().find_first_of(" ") - 1);
     
     if (s == "d")
     {
