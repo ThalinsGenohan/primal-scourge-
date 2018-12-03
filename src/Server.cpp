@@ -88,6 +88,7 @@ void Server::run()
 {
   std::cout << "Server connected!" << std::endl;
 
+  // ReSharper disable once CppLocalVariableMayBeConst
   auto loop = true;
   auto discon = false;
   std::list<ServerUser*>::iterator disconUser;

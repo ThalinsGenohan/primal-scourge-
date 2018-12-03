@@ -3,27 +3,25 @@
 
 #include <TGUI/TGUI.hpp>
 
-#include "Channel.h"
 #include "Message.h"
 #include "Client.h"
 
 class Client::ClientWindow
 {
 public:
+  class ChatDisplay;
+
   explicit ClientWindow(Client& client, TextManagerRef textManager);
 
-  std::vector<Channel> getLChannels() const { return this->_lChannels; }
-  std::vector<Channel> getRChannels() const { return this->_rChannels; }
-  std::vector<User> getUsers() const { return this->_users; }
+  std::vector<Channel> getIcChannels() const;
+  std::vector<Channel> getOocChannels() const;
 
   void addChannel(Channel channel);
   void removeChannel(std::string id);
   void removeChannel(Channel channel);
-  void addUser(std::string username) const;
-  void removeUser(std::string username) const;
-  void addMessage(Message message);
-
-  void sendButtonClick();
+  void addUser(User user) const;
+  void removeUser(User user) const;
+  void addMessage(Message message) const;
 
   void run();
 
@@ -36,21 +34,8 @@ private:
   tgui::Gui _gui;
   tgui::Theme _theme;
 
-  std::vector<Channel> _lChannels;
-  tgui::Tabs::Ptr _lTabs;
-  std::map<std::string, tgui::ChatBox::Ptr> _lChatBox;
-
-  std::vector<Channel> _rChannels;
-  tgui::Tabs::Ptr _rTabs;
-  std::map<std::string, tgui::ChatBox::Ptr> _rChatBox;
-
-  std::vector<User> _users;
-  tgui::ListBox::Ptr _memberList;
-  tgui::TextBox::Ptr _typeBox;
-  tgui::Button::Ptr _sendButton;
-
-  std::string _lLastUser;
-  std::string _rLastUser;
+  ChatDisplay* _ic;
+  ChatDisplay* _ooc;
 };
 
 #endif

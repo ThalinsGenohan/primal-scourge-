@@ -87,16 +87,16 @@ bool Client::receive()
     case Message::SERVER:
       if (message.getMessage().find(jStr) != std::string::npos)
       {
-        this->_window->addUser(message.getMessage().substr(0, message.getMessage().find(jStr)));
+        this->_window->addUser(User(0, message.getMessage().substr(0, message.getMessage().find(jStr))));
       }
       if (message.getMessage().find(cStr) != std::string ::npos)
       {
-        this->_window->removeUser(message.getMessage().substr(0, message.getMessage().find(cStr)));
-        this->_window->addUser(message.getMessage().substr(message.getMessage().find(cStr) + cStr.size(), message.getMessage().size() - message.getMessage().find(cStr) + cStr.size()));
+        this->_window->removeUser(User(0, message.getMessage().substr(0, message.getMessage().find(cStr))));
+        this->_window->addUser(User(0,message.getMessage().substr(message.getMessage().find(cStr) + cStr.size(), message.getMessage().size() - message.getMessage().find(cStr) + cStr.size())));
       }
       if (message.getMessage().find(dStr) != std::string::npos)
       {
-        this->_window->removeUser(message.getMessage().substr(0, message.getMessage().find(dStr)));
+        this->_window->removeUser(User(0, message.getMessage().substr(0, message.getMessage().find(dStr))));
       }
     case Message::MESSAGE:
       this->_window->addMessage(message);
