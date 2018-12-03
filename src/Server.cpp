@@ -53,19 +53,20 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   return true;
 }
 
-bool Server::parseMessage(Message msg)
+char Server::parseMessage(Message msg)
 {
   if (msg.getMessage()[0] == '/')
   {
-    switch (msg.getMessage()[1])
+    const auto s = msg.getMessage().substr(0, msg.getMessage().find_first_of(" "));
+    
+    if (s == "d")
     {
-    case 'd':
-      return false;
-    case 'u':
+      return 'd';
+    }
+    if (s == "u")
+    {
       this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + " has changed their username to " + msg.getMessage().substr(3)));
-      break;
-    default:
-      std::cout << "Unrecognized command." << std::endl;
+      return 'u';
     }
   }
   else
@@ -134,12 +135,18 @@ void Server::run()
               Message msg;
               if (packet >> msg)
               {
-                if (!parseMessage(msg))
+                switch (parseMessage(msg))
                 {
+                case 'd':
                   std::cout << "Client disconnecting..." << std::endl;
                   disconnectUser(it);
                   discon = true;
                   disconUser = it;
+                  break;
+                case 'u':
+                  u.setUsername(msg.getMessage().substr(3));
+                  break;
+                default:;
                 }
               }
             }

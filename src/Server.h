@@ -16,7 +16,7 @@ public:
   bool connectUser(sf::TcpSocket* socket);
   bool disconnectUser(std::list<ServerUser*>::iterator user);
 
-  bool parseMessage(Message msg);
+  char parseMessage(Message msg);
   bool send(Message msg);
 
   void run();
