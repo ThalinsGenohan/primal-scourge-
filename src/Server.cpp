@@ -62,7 +62,7 @@ bool Server::parseMessage(Message msg)
     case 'd':
       return false;
     case 'u':
-      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + "has changed their username to " + msg.getMessage().substr(3)));
+      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + " has changed their username to " + msg.getMessage().substr(3)));
       break;
     default:
       std::cout << "Unrecognized command." << std::endl;
