@@ -31,7 +31,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
 
   const auto username = su->getUsername();
   const auto str = username + J_STR;
-  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER));
+  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER), u);
 
   return true;
 }

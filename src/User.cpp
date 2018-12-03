@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include <array>
+#include <iostream>
 
 User::User() : _id(0), _username(""), _channels({ "general" }) {}
 
@@ -78,9 +79,10 @@ void User::setColor(std::string color)
   auto c = 0;
   for (auto i = 0; i < 6; i++)
   {
-    c += hexCharToInt(color[i]);
+    c += hexCharToInt(color[i]) * int(pow(16, 8 - i));
+    std::cout << c << std::endl;
   }
-  this->setColor(sf::Color(c));
+  this->setColor(sf::Color(c + 255));
 }
 
 std::ostream & operator<<(std::ostream & os, const sf::Color & c)
@@ -107,12 +109,19 @@ sf::Packet & operator<<(sf::Packet & p, const std::vector<std::string>& v)
 sf::Packet & operator>>(sf::Packet & p, std::vector<std::string>& v)
 {
   sf::Uint32 size;
+  const sf::Uint32 test = 3435973836;
   p >> size;
-  for (sf::Uint32 i = 0; i < size; ++i)
+  if (size == test)
   {
-    std::string item;
-    p >> item;
-    v.push_back(item);
+    std::cout << "Error!" << std::endl;
+  }
+  else {
+    for (sf::Uint32 i = 0; i < size; ++i)
+    {
+      std::string item;
+      p >> item;
+      v.push_back(item);
+    }
   }
   return p;
 }

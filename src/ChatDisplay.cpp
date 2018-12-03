@@ -102,15 +102,12 @@ void Client::ClientWindow::ChatDisplay::setChannels(const std::list<Channel*> ch
 
 void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User*> users)
 {
-  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+  this->_users = users;
+  this->_memberList->removeAllItems();
+  for (auto it = this->_users.begin(); it != prev(this->_users.end()); ++it)
   {
     auto& u = **it;
-    this->removeUser(new User(u));
-  }
-  for (auto it = users.begin(); it != users.end(); ++it)
-  {
-    auto& u = **it;
-    this->addUser(new User(u));
+    this->_memberList->addItem(u.getUsername());
   }
 }
 
@@ -169,7 +166,7 @@ void Client::ClientWindow::ChatDisplay::removeUser(User* user)
 {
   auto b = false;
   std::list<User*>::iterator ue;
-  for (auto it = this->_users.begin(); it != prev(this->_users.end()); ++it)
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
     std::cout << u.getId();
