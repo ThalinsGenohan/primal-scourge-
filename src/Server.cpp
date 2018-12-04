@@ -132,6 +132,20 @@ char Server::parseMessage(Message msg)
     {
       return 'c';
     }
+    if (s == "desc")
+    {
+      this->send(
+        ServerPacket(
+          Message(
+            _serverProfile,
+            msg.getChannel(),
+            msg.getMessage().substr(6),
+            Message::CLIENT_COMMAND
+          ),
+          serverUsersToUsers(this->_users)
+        )
+      );
+    }
   }
   else
   {
@@ -174,7 +188,7 @@ char Server::parseMessage(Message msg)
 
 bool Server::send(ServerPacket packet)
 {
-  std::cout << packet.getMessage().getUser().getUsername() << "(" << packet.getMessage().getChannel().getName() << ") : " << packet.getMessage().getMessage() << std::endl;
+  std::cout << packet.getMessage().getUser().getUsername() << " (" << packet.getMessage().getChannel().getName() << ") : " << packet.getMessage().getMessage() << std::endl;
   sf::Packet p;
   p << packet;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)

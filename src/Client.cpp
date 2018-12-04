@@ -130,7 +130,9 @@ bool Client::receive()
     case Message::MESSAGE:
       this->_window->addMessage(message);
       break;
-    case Message::CLIENT_COMMAND: break;
+    case Message::CLIENT_COMMAND:
+
+      break;
     case Message::SERVER_COMMAND: break;
     default:;
     }
