@@ -46,7 +46,7 @@ sf::Packet& operator>>(sf::Packet& p, std::list<T>& l)
 {
   sf::Uint32 size;
   p >> size;
-  for (auto i = 0; i < size; i++)
+  for (auto i = 0; i < int(size); i++)
   {
     T item;
     p >> item;
