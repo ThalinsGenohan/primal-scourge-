@@ -24,6 +24,10 @@ public:
   void setUsers(std::list<User> users) const;
   void addMessage(Message message) const;
 
+  bool isIcFocused() const { return this->_icFocus; }
+  void setIcFocus(const bool b);
+  void toggleIcFocus();
+
   void run();
 
 private:
@@ -37,6 +41,8 @@ private:
 
   ChatDisplay* _ic;
   ChatDisplay* _ooc;
+
+  bool _icFocus;
 };
 
 #endif

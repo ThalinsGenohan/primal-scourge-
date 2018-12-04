@@ -77,6 +77,18 @@ void Client::ClientWindow::addMessage(Message message) const
   }
 }
 
+void Client::ClientWindow::setIcFocus(const bool b)
+{
+  this->_icFocus = b;
+  this->_ic->setFocus(b);
+  this->_ooc->setFocus(!b);
+}
+
+void Client::ClientWindow::toggleIcFocus()
+{
+  setIcFocus(!this->_icFocus);
+}
+
 void Client::ClientWindow::run()
 {
   while (this->_window.isOpen())
@@ -87,6 +99,17 @@ void Client::ClientWindow::run()
       if (event.type == sf::Event::Closed)
       {
         this->_window.close();
+      }
+
+      if (event.type == sf::Event::KeyPressed && (this->_ic->isFocused() || this->_ooc->isFocused()))
+      {
+        switch (event.key.code)
+        {
+        case sf::Keyboard::Tab:
+          //toggleIcFocus();
+          break;
+        default:;
+        }
       }
 
       this->_gui.handleEvent(event);

@@ -51,6 +51,9 @@ public:
 
   std::vector<tgui::Widget::Ptr> getWidgets() const;
 
+  bool isFocused();
+  void setFocus(bool b);
+
 private:
   sf::Vector2f _position;
 
@@ -60,6 +63,7 @@ private:
   std::list<User*> _users;
   std::string _lastUser;
   int _focusedChat;
+  bool _typeFocus;
 
   tgui::Tabs::Ptr _tabs;
   std::map<std::string, tgui::ChatBox::Ptr> _chatBoxes;

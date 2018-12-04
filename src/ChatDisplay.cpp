@@ -17,7 +17,7 @@ void sendToClient(ArgsContainer a)
   a.textbox->setText("");
 }
 
-Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, std::string title) : _theme("themes/Black.txt"), _focusedChat(0), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
+Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, std::string title) : _theme("themes/Black.txt"), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
 {
   this->_tabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
   this->_tabs->setTextSize(TEXT_SIZE);
@@ -128,13 +128,42 @@ void Client::ClientWindow::ChatDisplay::addMessage(Message message)
 
 void Client::ClientWindow::ChatDisplay::addChannel(Channel* channel)
 {
+  std::list<Channel*>::iterator ch;
+  auto b = false;
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
+  {
+    auto& c = **it;
+    if (c.getId() == "na")
+    {
+      b = true;
+      ch = it;
+    }
+  }
+  if (b)
+  {
+    auto& c = **ch;
+    this->_channels.erase(ch);
+    this->_chatBoxes.erase(this->_chatBoxes.find(c.getName()));
+    this->_tabs->remove(c.getName());
+  }
+
   this->_channels.push_back(channel);
   this->_chatBoxes[channel->getName()] = tgui::ChatBox::create();
   this->_chatBoxes[channel->getName()]->setRenderer(this->_theme.getRenderer("ChatBox"));
   this->_chatBoxes[channel->getName()]->setSize(CHATBOX_WIDTH, CHATBOX_HEIGHT);
   this->_chatBoxes[channel->getName()]->setTextSize(TEXT_SIZE);
   this->_chatBoxes[channel->getName()]->setPosition(this->_position.x, this->_position.y + TAB_HEIGHT);
-  this->_tabs->add(channel->getName());
+  this->_chatBoxes[channel->getName()]->setVisible(false);
+  if (channel->getId() == "na")
+  {
+    this->_tabs->add(channel->getName(), false);
+    this->_tabs->setTabEnabled(this->_tabs->getTabsCount() - 1, false);
+  }
+  else
+  {
+    this->_tabs->add(channel->getName(), true);
+    this->_chatBoxes[channel->getName()]->setVisible(true);
+  }
 }
 
 bool operator==(const Channel c1, const Channel c2)
@@ -195,7 +224,7 @@ void Client::ClientWindow::ChatDisplay::switchChatBox()
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
     auto& c = **it;
-    if (c.getName() == this->_tabs->getSelected())
+    if (c.getName() == this->_tabs->getSelected() && c.getId() != "na")
     {
       this->_chatBoxes[c.getName()]->setVisible(true);
     }
@@ -232,4 +261,16 @@ std::vector<tgui::Widget::Ptr> Client::ClientWindow::ChatDisplay::getWidgets() c
   v.push_back(_typeBox);
   v.push_back(_sendButton);
   return v;
+}
+
+bool Client::ClientWindow::ChatDisplay::isFocused()
+{
+  this->_focusedChat = this->_typeBox->isFocused();
+  return this->_typeBox->isFocused();
+}
+
+void Client::ClientWindow::ChatDisplay::setFocus(bool b)
+{
+  this->_typeFocus = b;
+  this->_typeBox->setFocused(b);
 }
