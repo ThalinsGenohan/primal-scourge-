@@ -120,10 +120,17 @@ void Client::ClientWindow::ChatDisplay::addMessage(Message message)
 {
   if (message.getUser().getUsername() != this->_lastUser && message.getType() != Message::SERVER_COMMAND && message.getType() != Message::CLIENT_COMMAND)
   {
-    this->_chatBoxes[message.getChannel().getName()]->addLine("\n" + message.getUser().getUsername(), message.getUser().getColor(), tgui::TextStyle{ "Bold" });
+    this->_chatBoxes[message.getChannel().getName()]->addLine("\n" + message.getUser().getUsername(), message.getUser().getColor(), sf::Text::Bold);
     this->_lastUser = message.getUser().getUsername();
   }
-  this->_chatBoxes[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
+  if (message.getType() == Message::CLIENT_COMMAND)
+  {
+    this->_chatBoxes[message.getChannel().getName()]->addLine("\n" + message.getMessage(), message.getUser().getColor(), sf::Text::Bold | sf::Text::Italic);
+  }
+  else
+  {
+    this->_chatBoxes[message.getChannel().getName()]->addLine(message.getMessage(), sf::Color::White);
+  }
 }
 
 void Client::ClientWindow::ChatDisplay::addChannel(Channel* channel)

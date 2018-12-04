@@ -86,47 +86,11 @@ bool Client::receive()
     this->_user = serverPacket.getUser(this->_user.getId());
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     User u;
+    this->_window->addMessage(message);
     //auto b = false;
-    switch (message.getType())
+    /*switch (message.getType())
     {
     case Message::SERVER:
-      /*if (message.getMessage().find(J_STR) != std::string::npos)
-      {
-        std::cout << "User join!" << std::endl;
-        if (packet >> u)
-        {
-          this->_window->addUser(u);
-        }
-        if (this->_user.getId() == u.getId())
-        {
-          b = true;
-        }
-      }
-      if (message.getMessage().find(C_STR) != std::string::npos)
-      {
-        std::cout << "Username change!" << std::endl;
-        packet >> u;
-        this->_window->removeUser(u);
-        this->_window->addUser(User(message.getUser().getId(), message.getMessage().substr(message.getMessage().find(C_STR) + std::string(C_STR).size())));
-        if (this->_user.getId() == u.getId())
-        {
-          b = true;
-        }
-      }
-      if (message.getMessage().find(D_STR) != std::string::npos)
-      {
-        std::cout << "User disconnect!" << std::endl;
-        packet >> u;
-        this->_window->removeUser(u);
-        if (this->_user.getId() == u.getId())
-        {
-          b = true;
-        }
-      }
-      if (b)
-      {
-        this->_user = u;
-      }*/
     case Message::MESSAGE:
       this->_window->addMessage(message);
       break;
@@ -135,7 +99,7 @@ bool Client::receive()
       break;
     case Message::SERVER_COMMAND: break;
     default:;
-    }
+    }*/
     return true;
   }
   return false;

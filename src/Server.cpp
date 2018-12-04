@@ -137,9 +137,23 @@ char Server::parseMessage(Message msg)
       this->send(
         ServerPacket(
           Message(
-            _serverProfile,
+            User(0, "N/A", sf::Color::White),
             msg.getChannel(),
             msg.getMessage().substr(6),
+            Message::CLIENT_COMMAND
+          ),
+          serverUsersToUsers(this->_users)
+        )
+      );
+    }
+    if (s == "me")
+    {
+      this->send(
+        ServerPacket(
+          Message(
+            msg.getUser(),
+            msg.getChannel(),
+            msg.getUser().getUsername() + " " + msg.getMessage().substr(4),
             Message::CLIENT_COMMAND
           ),
           serverUsersToUsers(this->_users)
