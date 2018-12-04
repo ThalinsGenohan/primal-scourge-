@@ -100,11 +100,16 @@ void Client::ClientWindow::ChatDisplay::setChannels(const std::list<Channel*> ch
   }
 }
 
-void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User*> users)
+void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User> users)
 {
-  this->_users = users;
+  this->_users.clear();
   this->_memberList->removeAllItems();
-  for (auto it = this->_users.begin(); it != prev(this->_users.end()); ++it)
+  for (auto it = users.begin(); it != users.end(); ++it)
+  {
+    auto& u = *it;
+    this->_users.push_back(new User(u));
+  }
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
     this->_memberList->addItem(u.getUsername());

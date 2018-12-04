@@ -41,7 +41,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
   std::cout << "User info sent!";
 
   const auto username = su->getUsername();
-  const auto str = username + J_STR;
+  const auto str = J_STR(username);
   this->send(
     ServerPacket(
       Message(
@@ -61,7 +61,7 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
 {
   auto& u = **user;
   std::cout << "Disconnecting user..." << std::endl;
-  const auto str = u.getUsername() + D_STR;
+  const auto str = D_STR(u.getUsername());
   std::list<User> users;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
@@ -120,7 +120,7 @@ char Server::parseMessage(Message msg)
           Message(
             _serverProfile,
             GENERAL_CHANNEL,
-            msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3),
+            C_STR(msg.getUser().getUsername(), msg.getMessage().substr(3)),
             Message::SERVER
           ),
           users

@@ -79,15 +79,16 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
+    this->_window->setUsers(serverPacket.getUsers());
     auto message = serverPacket.getMessage();
     this->_user = serverPacket.getUser(this->_user.getId());
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     User u;
-    auto b = false;
+    //auto b = false;
     switch (message.getType())
     {
     case Message::SERVER:
-      if (message.getMessage().find(J_STR) != std::string::npos)
+      /*if (message.getMessage().find(J_STR) != std::string::npos)
       {
         std::cout << "User join!" << std::endl;
         if (packet >> u)
@@ -123,7 +124,7 @@ bool Client::receive()
       if (b)
       {
         this->_user = u;
-      }
+      }*/
     case Message::MESSAGE:
       this->_window->addMessage(message);
       break;

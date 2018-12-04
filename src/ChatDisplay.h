@@ -27,7 +27,7 @@ public:
   std::list<Channel*> getChannels() const { return this->_channels; }
   void setChannels(const std::list<Channel*> channels);
   std::list<User*> getUsers() const { return this->_users; }
-  void setUsers(const std::list<User*> users);
+  void setUsers(const std::list<User> users);
   std::string getLastUser() const { return this->_lastUser; }
   void setLastUser(const std::string lastUser) { this->_lastUser = lastUser; }
 

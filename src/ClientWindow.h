@@ -21,6 +21,7 @@ public:
   void removeChannel(Channel channel);
   void addUser(User user) const;
   void removeUser(User user) const;
+  void setUsers(std::list<User> users) const;
   void addMessage(Message message) const;
 
   void run();

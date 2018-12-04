@@ -55,6 +55,11 @@ void Client::ClientWindow::removeUser(User user) const
   this->_ooc->removeUser(new User(user));
 }
 
+void Client::ClientWindow::setUsers(std::list<User> users) const
+{
+  this->_ooc->setUsers(users);
+}
+
 void Client::ClientWindow::addMessage(Message message) const
 {
   switch (message.getChannel().getType())

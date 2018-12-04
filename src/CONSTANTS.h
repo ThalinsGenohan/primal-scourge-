@@ -22,9 +22,9 @@
 
 #define TEXT_SIZE 13
 
-#define J_STR " has joined!"
-#define C_STR " has changed their username to "
-#define D_STR " has disconnected!"
+#define J_STR(x) x + " has joined!"
+#define C_STR(x, y) x + " has changed their username to " + y
+#define D_STR(x) x + " has disconnected!"
 
 #define GENERAL_CHANNEL Channel("general", "General", Channel::PUBLIC_OOC)
 #define NO_CHANNEL(x) Channel("na", "N/A", x)
