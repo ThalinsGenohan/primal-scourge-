@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define VERSION std::string("A.2.0")
+#define VERSION std::string("Open Alpha 0.1")
 #define IP_ADDRESS sf::IpAddress("174.56.242.113")
 #define PORT 51130
 
