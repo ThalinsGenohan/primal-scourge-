@@ -7,7 +7,7 @@
 #include "ChatDisplay.h"
 #include "TextManager.h"
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("themes/Black.txt"), _ic(new ChatDisplay(this->_client, "IC Channels")), _ooc(new ChatDisplay(this->_client, "OOC Channels")), _icFocus(false)
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("themes/Black.txt"), _ic(new ChatDisplay(this->_client, "IC Channel(s)")), _ooc(new ChatDisplay(this->_client, "OOC Channel(s)")), _icFocus(false)
 {
   auto v = this->_ic->getWidgets();
   for (auto i = 0; i < int(v.size()); i++)
