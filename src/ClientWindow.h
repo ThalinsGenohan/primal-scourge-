@@ -16,6 +16,8 @@ public:
   std::vector<Channel> getIcChannels() const;
   std::vector<Channel> getOocChannels() const;
 
+  Channel getFocusedChannel() const;
+
   void addChannel(Channel channel);
   void removeChannel(std::string id);
   void removeChannel(Channel channel);

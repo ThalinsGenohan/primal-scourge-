@@ -274,3 +274,16 @@ void Client::ClientWindow::ChatDisplay::setFocus(bool b)
   this->_typeFocus = b;
   this->_typeBox->setFocused(b);
 }
+
+Channel Client::ClientWindow::ChatDisplay::getFocusedChannel() const
+{
+  for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
+  {
+    auto& c = **it;
+    if (this->_typeBox->isFocused() && this->_tabs->getSelected() == c.getName())
+    {
+      return c;
+    }
+  }
+  return Channel();
+}

@@ -7,7 +7,7 @@
 #include "ChatDisplay.h"
 #include "TextManager.h"
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("themes/Black.txt"), _ic(new ChatDisplay(this->_client, "IC Channels")), _ooc(new ChatDisplay(this->_client, "OOC Channels"))
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("themes/Black.txt"), _ic(new ChatDisplay(this->_client, "IC Channels")), _ooc(new ChatDisplay(this->_client, "OOC Channels")), _icFocus(false)
 {
   auto v = this->_ic->getWidgets();
   for (auto i = 0; i < int(v.size()); i++)
@@ -22,8 +22,18 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
 
   this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
   this->addChannel(GENERAL_CHANNEL);
+  this->addChannel(Channel("testic", "Test IC", Channel::PUBLIC_IC));
   this->_ic->setPosition({ MARGIN, MARGIN });
   this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN });
+}
+
+Channel Client::ClientWindow::getFocusedChannel() const
+{
+  if (this->_icFocus)
+  {
+    return this->_ic->getFocusedChannel();
+  }
+  return this->_ooc->getFocusedChannel();
 }
 
 void Client::ClientWindow::addChannel(Channel channel)
@@ -113,6 +123,8 @@ void Client::ClientWindow::run()
       }
 
       this->_gui.handleEvent(event);
+
+      this->_icFocus = this->_ic->getTypeBox()->isFocused();
 
       this->_ic->switchChatBox();
       this->_ooc->switchChatBox();
