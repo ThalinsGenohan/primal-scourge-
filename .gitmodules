@@ -1,3 +1,9 @@
 [submodule "lib/SFML"]
 	path = lib/SFML
 	url = https://github.com/SFML/SFML.git
+[submodule "lib/TGUI"]
+	path = lib/TGUI
+	url = https://github.com/texus/TGUI.git
+[submodule "lib/discord-rpc"]
+	path = lib/discord-rpc
+	url = https://github.com/discordapp/discord-rpc.git
