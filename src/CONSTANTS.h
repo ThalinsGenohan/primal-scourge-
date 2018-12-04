@@ -26,6 +26,9 @@
 #define C_STR " has changed their username to "
 #define D_STR " has disconnected!"
 
+#define GENERAL_CHANNEL Channel("general", "General", Channel::PUBLIC_OOC)
+#define NO_CHANNEL(x) Channel("na", "N/A", x)
+
 enum Species
 {
   NO_SPECIES,

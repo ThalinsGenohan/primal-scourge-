@@ -6,7 +6,7 @@
 
 #include "ServerUser.h"
 #include "Message.h"
-#include <iostream>
+#include "ServerPacket.h"
 
 class Message;
 
@@ -19,8 +19,9 @@ public:
   bool disconnectUser(std::list<ServerUser*>::iterator user);
 
   char parseMessage(Message msg);
-  bool send(Message msg);
-  bool send(Message msg, User u);
+  //bool send(Message msg);
+  //bool send(Message msg, User u);
+  bool send(ServerPacket packet);
 
   void run();
 
@@ -33,7 +34,7 @@ private:
 
   int _userCount;
   std::list<ServerUser*> _users;
-
+  std::list<Channel*> _channels;
 };
 
 #endif

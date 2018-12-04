@@ -5,6 +5,8 @@
 #include <vector>
 #include <SFML/Graphics/Color.hpp>
 
+class ServerUser;
+
 template class std::basic_string<char>;
 
 namespace sf
@@ -17,6 +19,7 @@ class User
 public:
   User();
   User(int id, std::string username, sf::Color color = sf::Color::White);
+  explicit User(ServerUser serverUser);
 
   int getId() const { return this->_id; }
   std::string getIdString() const;

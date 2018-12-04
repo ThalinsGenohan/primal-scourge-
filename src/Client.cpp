@@ -9,6 +9,7 @@
 #include "ClientWindow.h"
 #include "Message.h"
 #include "discord.h"
+#include "ServerPacket.h"
 
 Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {
@@ -44,7 +45,7 @@ bool Client::connect(std::string ipAddress)
 void Client::disconnect()
 {
   sf::Packet packet;
-  packet << Message(this->_user, generalChannel, "/d", Message::SERVER_COMMAND);
+  packet << Message(this->_user, GENERAL_CHANNEL, "/d", Message::SERVER_COMMAND);
   this->send(packet);
   this->_socket.disconnect();
 }
@@ -72,16 +73,14 @@ bool Client::receive()
   sf::Packet packet;
   if (this->_socket.receive(packet) == sf::Socket::Done)
   {
-    Message message;
-    if (!(packet >> message))
+    ServerPacket serverPacket;
+    if (!(packet >> serverPacket))
     {
       std::cout << "Packet receive error!\n";
       return false;
     }
-    if (this->_user.getId() == message.getUser().getId())
-    {
-      this->_user = message.getUser();
-    }
+    auto message = serverPacket.getMessage();
+    this->_user = serverPacket.getUser(this->_user.getId());
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     User u;
     auto b = false;

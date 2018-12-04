@@ -45,8 +45,8 @@ sf::Packet& operator>>(sf::Packet& p, Channel::ChannelType& t);
 sf::Packet& operator<<(sf::Packet& p, const Channel& c);
 sf::Packet& operator>>(sf::Packet& p, Channel& c);
 
-extern Channel noIcChannel;
-extern Channel noOocChannel;
-extern Channel generalChannel;
+//extern Channel noIcChannel;
+//extern Channel noOocChannel;
+//extern Channel generalChannel;
 
 #endif

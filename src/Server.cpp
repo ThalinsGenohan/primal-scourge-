@@ -8,6 +8,17 @@
 #include "Message.h"
 #include "ServerUser.h"
 
+std::list<User> serverUsersToUsers(std::list<ServerUser*> serverUsers)
+{
+  std::list<User> users;
+  for (auto it = serverUsers.begin(); it != serverUsers.end(); ++it)
+  {
+    auto& su = **it;
+    users.push_back(su);
+  }
+  return users;
+}
+
 Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
   this->_listener.listen(PORT);
@@ -31,7 +42,17 @@ bool Server::connectUser(sf::TcpSocket* socket)
 
   const auto username = su->getUsername();
   const auto str = username + J_STR;
-  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER), u);
+  this->send(
+    ServerPacket(
+      Message(
+        this->_serverProfile,
+        GENERAL_CHANNEL,
+        str,
+        Message::SERVER
+      ),
+      serverUsersToUsers(this->_users)
+    )
+  );
 
   return true;
 }
@@ -41,7 +62,26 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   auto& u = **user;
   std::cout << "Disconnecting user..." << std::endl;
   const auto str = u.getUsername() + D_STR;
-  this->send(Message(this->_serverProfile, generalChannel, str, Message::SERVER), User(u.getId(), u.getUsername(), u.getColor()));
+  std::list<User> users;
+  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+  {
+    auto& su = **it;
+    if (it != user)
+    {
+      users.push_back(su);
+    }
+  }
+  this->send(
+    ServerPacket(
+      Message(
+        this->_serverProfile,
+        GENERAL_CHANNEL,
+        str,
+        Message::SERVER
+      ),
+      users
+    )
+  );
   std::cout << "Saving user info..." << std::endl;
   u.saveUser();
   std::cout << "Disconnecting socket..." << std::endl;
@@ -65,7 +105,27 @@ char Server::parseMessage(Message msg)
     }
     if (s == "u")
     {
-      this->send(Message(_serverProfile, generalChannel, msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3), Message::SERVER), User(msg.getUser().getId(), msg.getMessage().substr(3), msg.getUser().getColor()));
+      std::list<User> users;
+      for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+      {
+        auto& u = **it;
+        if (u.getId() == msg.getUser().getId())
+        {
+          u.setUsername(msg.getMessage().substr(3));
+        }
+        users.push_back(u);
+      }
+      this->send(
+        ServerPacket(
+          Message(
+            _serverProfile,
+            GENERAL_CHANNEL,
+            msg.getUser().getUsername() + C_STR + msg.getMessage().substr(3),
+            Message::SERVER
+          ),
+          users
+        )
+      );
       return 'u';
     }
     if (s == "c")
@@ -75,33 +135,52 @@ char Server::parseMessage(Message msg)
   }
   else
   {
-    this->send(msg);
+    std::list<User> users;
+    for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+    {
+      auto& u = **it;
+      users.push_back(u);
+    }
+    this->send(ServerPacket(msg, users));
   }
   return true;
 }
 
-bool Server::send(Message msg)
-{
-  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-  sf::Packet packet;
-  packet << msg;
-  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-  {
-    auto& user = **it;
-    user.getSocket()->send(packet);
-  }
-  return false;
-}
+//bool Server::send(Message msg)
+//{
+//  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
+//  sf::Packet packet;
+//  packet << msg;
+//  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+//  {
+//    auto& user = **it;
+//    user.getSocket()->send(packet);
+//  }
+//  return false;
+//}
+//
+//bool Server::send(Message msg, User u)
+//{
+//  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
+//  sf::Packet packet;
+//  packet << msg << u;
+//  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
+//  {
+//    auto& user = **it;
+//    user.getSocket()->send(packet);
+//  }
+//  return false;
+//}
 
-bool Server::send(Message msg, User u)
+bool Server::send(ServerPacket packet)
 {
-  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-  sf::Packet packet;
-  packet << msg << u;
+  std::cout << packet.getMessage().getUser().getUsername() << ": " << packet.getMessage().getMessage() << std::endl;
+  sf::Packet p;
+  p << packet;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
-    auto& user = **it;
-    user.getSocket()->send(packet);
+    auto& u = **it;
+    u.getSocket()->send(p);
   }
   return false;
 }

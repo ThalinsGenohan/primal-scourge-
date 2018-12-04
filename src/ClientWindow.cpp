@@ -20,8 +20,8 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
     this->_gui.add(v[i]);
   }
 
-  this->addChannel(noIcChannel);
-  this->addChannel(generalChannel);
+  this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
+  this->addChannel(GENERAL_CHANNEL);
   this->_ic->setPosition({ MARGIN, MARGIN });
   this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN });
 }
