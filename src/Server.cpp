@@ -29,16 +29,16 @@ bool Server::connectUser(sf::TcpSocket* socket)
 {
   this->_users.push_back(new ServerUser(socket));
   const auto su = this->_users.back();
-  std::cout << "Added to list..." << std::endl;
+  //std::cout << "Added to list..." << std::endl;
   this->_selector.add(*su->getSocket());
-  std::cout << "Added to selector" << std::endl;
+  //std::cout << "Added to selector" << std::endl;
 
-  std::cout << "Sending User info to Client..." << std::endl;
+  //std::cout << "Sending User info to Client..." << std::endl;
   sf::Packet p;
   const auto u = User(su->getId(), su->getUsername(), su->getColor());
   p << u;
   su->getSocket()->send(p);
-  std::cout << "User info sent!";
+  //std::cout << "User info sent!";
 
   const auto username = su->getUsername();
   const auto str = J_STR(username);
@@ -60,7 +60,7 @@ bool Server::connectUser(sf::TcpSocket* socket)
 bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
 {
   auto& u = **user;
-  std::cout << "Disconnecting user..." << std::endl;
+  //std::cout << "Disconnecting user..." << std::endl;
   const auto str = D_STR(u.getUsername());
   std::list<User> users;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
@@ -82,13 +82,13 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
       users
     )
   );
-  std::cout << "Saving user info..." << std::endl;
+  //std::cout << "Saving user info..." << std::endl;
   u.saveUser();
-  std::cout << "Disconnecting socket..." << std::endl;
+  //std::cout << "Disconnecting socket..." << std::endl;
   this->_selector.remove(*u.getSocket());
   u.getSocket()->disconnect();
-  std::cout << "Deleting user in list..." << std::endl;
-  std::cout << "User disconnected!" << std::endl;
+  //std::cout << "Deleting user in list..." << std::endl;
+  //std::cout << "User disconnected!" << std::endl;
 
   return true;
 }
@@ -174,7 +174,7 @@ char Server::parseMessage(Message msg)
 
 bool Server::send(ServerPacket packet)
 {
-  std::cout << packet.getMessage().getUser().getUsername() << ": " << packet.getMessage().getMessage() << std::endl;
+  std::cout << packet.getMessage().getUser().getUsername() << "(" << packet.getMessage().getChannel().getName() << ") : " << packet.getMessage().getMessage() << std::endl;
   sf::Packet p;
   p << packet;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)

@@ -20,7 +20,7 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
     this->_gui.add(v[i]);
   }
 
-  this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
+  //this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
   this->addChannel(GENERAL_CHANNEL);
   this->addChannel(Channel("testic", "Test IC", Channel::PUBLIC_IC));
   this->_ic->setPosition({ MARGIN, MARGIN });

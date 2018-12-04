@@ -65,7 +65,7 @@ bool Client::send(tgui::TextBox::Ptr& textbox)
   Message m(this->_user, this->_window->getFocusedChannel(), textbox->getText());
 
   sf::Packet packet;
-  packet << Message(this->_user, GENERAL_CHANNEL, textbox->getText());
+  packet << m;
 
   return this->send(packet);
 }
