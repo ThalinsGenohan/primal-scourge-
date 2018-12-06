@@ -48,3 +48,4 @@ lib/discord-rpc/build/
 # Misc
 users/*
 build/*
+lib/SFML
