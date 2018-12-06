@@ -3,6 +3,8 @@
 
 #include "User.h"
 
+#include <SFML/Network.hpp>
+
 class ServerUser : public User
 {
 public:
