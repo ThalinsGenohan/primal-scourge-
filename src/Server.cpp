@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "Server.h"
-
-#include <iostream>
-#include <SFML/Network.hpp>
 
 #include "CONSTANTS.h"
 #include "Channel.h"

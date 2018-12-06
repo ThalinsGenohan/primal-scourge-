@@ -1,10 +1,6 @@
-#include "User.h"
+#include "pch.h"
 
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
-#include <array>
-#include <iostream>
+#include "User.h"
 
 User::User() : _id(0), _username(""), _channels({ "general" }) {}
 

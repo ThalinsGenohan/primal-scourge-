@@ -2,7 +2,6 @@
 #define SERVERPACKET_H
 
 #include <list>
-
 #include <SFML/Network.hpp>
 
 #include "Channel.h"

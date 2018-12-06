@@ -1,6 +1,6 @@
+#include "pch.h"
 #include "discord.h"
 
-#include <iostream>
 #include <discord_rpc.h>
 
 #include "CONSTANTS.h"

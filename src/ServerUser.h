@@ -1,14 +1,7 @@
 #ifndef SERVERUSER_H
 #define SERVERUSER_H
 
-#include <SFML/Network/IpAddress.hpp>
-
 #include "User.h"
-
-namespace sf
-{
-  class TcpSocket;
-}
 
 class ServerUser : public User
 {

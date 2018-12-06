@@ -1,12 +1,5 @@
+#include "pch.h"
 #include "ServerUser.h"
-
-#include <array>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <SFML/Network.hpp>
 
 #include "User.h"
 

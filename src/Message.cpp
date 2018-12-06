@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "Message.h"
-
-#include <string>
-#include <SFML/Network.hpp>
 
 #include "Channel.h"
 #include "User.h"

@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #ifdef _CLIENT
 #include <discord_rpc.h>
 #include "discord.h"
@@ -19,7 +21,8 @@ int main()
 #elif defined(_SERVER)
   Server server;
   server.run();
+#else
+  std::cout << "Neither _CLIENT nor _SERVER are defined!" << std::endl;
 #endif
-
   return 0;
 }

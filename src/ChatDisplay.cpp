@@ -1,7 +1,7 @@
+#include "pch.h"
 #include "ChatDisplay.h"
+
 #include "CONSTANTS.h"
-#include <iostream>
-#include <list>
 
 struct ArgsContainer
 {

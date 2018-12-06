@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Character.h"
 
 Character::Character(): _species(), _hp(0), _maxHp(0), _type1(), _type2(), _primality(0), _exp(0)

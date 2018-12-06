@@ -4,7 +4,7 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics.hpp>
 
 
 class TextManager

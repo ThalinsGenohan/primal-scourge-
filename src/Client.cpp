@@ -1,9 +1,5 @@
+#include "pch.h"
 #include "Client.h"
-
-#include <iostream>
-
-#include <SFML/Network.hpp>
-#include <TGUI/TGUI.hpp>
 
 #include "CONSTANTS.h"
 #include "ClientWindow.h"

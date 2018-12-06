@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "ClientWindow.h"
-
-#include <SFML/Graphics.hpp>
-#include <TGUI/TGUI.hpp>
 
 #include "CONSTANTS.h"
 #include "ChatDisplay.h"

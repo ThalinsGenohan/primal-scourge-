@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "Channel.h"
-
-#include <SFML/Network.hpp>
 
 Channel::Channel(): _type(PUBLIC_OOC) {}
 

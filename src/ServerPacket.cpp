@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ServerPacket.h"
 
 ServerPacket::ServerPacket() {}

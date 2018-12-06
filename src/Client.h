@@ -1,8 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <SFML/Network/TcpSocket.hpp>
-#include <TGUI/Widgets/TextBox.hpp>
+#include <SFML/Network.hpp>
+#include <TGUI/TGUI.hpp>
 
 #include "User.h"
 #include "TextManager.h"
