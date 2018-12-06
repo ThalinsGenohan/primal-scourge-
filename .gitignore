@@ -47,3 +47,4 @@ lib/discord-rpc/build/
 
 # Misc
 users/*
+build/*

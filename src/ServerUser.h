@@ -31,8 +31,9 @@ private:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const std::vector<std::string> v);
-std::ostream& operator<<(std::ostream& os, const ServerUser& su);
-std::istream& operator>>(std::istream& is, ServerUser& su);
+extern std::ostream& operator<<(std::ostream& os, const std::vector<std::string> v);
+extern std::ostream& operator<<(std::ostream& os, const ServerUser& su);
+extern std::istream& operator>>(std::istream& is, ServerUser& su);
+extern User serverUserToUser(ServerUser su);
 
 #endif

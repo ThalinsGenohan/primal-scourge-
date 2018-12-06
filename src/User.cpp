@@ -5,18 +5,10 @@
 #include <SFML/Network.hpp>
 #include <array>
 #include <iostream>
-#include "ServerUser.h"
 
 User::User() : _id(0), _username(""), _channels({ "general" }) {}
 
 User::User(int id, std::string username, sf::Color color) : _id(id), _username(username), _color(color), _channels({ "general" }) {}
-
-User::User(ServerUser serverUser)
-{
-  this->_id = serverUser.getId();
-  this->_username = serverUser.getUsername();
-  this->_color = serverUser.getColor();
-}
 
 std::string User::getIdString() const
 {

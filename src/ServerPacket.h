@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SERVERPACKET_H
+#define SERVERPACKET_H
 
 #include <list>
 
@@ -57,3 +58,5 @@ sf::Packet& operator>>(sf::Packet& p, std::list<T>& l)
 
 sf::Packet& operator<<(sf::Packet& p, const ServerPacket& sp);
 sf::Packet& operator>>(sf::Packet& p, ServerPacket& sp);
+
+#endif

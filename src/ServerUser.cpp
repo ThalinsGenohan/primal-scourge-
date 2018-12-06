@@ -8,6 +8,8 @@
 #include <vector>
 #include <SFML/Network.hpp>
 
+#include "User.h"
+
 //namespace fs = std::experimental::filesystem;
 
 ServerUser::ServerUser(): _socket(nullptr)
@@ -101,4 +103,9 @@ std::istream & operator>>(std::istream & is, ServerUser & su)
   }
 
   return is;
+}
+
+User serverUserToUser(ServerUser su)
+{
+  return User(su.getId(), su.getUsername(), su.getColor());
 }
