@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHATDISPLAY_H
+#define CHATDISPLAY_H
 
 #include <TGUI/TGUI.hpp>
 
@@ -77,3 +78,5 @@ private:
 
   Client& _client;
 };
+
+#endif
