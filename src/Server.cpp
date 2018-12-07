@@ -180,8 +180,7 @@ char Server::parseMessage(Message msg)
       std::cout << "'" << ss.str() << "'" << std::endl;
       auto diceNum = 0;
       ss >> diceNum;
-      ss.clear();
-      ss << dice.substr(dice.find('d') + 1);
+      ss.str(dice.substr(dice.find('d') + 1));
       std::cout << "'" << ss.str() << "'" << std::endl;
       auto diceSides = 0;
       ss >> diceSides;
