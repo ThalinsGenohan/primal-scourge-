@@ -177,10 +177,12 @@ char Server::parseMessage(Message msg)
     {
       auto dice = msg.getMessage().substr(msg.getMessage().find(' ') + 1);
       std::stringstream ss(dice.substr(0, dice.find('d')));
+      std::cout << ss.str() << std::endl;
       auto diceNum = 0;
       ss >> diceNum;
       ss.clear();
       ss << dice.substr(dice.find('d') + 1);
+      std::cout << ss.str() << std::endl;
       auto diceSides = 0;
       ss >> diceSides;
       auto r = roll(diceNum, diceSides);
