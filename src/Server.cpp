@@ -170,7 +170,7 @@ char Server::parseMessage(Message msg)
     }
     if (s == "roll")
     {
-      auto dice = msg.getMessage().substr(6);
+      auto dice = msg.getMessage().substr(msg.getMessage().find(' '));
       std::stringstream ss(dice.substr(6, dice.find('d')));
       auto diceNum = 0;
       ss >> diceNum;
