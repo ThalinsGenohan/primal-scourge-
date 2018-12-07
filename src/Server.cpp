@@ -201,8 +201,7 @@ char Server::parseMessage(Message msg)
 bool Server::send(ServerPacket packet)
 {
   auto now = time(nullptr);
-  const auto ltm = new tm;
-  localtime_s(ltm, &now);
+  const auto ltm = localtime(&now);
 
   const auto user = packet.getMessage().getUser().getUsername();
   const auto msg = packet.getMessage().getMessage();
