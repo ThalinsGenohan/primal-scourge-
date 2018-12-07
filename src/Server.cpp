@@ -93,6 +93,7 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
 
 std::vector<int> roll(int diceNum, int diceSides)
 {
+  std::cout << "Rolling " << diceNum << "d" << diceSides << "..." << std::endl;
   std::vector<int> r;
   for (auto i = 0; i < diceNum; i++)
   {
