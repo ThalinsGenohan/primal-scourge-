@@ -175,12 +175,12 @@ char Server::parseMessage(Message msg)
     }
     if (s == "roll")
     {
-      auto dice = msg.getMessage().substr(msg.getMessage().find(' '));
+      auto dice = msg.getMessage().substr(msg.getMessage().find(' ') + 1);
       std::stringstream ss(dice.substr(0, dice.find('d')));
       auto diceNum = 0;
       ss >> diceNum;
       ss.clear();
-      ss << dice.substr(dice.find('d'));
+      ss << dice.substr(dice.find('d') + 1);
       auto diceSides = 0;
       ss >> diceSides;
       auto r = roll(diceNum, diceSides);
@@ -188,7 +188,11 @@ char Server::parseMessage(Message msg)
       auto rt = 0;
       for (auto i = 0; i < int(r.size()); i++)
       {
-        str += std::to_string(r[i]) + " + ";
+        str += std::to_string(r[i]);
+        if (i != int(r.size()))
+        {
+          str += " + ";
+        }
         rt += r[i];
       }
       this->send(
