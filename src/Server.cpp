@@ -91,12 +91,12 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   return true;
 }
 
-int roll(int diceNum, int diceSides)
+std::vector<int> roll(int diceNum, int diceSides)
 {
-  auto r = 0;
+  std::vector<int> r;
   for (auto i = 0; i < diceNum; i++)
   {
-    r += 1 + rand() % diceSides;
+    r.push_back(1 + rand() % diceSides);
   }
   return r;
 }
@@ -178,12 +178,19 @@ char Server::parseMessage(Message msg)
       auto diceSides = 0;
       ss >> diceSides;
       auto r = roll(diceNum, diceSides);
+      std::string str = "";
+      int rt = 0;
+      for (auto i = 0; i < int(r.size()); i++)
+      {
+        str += std::to_string(r[i]) + " + ";
+        rt += r[i];
+      }
       this->send(
         ServerPacket(
           Message(
             msg.getUser(),
             msg.getChannel(),
-            "Rolling " + dice + "...\n" + std::to_string(r),
+            "Rolling " + dice + "...\n" + str + " = " + std::to_string(rt),
             Message::CLIENT_COMMAND
           ),
           serverUsersToUsers(this->_users)
