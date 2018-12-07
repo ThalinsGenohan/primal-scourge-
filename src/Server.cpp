@@ -176,7 +176,7 @@ char Server::parseMessage(Message msg)
       auto diceNum = 0;
       ss >> diceNum;
       ss.clear();
-      ss << dice.substr(dice.find('d'), dice.find(' '));
+      ss << dice.substr(dice.find('d'));
       auto diceSides = 0;
       ss >> diceSides;
       auto r = roll(diceNum, diceSides);
