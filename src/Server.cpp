@@ -200,7 +200,12 @@ char Server::parseMessage(Message msg)
 
 bool Server::send(ServerPacket packet)
 {
-  std::cout << packet.getMessage().getUser().getUsername() << " (" << packet.getMessage().getChannel().getName() << ") : " << packet.getMessage().getMessage() << std::endl;
+  const auto user = packet.getMessage().getUser().getUsername();
+  const auto msg = packet.getMessage().getMessage();
+  const auto chan = packet.getMessage().getChannel().getName();
+  std::ofstream ofs("logs/" + chan);
+  ofs << user << ": " << msg;
+  std::cout << user << " (" << chan << "): " << msg << std::endl;
   sf::Packet p;
   p << packet;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
