@@ -13,7 +13,7 @@ class Message;
 class Client::ClientWindow::ChatDisplay
 {
 public:
-  explicit ChatDisplay(Client& client, std::string title);
+  explicit ChatDisplay(Client& client, tgui::Theme theme, std::string title);
 
   static sf::Vector2f getSize() { return { CHATBOX_WIDTH + PADDING + MEMBERLIST_WIDTH, CHATBOX_HEIGHT + PADDING + TYPEBOX_HEIGHT }; }
 

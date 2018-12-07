@@ -36,6 +36,7 @@ namespace discord
 
   void updatePresence(std::wstring status)
   {
+    std::cout << "Setting Discord status..." << std::endl;
     std::string s_status(status.begin(), status.end());
 
     DiscordRichPresence discordPresence;

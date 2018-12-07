@@ -17,8 +17,9 @@ void sendToClient(ArgsContainer a)
   a.textbox->setText("");
 }
 
-Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, std::string title) : _theme("themes/Black.txt"), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
+Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, tgui::Theme theme, std::string title) : _theme(theme), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
 {
+  std::cout << "Creating ChatDisplay..." << std::endl;
   this->_tabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
   this->_tabs->setTextSize(TEXT_SIZE);
 

@@ -35,6 +35,7 @@ set(SERVER_HEADERS
 )
 
 set(MAIN_SOURCE
+  src/main.cpp
   src/Channel.cpp
   src/Message.cpp
   src/ServerPacket.cpp
@@ -53,15 +54,17 @@ set(SERVER_SOURCE
 )
 
 if(WIN32)
-  list(APPEND MAIN_SOURCE assets/resource.rc)
+  list(APPEND MAIN_SOURCE assets/resources.rc)
 endif()
 
 if(SERVER)
   list(APPEND MAIN_HEADERS ${SERVER_HEADERS})
   list(APPEND MAIN_SOURCE ${SERVER_SOURCE})
+  set(DEFINES ${DEFINES} _SERVER)
 else(SERVER)
   list(APPEND MAIN_HEADERS ${CLIENT_HEADERS})
   list(APPEND MAIN_SOURCE ${CLIENT_SOURCE})
+  set(DEFINES ${DEFINES} _CLIENT)
 endif(SERVER)
 
 source_group("source" FILES ${MAIN_SOURCE} ${MAIN_HEADERS})
@@ -77,7 +80,13 @@ find_package(SFML 2.5 COMPONENTS graphics window network system)
 find_package(TGUI 0.8)
 set(DISCORDRPC_ROOT "" CACHE PATH "DiscordRPC installation directory")
 
-add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32 ${MAIN_HEADERS} ${MAIN_SOURCE})
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+
+add_executable(${PROJECT_NAME} ${MAIN_HEADERS} ${MAIN_SOURCE})
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${DEFINES})
 target_include_directories(${PROJECT_NAME} PRIVATE src ${DISCORDRPC_ROOT}/include)
-target_link_libraries(${PROJECT_NAME} tgui sfml-graphics sfml-network ${DISCORDRPC_ROOT}/lib/discord-rpc.lib -static)
+target_link_libraries(${PROJECT_NAME} tgui sfml-graphics sfml-network ${DISCORDRPC_ROOT}/lib/discord-rpc.lib)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/assets/fonts ${PROJECT_SOURCE_DIR}/assets/themes DESTINATION bin/assets)

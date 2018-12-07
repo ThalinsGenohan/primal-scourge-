@@ -9,10 +9,11 @@
 #include "Server.h"
 #endif
 
-int main()
+int main(int /*argc*/, char** /*argv*/)
 {
   srand(unsigned(time(nullptr)));
 #ifdef _CLIENT
+  std::cout << "Starting Client..." << std::endl;
   const auto textManager = std::make_shared<TextManager>();
   discord::initDiscord();
   Client client(textManager);
@@ -24,5 +25,6 @@ int main()
 #else
   std::cout << "Neither _CLIENT nor _SERVER are defined!" << std::endl;
 #endif
+  std::cout << "End. Closing program..." << std::endl;
   return 0;
 }
