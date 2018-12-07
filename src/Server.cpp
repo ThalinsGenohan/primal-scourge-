@@ -189,7 +189,7 @@ char Server::parseMessage(Message msg)
       for (auto i = 0; i < int(r.size()); i++)
       {
         str += std::to_string(r[i]);
-        if (i != int(r.size()))
+        if (i != int(r.size()) - 1)
         {
           str += " + ";
         }
