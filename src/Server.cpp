@@ -200,11 +200,15 @@ char Server::parseMessage(Message msg)
 
 bool Server::send(ServerPacket packet)
 {
+  auto now = time(nullptr);
+  const auto ltm = new tm;
+  localtime_s(ltm, &now);
+
   const auto user = packet.getMessage().getUser().getUsername();
   const auto msg = packet.getMessage().getMessage();
   const auto chan = packet.getMessage().getChannel();
-  std::ofstream ofs("logs/" + chan.getId(), std::ios::app);
-  ofs << user << ": " << msg << std::endl;
+  std::ofstream ofs("logs/" + chan.getId() + " " + std::to_string(ltm->tm_year + ltm->tm_mon + ltm->tm_mday), std::ios::app);
+  ofs << ltm->tm_year << "/" << ltm->tm_mon << "/" << ltm->tm_mday << " " << user << ": " << msg << std::endl;
   std::cout << user << " (" << chan.getName() << "): " << msg << std::endl;
   sf::Packet p;
   p << packet;
