@@ -174,12 +174,13 @@ char Server::parseMessage(Message msg)
       std::stringstream ss(dice.substr(6, dice.find('d')));
       auto diceNum = 0;
       ss >> diceNum;
-      ss = std::stringstream(dice.substr(dice.find('d')));
+      ss.clear();
+      ss << dice.substr(dice.find('d'), dice.find(' '));
       auto diceSides = 0;
       ss >> diceSides;
       auto r = roll(diceNum, diceSides);
       std::string str = "";
-      int rt = 0;
+      auto rt = 0;
       for (auto i = 0; i < int(r.size()); i++)
       {
         str += std::to_string(r[i]) + " + ";
