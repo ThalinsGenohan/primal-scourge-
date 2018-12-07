@@ -4,7 +4,6 @@ project(primal-scourge-tool)
 set(BUILD_SHARED_LIBS FALSE)
 
 option(SERVER "Build server? TRUE for Server, FALSE for client" OFF)
-option(DEBUG "Debug mode" OFF)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
