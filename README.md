@@ -9,6 +9,7 @@ This project is being written in Visual Studio 2017, and uses SFML, TGUI, and Di
 ### 1. Build dependencies
 
 SFML, TGUI, and DiscordRPC are included with this repository as submodules. You must build **and install** them using CMake before you can build this project. (If using Windows, change `CMAKE_INSTALL_PREFIX` to something besides `Program Files`, because Windows is weird.) If you don't know how to do that, then you probably want to check out the Releases.
+**NOTE: You may need to pull the submodules separately, using the `git submodule update --init --recursive` command in the console for the repo directory.**
 
 ### 2. Build the Tool
 
