@@ -91,6 +91,16 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   return true;
 }
 
+int roll(int diceNum, int diceSides)
+{
+  auto r = 0;
+  for (auto i = 0; i < diceNum; i++)
+  {
+    r += 1 + rand() % diceSides;
+  }
+  return r;
+}
+
 char Server::parseMessage(Message msg)
 {
   if (msg.getMessage()[0] == '/')
@@ -152,6 +162,28 @@ char Server::parseMessage(Message msg)
             msg.getUser(),
             msg.getChannel(),
             msg.getUser().getUsername() + " " + msg.getMessage().substr(4),
+            Message::CLIENT_COMMAND
+          ),
+          serverUsersToUsers(this->_users)
+        )
+      );
+    }
+    if (s == "roll")
+    {
+      auto dice = msg.getMessage().substr(6);
+      std::stringstream ss(dice.substr(6, dice.find('d')));
+      auto diceNum = 0;
+      ss >> diceNum;
+      ss = std::stringstream(dice.substr(dice.find('d')));
+      auto diceSides = 0;
+      ss >> diceSides;
+      auto r = roll(diceNum, diceSides);
+      this->send(
+        ServerPacket(
+          Message(
+            msg.getUser(),
+            msg.getChannel(),
+            "Rolling " + dice + "...\n" + std::to_string(r),
             Message::CLIENT_COMMAND
           ),
           serverUsersToUsers(this->_users)
