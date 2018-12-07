@@ -13,8 +13,10 @@ struct ArgsContainer
 
 void sendToClient(ArgsContainer a)
 {
+  std::cout << "Sending message..." << std::endl;
   a.client.send(a.textbox);
   a.textbox->setText("");
+  std::cout << "Message sent!" << std::endl;
 }
 
 Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, tgui::Theme theme, std::string title) : _theme(theme), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
@@ -273,8 +275,18 @@ std::vector<tgui::Widget::Ptr> Client::ClientWindow::ChatDisplay::getWidgets() c
 
 bool Client::ClientWindow::ChatDisplay::isFocused()
 {
-  this->_focusedChat = this->_typeBox->isFocused();
-  return this->_typeBox->isFocused();
+  auto b = false;
+  for (auto i = 0; i > int(this->getWidgets().size()); i++)
+  {
+    const auto w = this->getWidgets()[i];
+    if (w->isFocused())
+    {
+      b = true;
+      break;
+    }
+  }
+  this->_typeFocus = b;
+  return b;
 }
 
 void Client::ClientWindow::ChatDisplay::setFocus(bool b)
@@ -283,15 +295,15 @@ void Client::ClientWindow::ChatDisplay::setFocus(bool b)
   this->_typeBox->setFocused(b);
 }
 
-Channel Client::ClientWindow::ChatDisplay::getFocusedChannel() const
+Channel Client::ClientWindow::ChatDisplay::getFocusedChannel()
 {
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
     auto& c = **it;
-    if (this->_typeBox->isFocused() && this->_tabs->getSelected() == c.getName())
+    if (this->isFocused() && this->_tabs->getSelected() == c.getName())
     {
       return c;
     }
   }
-  return Channel();
+  return GENERAL_CHANNEL;
 }

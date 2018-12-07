@@ -55,7 +55,7 @@ public:
   bool isFocused();
   void setFocus(bool b);
 
-  Channel getFocusedChannel() const;
+  Channel getFocusedChannel();
 
 private:
   sf::Vector2f _position;
