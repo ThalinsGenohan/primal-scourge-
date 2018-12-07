@@ -202,10 +202,10 @@ bool Server::send(ServerPacket packet)
 {
   const auto user = packet.getMessage().getUser().getUsername();
   const auto msg = packet.getMessage().getMessage();
-  const auto chan = packet.getMessage().getChannel().getName();
-  std::ofstream ofs("logs/" + chan);
+  const auto chan = packet.getMessage().getChannel();
+  std::ofstream ofs("logs/" + chan.getId(), std::ios::app);
   ofs << user << ": " << msg;
-  std::cout << user << " (" << chan << "): " << msg << std::endl;
+  std::cout << user << " (" << chan.getName() << "): " << msg << std::endl;
   sf::Packet p;
   p << packet;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
