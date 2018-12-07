@@ -185,6 +185,7 @@ char Server::parseMessage(Message msg)
       std::cout << "'" << ss.str() << "'" << std::endl;
       auto diceSides = 0;
       ss >> diceSides;
+      std::cout << diceNum << "d" << diceSides << std::endl;
       auto r = roll(diceNum, diceSides);
       std::string str = "";
       auto rt = 0;
