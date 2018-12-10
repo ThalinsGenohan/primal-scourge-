@@ -7,6 +7,9 @@
 
 #define DISCORD_DETAILS "Making Client commands..."
 
+#define FONT "assets/fonts/Lucida Sans.ttf"
+#define JA_FONT "assets/fonts/KozGoPro-Regular.otf"
+
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 

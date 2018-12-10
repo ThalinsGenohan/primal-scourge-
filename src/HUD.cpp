@@ -1,6 +1,7 @@
 #include "pch.h"
-
 #include "HUD.h"
+
+#include "CONSTANTS.h"
 
 Character::HUD::HUD() {}
 
@@ -8,7 +9,7 @@ Character::HUD::HUD(std::string portraitFilepath, std::string name)
 {
   this->_portraitTexture.loadFromFile(portraitFilepath);
   this->_portrait.setTexture(this->_portraitTexture);
-  this->_font.loadFromFile("assets/fonts/Lucida Sans.ttf");
+  this->_font.loadFromFile(FONT);
   this->_name.setFont(this->_font);
   this->_name.setString(name);
   this->_hpBar.background.setSize({ 100.f, 20.f });
