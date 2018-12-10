@@ -8,7 +8,8 @@ Character::HUD::HUD() {}
 Character::HUD::HUD(std::string portraitFilepath, std::string name)
 {
   this->_portraitTexture.loadFromFile(portraitFilepath);
-  this->_portrait.setTexture(this->_portraitTexture);
+  this->_portrait.setSize({ 64.f, 64.f });
+  this->_portrait.setTexture(new sf::Texture(this->_portraitTexture));
   this->_font.loadFromFile(FONT);
   this->_name.setFont(this->_font);
   this->_name.setString(name);

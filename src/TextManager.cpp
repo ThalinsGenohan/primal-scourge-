@@ -4,7 +4,7 @@
 #include "CONSTANTS.h"
 #include "lang/lang.h"
 
-TextManager::TextManager()
+TextManager::TextManager() : _activeLanguage(LANG_EN_US)
 {
   this->_fonts[LANG_EN_US].loadFromFile(FONT);
   this->_fonts[LANG_JA].loadFromFile(JA_FONT);

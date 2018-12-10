@@ -49,7 +49,7 @@ public:
   void setPosition(sf::Vector2f pos);
 
   sf::Text getName() const { return this->_name; }
-  sf::Sprite getPortrait() const { return this->_portrait; }
+  sf::RectangleShape getPortrait() const { return this->_portrait; }
   Label getType1() const { return this->_type1; }
   Label getType2() const { return this->_type2; }
   Bar getHpBar() const { return this->_hpBar; }
@@ -66,7 +66,7 @@ private:
   sf::Vector2f _position;
 
   sf::Text _name;
-  sf::Sprite _portrait;
+  sf::RectangleShape _portrait;
   Label _type1;
   Label _type2;
   Bar _hpBar;

@@ -67,7 +67,7 @@ private:
   std::map<Status, bool> _statuses;
   int _exp;
 
-  HUD _hud;
+  HUD* _hud;
   
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
