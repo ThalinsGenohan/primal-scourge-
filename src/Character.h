@@ -19,56 +19,7 @@ public:
 
     int cost;
   };
-  class HUD : public Drawable
-  {
-  public:
-    struct Label : Drawable
-    {
-      sf::RectangleShape background;
-      sf::Text text;
-
-      std::string str;
-
-    private:
-      sf::Font _font;
-
-      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    };
-    struct Bar : Drawable
-    {
-      sf::RectangleShape background;
-      sf::RectangleShape bar;
-      sf::Text valueText;
-      sf::Text maxText;
-
-      int value;
-      int max;
-
-    private:
-      sf::Font _font;
-
-      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    };
-
-    HUD();
-
-  private:
-    sf::Font _font;
-    sf::Texture _portraitTexture;
-
-    sf::Text _name;
-    sf::Sprite _portrait;
-    Label _type1;
-    Label _type2;
-    Bar _hpBar;
-    Label _strength;
-    Label _dexterity;
-    Label _special;
-    Label _vitality;
-    std::array<sf::RectangleShape, 5> _primality;
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-  };
+  class HUD;
 
   Character();
 
@@ -98,6 +49,8 @@ public:
   bool isStaggered() const { return this->_statuses.at(STAGGER); }
   bool isFainted() const { return this->_statuses.at(FAINT); }
   int getExp() const { return this->_exp; }
+
+  void setPosition(sf::Vector2f pos);
 
 private:
   std::string _name;

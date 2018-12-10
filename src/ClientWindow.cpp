@@ -22,8 +22,8 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
   //this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
   this->addChannel(GENERAL_CHANNEL);
   this->addChannel(Channel("testic", "Test IC", Channel::PUBLIC_IC));
-  this->_ic->setPosition({ MARGIN, MARGIN });
-  this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN });
+  this->_ic->setPosition({ MARGIN, MARGIN + HUD_HEIGHT });
+  this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN + HUD_HEIGHT });
 }
 
 Channel Client::ClientWindow::getFocusedChannel() const
@@ -158,6 +158,7 @@ void Client::ClientWindow::run()
 
     this->_window.clear();
     this->_gui.draw();
+    this->_window.draw(this->_client.getUser().getCharacter());
     this->_window.display();
   }
 }

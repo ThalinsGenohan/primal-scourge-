@@ -5,6 +5,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+#include "Character.h"
+
 class ServerUser;
 
 template class std::basic_string<char>;
@@ -24,6 +26,7 @@ public:
   std::string getIdString() const;
   std::string getUsername() const { return this->_username; }
   sf::Color getColor() const { return this->_color; }
+  Character getCharacter() const { return this->_character; }
 
   void setUsername(std::string username) { this->_username = username; }
   void setColor(sf::Color color) { this->_color = color; }
@@ -37,6 +40,7 @@ protected:
   std::string _username;
   sf::Color _color;
   std::vector<std::string> _channels;
+  Character _character;
 };
 
 std::ostream& operator<<(std::ostream& os, const sf::Color& c);

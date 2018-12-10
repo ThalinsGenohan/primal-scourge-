@@ -9,6 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(MAIN_HEADERS
   src/CONSTANTS.h
+  src/Character.h
   src/Channel.h
   src/Message.h
   src/ServerPacket.h
@@ -35,6 +36,7 @@ set(SERVER_HEADERS
 
 set(MAIN_SOURCE
   src/main.cpp
+  src/Character.cpp
   src/Channel.cpp
   src/Message.cpp
   src/ServerPacket.cpp

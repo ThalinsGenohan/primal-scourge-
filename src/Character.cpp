@@ -1,12 +1,27 @@
 #include "pch.h"
 #include "Character.h"
 
-Character::Character(): _species(), _hp(0), _maxHp(0), _type1(), _type2(), _primality(0), _exp(0)
+Character::Character(): _species(), _hp(0), _maxHp(0), _type1(), _type2(), _primality(0), _exp(0), _hud("none", "none")
 {
   for (auto i = 0; i < STATUS_COUNT; i++)
   {
     this->_statuses[Status(i)] = false;
   }
+  this->_hud.setPosition({ MARGIN, MARGIN });
+
+}
+
+void Character::setPosition(sf::Vector2f pos)
+{
+  this->_hud.setPosition(pos);
+}
+
+void Character::HUD::setPosition(sf::Vector2f pos)
+{
+  this->_position = pos;
+  const auto x = pos.x, y = pos.y;
+  this->_portrait.setPosition(pos);
+  this->_hpBar.setPosition({ x + this->_portrait.getGlobalBounds().width, y });
 }
 
 void Character::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -14,25 +29,3 @@ void Character::draw(sf::RenderTarget & target, sf::RenderStates states) const
   target.draw(this->_hud, states);
 }
 
-Character::HUD::HUD()
-{
-}
-
-void Character::HUD::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-  target.draw(this->_portrait, states);
-}
-
-void Character::HUD::Label::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-  target.draw(this->background, states);
-  target.draw(this->text, states);
-}
-
-void Character::HUD::Bar::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-  target.draw(this->background, states);
-  target.draw(this->bar, states);
-  target.draw(this->valueText, states);
-  target.draw(this->maxText, states);
-}
