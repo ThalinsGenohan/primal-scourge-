@@ -50,7 +50,7 @@ public:
   bool isFainted() const { return this->_statuses.at(FAINT); }
   int getExp() const { return this->_exp; }
 
-  void setPosition(sf::Vector2f pos);
+  void setPosition(sf::Vector2f pos) const;
 
 private:
   std::string _name;

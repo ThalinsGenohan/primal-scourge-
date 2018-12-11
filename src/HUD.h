@@ -9,22 +9,38 @@ class Character::HUD : public Drawable
 public:
   struct Label : Drawable
   {
+    explicit Label(std::string text);
+
     sf::RectangleShape background;
     sf::Text text;
 
     std::string str;
 
-    void setPosition(sf::Vector2f pos);
+    sf::Vector2f getSize() const { return this->background.getSize(); }
 
-  private:
+    void setPosition(sf::Vector2f pos);
+    void setText(std::string text);
+
+  protected:
     sf::Font _font;
 
     sf::Vector2f _position;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
   };
+  struct TypeLabel : Label
+  {
+    explicit TypeLabel(Type type);
+
+    void setType(Type type);
+
+  private:
+    Type _type;
+  };
   struct Bar : Drawable
   {
+    Bar() : value(0), max(0) {}
+
     sf::RectangleShape background;
     sf::RectangleShape bar;
     sf::Text valueText;
@@ -42,6 +58,20 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
   };
+  struct Portrait : Drawable
+  {
+    explicit Portrait(sf::Vector2f size, std::string filepath);
+
+    sf::RectangleShape background;
+    sf::RectangleShape image;
+
+    void setPosition(sf::Vector2f pos);
+
+  private:
+    sf::Texture _texture;
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  };
 
   HUD();
   HUD(std::string portraitFilepath, std::string name);
@@ -49,7 +79,7 @@ public:
   void setPosition(sf::Vector2f pos);
 
   sf::Text getName() const { return this->_name; }
-  sf::RectangleShape getPortrait() const { return this->_portrait; }
+  Portrait getPortrait() const { return this->_portrait; }
   Label getType1() const { return this->_type1; }
   Label getType2() const { return this->_type2; }
   Bar getHpBar() const { return this->_hpBar; }
@@ -61,14 +91,13 @@ public:
 
 private:
   sf::Font _font;
-  sf::Texture _portraitTexture;
 
   sf::Vector2f _position;
 
   sf::Text _name;
-  sf::RectangleShape _portrait;
-  Label _type1;
-  Label _type2;
+  Portrait _portrait;
+  TypeLabel _type1;
+  TypeLabel _type2;
   Bar _hpBar;
   Label _strength;
   Label _dexterity;

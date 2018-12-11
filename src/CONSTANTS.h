@@ -5,7 +5,7 @@
 #define IP_ADDRESS sf::IpAddress("174.56.242.113")
 #define PORT 51130
 
-#define DISCORD_DETAILS "Making Client commands..."
+#define DISCORD_DETAILS "Adding Character HUD..."
 
 #define FONT "assets/fonts/Lucida Sans.ttf"
 #define JA_FONT "assets/fonts/KozGoPro-Regular.otf"
@@ -20,9 +20,9 @@
 #define TYPEBOX_HEIGHT 50.f
 
 #define CHATBOX_WIDTH   WINDOW_WIDTH / 2.f - MARGIN - MEMBERLIST_WIDTH - 2 * PADDING          // 
-#define CHATBOX_HEIGHT  350
+#define CHATBOX_HEIGHT  330
 #define TYPEBOX_WIDTH   CHATBOX_WIDTH + MEMBERLIST_WIDTH - TYPEBOX_HEIGHT
-#define HUD_HEIGHT WINDOW_HEIGHT - CHATBOX_HEIGHT - TYPEBOX_HEIGHT - 2 * PADDING - 2 * MARGIN
+#define HUD_HEIGHT 140
 
 #define TEXT_SIZE 13
 
@@ -205,6 +205,25 @@ enum Type
 
   TYPE_COUNT
 };
+
+#define NORMAL_COLOR sf::Color(0xA8, 0xA8, 0x78)
+#define FIRE_COLOR sf::Color(0xF0, 0x80, 0x30)
+#define WATER_COLOR sf::Color(0x68, 0x90, 0xF0)
+#define ELECTRIC_COLOR sf::Color(0xF8, 0xD0, 0x30)
+#define GRASS_COLOR sf::Color(0x78, 0xC8, 0x50)
+#define ICE_COLOR sf::Color(0x98, 0xD8, 0xD8)
+#define FIGHTING_COLOR sf::Color(0xC0, 0x30, 0x28)
+#define POISON_COLOR sf::Color(0xA0, 0x40, 0xA0)
+#define GROUND_COLOR sf::Color(0xE0, 0xC0, 0x68)
+#define FLYING_COLOR sf::Color(0xA8, 0x90, 0xF0)
+#define PSYCHIC_COLOR sf::Color(0xF8, 0x58, 0x88)
+#define BUG_COLOR sf::Color(0xA8, 0xB8, 0x20)
+#define ROCK_COLOR sf::Color(0xB8, 0xA0, 0x38)
+#define GHOST_COLOR sf::Color(0x70, 0x58, 0x98)
+#define DRAGON_COLOR sf::Color(0x70, 0x38, 0xF8)
+#define DARK_COLOR sf::Color(0x70, 0x58, 0x48)
+#define STEEL_COLOR sf::Color(0xB8, 0xB8, 0xD0)
+#define FAIRY_COLOR sf::Color(0xEE, 0x99, 0xAC)
 
 enum Status
 {

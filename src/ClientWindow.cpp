@@ -8,6 +8,7 @@
 Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("assets/themes/Black.txt"), _ic(new ChatDisplay(this->_client, this->_theme, "IC Channel(s)")), _ooc(new ChatDisplay(this->_client, this->_theme, "OOC Channel(s)")), _icFocus(false)
 {
   std::cout << "Creating ClientWindow..." << std::endl;
+  this->_window.setFramerateLimit(60);
   auto v = this->_ic->getWidgets();
   for (auto i = 0; i < int(v.size()); i++)
   {
@@ -22,8 +23,8 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
   //this->addChannel(NO_CHANNEL(Channel::PUBLIC_IC));
   this->addChannel(GENERAL_CHANNEL);
   this->addChannel(Channel("testic", "Test IC", Channel::PUBLIC_IC));
-  this->_ic->setPosition({ MARGIN, MARGIN + HUD_HEIGHT });
-  this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN + HUD_HEIGHT });
+  this->_ic->setPosition({ MARGIN, MARGIN + HUD_HEIGHT + PADDING });
+  this->_ooc->setPosition({ this->_ic->getPosition().x + this->_ic->getSize().x + 2.f * PADDING, MARGIN + HUD_HEIGHT + PADDING });
 }
 
 Channel Client::ClientWindow::getFocusedChannel() const
