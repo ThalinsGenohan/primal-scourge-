@@ -1,13 +1,13 @@
 #include "pch.h"
-
 #include "TextManager.h"
+
+#include "CONSTANTS.h"
 #include "lang/lang.h"
 
-TextManager::TextManager()
+TextManager::TextManager() : _activeLanguage(LANG_EN_US)
 {
-  this->_fonts[LANG_EN_US].loadFromFile("assets/fonts/Lucida Sans.ttf");
-  this->_fonts[LANG_ES].loadFromFile("assets/fonts/Lucida Sans.ttf");
-  this->_fonts[LANG_JA].loadFromFile("assets/fonts/KozGoPro-Regular.otf");
+  this->_fonts[LANG_EN_US].loadFromFile(FONT);
+  this->_fonts[LANG_JA].loadFromFile(JA_FONT);
   this->setLanguage(LANG_EN_US);
 }
 
