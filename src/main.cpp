@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "CONSTANTS.h"
 
 #ifdef _CLIENT
 #include <discord_rpc.h>
@@ -9,9 +10,21 @@
 #include "Server.h"
 #endif
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 int main(int /*argc*/, char** /*argv*/)
 {
+#ifdef _SERVER
+#ifdef _WIN32
+#ifdef NDEBUG
+  ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
+#endif
+#endif
   srand(unsigned(time(nullptr)));
+
 #ifdef _CLIENT
   std::cout << "Starting Client..." << std::endl;
   const auto textManager = std::make_shared<TextManager>();

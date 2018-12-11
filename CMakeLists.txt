@@ -1,75 +1,64 @@
 cmake_minimum_required(VERSION 3.0)
-project(primal-scourge-tool)
+project(simple-chat-app VERSION 1.0)
 
 set(BUILD_SHARED_LIBS FALSE)
 
-option(SERVER "Build server? TRUE for Server, FALSE for client" OFF)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(MAIN_HEADERS
-  src/CONSTANTS.h
+option(SERVER_MODE "TRUE if building server, FALSE if building client" OFF)
+option(DEBUG_MODE "Turns on Debug mode, letting the console remain open." OFF)
+
+set(HEADER_FILES
   src/Channel.h
-  src/Message.h
-  src/ServerPacket.h
-  src/ServerUser.h
-  src/User.h
-)
-set(CLIENT_HEADERS
   src/ChatDisplay.h
   src/Client.h
   src/ClientWindow.h
+  src/CONSTANTS.h
   src/discord.h
+  src/Message.h
+  src/Server.h
+  src/ServerPacket.h
+  src/ServerUser.h
   src/TextManager.h
-
-  src/lang/lang.h
+  src/User.h
 )
 set(LANG_HEADERS
+  src/lang/lang.h
   src/lang/en_us.h
+  src/lang/es.h
   src/lang/ja.h
 )
-list(APPEND CLIENT_HEADERS ${LANG_HEADERS})
-set(SERVER_HEADERS
-  src/Server.h
-)
+list(APPEND HEADER_FILES ${LANG_HEADERS})
 
-set(MAIN_SOURCE
+set(SOURCE_FILES
   src/main.cpp
   src/Channel.cpp
-  src/Message.cpp
-  src/ServerPacket.cpp
-  src/ServerUser.cpp
-  src/User.cpp
-)
-set(CLIENT_SOURCE
   src/ChatDisplay.cpp
   src/Client.cpp
   src/ClientWindow.cpp
   src/discord.cpp
-  src/TextManager.cpp
-)
-set(SERVER_SOURCE
+  src/Message.cpp
   src/Server.cpp
+  src/ServerPacket.cpp
+  src/ServerUser.cpp
+  src/TextManager.cpp
+  src/User.cpp
 )
 
 if(WIN32)
-  list(APPEND MAIN_SOURCE assets/resources.rc)
+  list(APPEND SOURCE_FILES assets/resources.rc)
 endif()
 
-if(SERVER)
-  list(APPEND MAIN_HEADERS ${SERVER_HEADERS})
-  list(APPEND MAIN_SOURCE ${SERVER_SOURCE})
-  set(DEFINES ${DEFINES} _SERVER)
-else(SERVER)
-  list(APPEND MAIN_HEADERS ${CLIENT_HEADERS})
-  list(APPEND MAIN_SOURCE ${CLIENT_SOURCE})
-  set(DEFINES ${DEFINES} _CLIENT)
-endif(SERVER)
-
-source_group("source" FILES ${MAIN_SOURCE} ${MAIN_HEADERS})
+source_group("source" FILES ${SOURCE_FILES} ${HEADER_FILES})
 
 if(MSVC)
   list(APPEND DEFINES _CRT_SECURE_NO_WARNINGS NOMINMAX)
+endif()
+
+if(DEBUG_MODE)
+  list(APPEND DEFINES _DEBUG)
+else()
+  list(APPEND DEFINES NDEBUG)
 endif()
 
 set(SFML_STATIC_LIBRARIES TRUE)
@@ -82,7 +71,7 @@ set(DISCORDRPC_ROOT "" CACHE PATH "DiscordRPC installation directory")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
-add_executable(${PROJECT_NAME} ${MAIN_HEADERS} ${MAIN_SOURCE})
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${DEFINES})
 target_include_directories(${PROJECT_NAME} PRIVATE src ${DISCORDRPC_ROOT}/include)
 target_link_libraries(${PROJECT_NAME} tgui sfml-graphics sfml-network ${DISCORDRPC_ROOT}/lib/discord-rpc.lib)

@@ -7,7 +7,7 @@
 namespace lang
 {
   std::map<std::string, std::wstring> en_us = {
-    { "GAME_TITLE", L"Primal Scourge Client" },
+    { "TITLE", L"Simple Chat Application" },
     { "SEND_BUTTON", L"Send" }
   };
 }

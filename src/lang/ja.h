@@ -7,7 +7,7 @@
 namespace lang
 {
   std::map<std::string, std::wstring> ja = {
-    { "GAME_TITLE", L"プライマル・スカージ" },
+    { "TITLE", L"単純のチャットアプリ" },
     { "SEND_BUTTON", L"送る" }
   };
 }
