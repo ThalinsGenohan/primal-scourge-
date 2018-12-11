@@ -8,7 +8,8 @@ namespace lang
 {
   std::map<std::string, std::wstring> en_us = {
     { "TITLE", L"Simple Chat Application" },
-    { "SEND_BUTTON", L"Send" }
+    { "SEND_BUTTON", L"Send" },
+    { "CONNECTION_WINDOW", L"" }
   };
 }
 

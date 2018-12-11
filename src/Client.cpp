@@ -7,12 +7,12 @@
 #include "discord.h"
 #include "ServerPacket.h"
 
-Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
+Client::Client(sf::IpAddress ip, TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
 {
   std::cout << "Creating Client..." << std::endl;
   discord::updatePresence(L"Connecting...");
   std::cout << "Connecting..." << std::endl;
-  if (!this->connect(IP_ADDRESS.toString()))
+  if (!this->connect(ip.toString()))
   {
     std::cout << "Server connection error!\n";
     return;

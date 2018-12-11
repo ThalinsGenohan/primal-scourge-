@@ -6,6 +6,7 @@
 TextManager::TextManager()
 {
   this->_fonts[LANG_EN_US].loadFromFile("assets/fonts/Lucida Sans.ttf");
+  this->_fonts[LANG_ES].loadFromFile("assets/fonts/Lucida Sans.ttf");
   this->_fonts[LANG_JA].loadFromFile("assets/fonts/KozGoPro-Regular.otf");
   this->setLanguage(LANG_EN_US);
 }

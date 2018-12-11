@@ -5,7 +5,7 @@
 #include "ChatDisplay.h"
 #include "TextManager.h"
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("assets/themes/Black.txt"), _chat(new ChatDisplay(this->_client, this->_theme, "IC Channel(s)")), _icFocus(false)
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("assets/themes/Black.txt"), _chat(new ChatDisplay(this->_client, this->_theme, "Channel(s)"))
 {
   std::cout << "Creating ClientWindow..." << std::endl;
   auto v = this->_chat->getWidgets();
@@ -47,11 +47,6 @@ void Client::ClientWindow::setUsers(std::list<User> users) const
 void Client::ClientWindow::addMessage(Message message) const
 {
   this->_chat->addMessage(message);
-}
-
-void Client::ClientWindow::toggleIcFocus()
-{
-  setIcFocus(!this->_icFocus);
 }
 
 void Client::ClientWindow::run()

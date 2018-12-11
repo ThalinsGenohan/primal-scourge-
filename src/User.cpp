@@ -96,7 +96,7 @@ void User::setColor(std::string color)
   this->setColor(sf::Color(r, g, b, 255));
 }
 
-std::ostream & operator<<(std::ostream & os, const sf::Color & c)
+std::ostream & operator<<(std::ostream& os, const sf::Color& c)
 {
   return os << int(c.r) << "/" << int(c.g) << "/" << int(c.b) << "/" << int(c.a);
 }
@@ -104,7 +104,7 @@ sf::Packet & operator<<(sf::Packet & p, const sf::Color & c)
 {
   return p << c.r << c.g << c.b << c.a;
 }
-sf::Packet & operator>>(sf::Packet & p, sf::Color & c)
+sf::Packet & operator>>(sf::Packet& p, sf::Color& c)
 {
   return p >> c.r >> c.g >> c.b >> c.a;
 }

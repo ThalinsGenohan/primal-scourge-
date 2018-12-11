@@ -13,6 +13,7 @@ public:
   const enum Language
   {
     LANG_EN_US,
+    LANG_ES,
     LANG_JA
   };
 

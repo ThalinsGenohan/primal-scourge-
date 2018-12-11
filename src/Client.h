@@ -12,7 +12,7 @@ class Client
 public:
   class ClientWindow;
 
-  explicit Client(TextManagerRef textManager);
+  explicit Client(sf::IpAddress ip, TextManagerRef textManager);
 
   User getUser() const { return this->_user; }
 

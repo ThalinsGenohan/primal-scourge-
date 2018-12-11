@@ -14,9 +14,57 @@
 #include <Windows.h>
 #endif
 
+bool pushButton(tgui::EditBox::Ptr eb)
+{
+  auto str = eb->getText();
+
+  return false;
+}
+
+sf::IpAddress connect(TextManagerRef textManager)
+{
+  sf::RenderWindow window(sf::VideoMode(250, 100), textManager->getText("CONNECTION_WINDOW"));
+  tgui::Gui gui(window);
+  auto textbox = tgui::EditBox::create();
+  auto button = tgui::Button::create();
+  textbox->setRenderer(tgui::Theme("assets/themes/Black.txt").getRenderer("EditBox"));
+  textbox->setTextSize(int(TEXT_SIZE * 1.5f));
+  textbox->setAlignment(tgui::EditBox::Alignment::Center);
+  textbox->setSize(180, 25);
+  textbox->setPosition((250.f - textbox->getSize().x) / 2.f, 25);
+  textbox->setInputValidator("\\d{1,3}(\\.\\d{1,3}|\\.$){0,3}");
+  button->setRenderer(tgui::Theme("assets/themes/Black.txt").getRenderer("Button"));
+  button->setSize(100, 25);
+  button->setPosition(75, 50);
+  button->setTextSize(int(TEXT_SIZE * 1.5f));
+  button->setText("Connect");
+  button->setPosition((250.f - button->getSize().x) / 2.f, 50);
+
+  gui.add(textbox);
+  gui.add(button);
+
+  while (window.isOpen())
+  {
+    sf::Event e;
+    while (window.pollEvent(e))
+    {
+      if (e.type == sf::Event::Closed)
+      {
+        window.close();
+      }
+      gui.handleEvent(e);
+    }
+
+    window.clear(sf::Color::Black);
+    gui.draw();
+    window.display();
+  }
+  return sf::IpAddress("0.0.0.0");
+}
+
 int main(int /*argc*/, char** /*argv*/)
 {
-#ifdef _SERVER
+#ifndef _SERVER
 #ifdef _WIN32
 #ifdef NDEBUG
   ShowWindow(GetConsoleWindow(), SW_HIDE);
@@ -29,8 +77,13 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout << "Starting Client..." << std::endl;
   const auto textManager = std::make_shared<TextManager>();
   discord::initDiscord();
-  Client client(textManager);
-  client.disconnect();
+
+  auto ip = connect(textManager);
+  if (ip.toInteger() != 0)
+  {
+    Client client(ip, textManager);
+    client.disconnect();
+  }
   Discord_Shutdown();
 #elif defined(_SERVER)
   Server server;
