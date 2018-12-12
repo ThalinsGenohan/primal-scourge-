@@ -32,6 +32,8 @@ private:
   sf::TcpListener _listener;
   sf::SocketSelector _selector;
 
+  sf::UdpSocket _connectionSocket;
+
   int _userCount;
   std::list<ServerUser*> _users;
   std::list<Channel*> _channels;

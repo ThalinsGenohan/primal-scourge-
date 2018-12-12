@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "CONSTANTS.h"
+#include "TextManager.h"
 
 #ifdef _CLIENT
 #include <discord_rpc.h>
 #include "discord.h"
-#include "TextManager.h"
 #include "Client.h"
 #elif defined(_SERVER)
 #include "Server.h"
@@ -62,15 +62,34 @@ sf::IpAddress connect(TextManagerRef textManager)
   return sf::IpAddress("0.0.0.0");
 }
 
+sf::IpAddress searchLan()
+{
+  sf::UdpSocket udp;
+  udp.bind(PORT);
+  sf::Packet packet;
+  packet << std::string("ping");
+  std::cout << "Searching LAN for connection..." << std::endl;
+  udp.send(packet, sf::IpAddress::Broadcast, PORT);
+  packet.clear();
+  sf::IpAddress ip = "0.0.0.0";
+  unsigned short port;
+  if(udp.receive(packet, ip, port) != sf::Socket::Done)
+  {
+    std::cout << "No LAN connection detected." << std::endl;
+    ip = "0.0.0.0";
+    return ip;
+  }
+  std::string str = "";
+  if (!(packet >> str) || str != "pong")
+  {
+    std::cout << "No LAN connection detected." << std::endl;
+    ip = "0.0.0.0";
+  }
+  return ip;
+}
+
 int main(int /*argc*/, char** /*argv*/)
 {
-#ifndef _SERVER
-#ifdef _WIN32
-#ifdef NDEBUG
-  ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
-#endif
-#endif
   srand(unsigned(time(nullptr)));
 
 #ifdef _CLIENT
@@ -78,7 +97,18 @@ int main(int /*argc*/, char** /*argv*/)
   const auto textManager = std::make_shared<TextManager>();
   discord::initDiscord();
 
-  auto ip = connect(textManager);
+  auto ip = searchLan();
+#ifndef _SERVER
+#ifdef _WIN32
+#ifdef NDEBUG
+  ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
+#endif
+#endif
+  if (ip.toInteger() == 0)
+  {
+    ip = connect(textManager);
+  }
   if (ip.toInteger() != 0)
   {
     Client client(ip, textManager);

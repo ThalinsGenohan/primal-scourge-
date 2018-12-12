@@ -21,6 +21,8 @@ Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
 {
   this->_listener.listen(PORT);
   this->_selector.add(this->_listener);
+  this->_connectionSocket.bind(PORT);
+  this->_selector.add(this->_connectionSocket);
 }
 
 bool Server::connectUser(sf::TcpSocket* socket)
@@ -306,6 +308,23 @@ void Server::run()
       }
       else
       {
+        if (this->_selector.isReady(this->_connectionSocket))
+        {
+          sf::Packet packet;
+          sf::IpAddress ip;
+          unsigned short port;
+          if (this->_connectionSocket.receive(packet, ip, port))
+          {
+            std::string str = "";
+            if (packet >> str && str == "ping")
+            {
+              std::cout << "Received ping!" << std::endl;
+              packet.clear();
+              packet << std::string("pong");
+              this->_connectionSocket.send(packet, ip, port);
+            }
+          }
+        }
         for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
         {
           auto& u = **it;

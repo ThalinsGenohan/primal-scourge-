@@ -5,7 +5,7 @@
 #include "ChatDisplay.h"
 #include "TextManager.h"
 
-Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("GAME_TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("assets/themes/Black.txt"), _chat(new ChatDisplay(this->_client, this->_theme, "Channel(s)"))
+Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) : _client(client), _textManager(textManager), _window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), this->_textManager->getText("TITLE"), sf::Style::Close | sf::Style::Titlebar), _gui(this->_window), _theme("assets/themes/Black.txt"), _chat(new ChatDisplay(this->_client, this->_theme, "Channel(s)"))
 {
   std::cout << "Creating ClientWindow..." << std::endl;
   auto v = this->_chat->getWidgets();

@@ -24,8 +24,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 
-#ifdef _CLIENT
 #include <TGUI/TGUI.hpp>
-#endif
 
 #endif // PCH_H
