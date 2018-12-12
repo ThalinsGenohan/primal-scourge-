@@ -4,6 +4,9 @@ project(primal-scourge-tool)
 set(BUILD_SHARED_LIBS FALSE)
 
 option(SERVER "Build server? TRUE for Server, FALSE for client" OFF)
+option(STATIC_DEPS "Are SFML and TGUI built statically?" OFF)
+set(SFML_ROOT "" CACHE PATH "")
+set(TGUI_ROOT "" CACHE PATH "")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -74,12 +77,19 @@ if(MSVC)
   list(APPEND DEFINES _CRT_SECURE_NO_WARNINGS NOMINMAX)
 endif()
 
-set(SFML_STATIC_LIBRARIES TRUE)
-set(TGUI_STATIC_LIBRARIES TRUE)
+if (STATIC_DEPS)
+  set(SFML_STATIC_LIBRARIES TRUE)
+  set(TGUI_STATIC_LIBRARIES TRUE)
+endif()
 
-find_package(SFML 2.5 COMPONENTS graphics window network system)
-find_package(TGUI 0.8)
-set(DISCORDRPC_ROOT "" CACHE PATH "DiscordRPC installation directory")
+if (NOT SFML_ROOT STREQUAL "")
+  set(SFML_DIR ${SFML_ROOT}/lib/cmake/SFML)
+  set(TGUI_DIR ${TGUI_ROOT}/lib/cmake/TGUI)
+  
+  find_package(SFML 2.5 COMPONENTS graphics window network system)
+  find_package(TGUI 0.8)
+  set(DISCORDRPC_ROOT "" CACHE PATH "DiscordRPC installation directory")
+endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
@@ -91,3 +101,7 @@ target_link_libraries(${PROJECT_NAME} tgui sfml-graphics sfml-network ${DISCORDR
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/assets/fonts ${PROJECT_SOURCE_DIR}/assets/themes DESTINATION bin/assets)
+if (NOT STATIC_DEPS)
+  install(FILES ${SFML_ROOT}/bin/sfml-graphics-2.dll ${SFML_ROOT}/bin/sfml-window-2.dll ${SFML_ROOT}/bin/sfml-network-2.dll ${SFML_ROOT}/bin/sfml-system-2.dll DESTINATION bin)
+  install(FILES ${TGUI_ROOT}/bin/tgui.dll DESTINATION bin)
+endif()

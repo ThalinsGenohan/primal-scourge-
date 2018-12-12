@@ -31,15 +31,6 @@
 *.out
 *.app
 
-# Visual Studio
-.vs/
-*.sln
-*.vcxproj*
-Debug/
-Release/
-Debug Server/
-Release Server/
-
 # Libs
 lib/SFML/build/
 lib/TGUI/build/
@@ -51,3 +42,8 @@ build/
 logs/
 x64/
 Server Debug/
+Debug/
+Release/
+Debug Server/
+Release Server/
+.vs/
