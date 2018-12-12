@@ -49,3 +49,5 @@ lib/discord-rpc/build/
 users/
 build/
 logs/
+x64/
+Server Debug/
