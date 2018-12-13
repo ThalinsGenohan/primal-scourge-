@@ -200,10 +200,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Channel.cpp" />
+    <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\ChatDisplay.cpp" />
     <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\ClientWindow.cpp" />
     <ClCompile Include="src\discord.cpp" />
+    <ClCompile Include="src\HUD.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -225,12 +227,14 @@
     <ClInclude Include="src\ClientWindow.h" />
     <ClInclude Include="src\CONSTANTS.h" />
     <ClInclude Include="src\discord.h" />
+    <ClInclude Include="src\HUD.h" />
     <ClInclude Include="src\lang\en_us.h" />
     <ClInclude Include="src\lang\es.h" />
     <ClInclude Include="src\lang\ja.h" />
     <ClInclude Include="src\lang\lang.h" />
     <ClInclude Include="src\Message.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Pokemon.h" />
     <ClInclude Include="src\Server.h" />
     <ClInclude Include="src\ServerPacket.h" />
     <ClInclude Include="src\ServerUser.h" />

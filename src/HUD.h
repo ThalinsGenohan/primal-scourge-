@@ -80,8 +80,8 @@ public:
 
   sf::Text getName() const { return this->_name; }
   Portrait getPortrait() const { return this->_portrait; }
-  Label getType1() const { return this->_type1; }
-  Label getType2() const { return this->_type2; }
+  TypeLabel getType1() const { return this->_type1; }
+  TypeLabel getType2() const { return this->_type2; }
   Bar getHpBar() const { return this->_hpBar; }
   Label getStrength() const { return this->_strength; }
   Label getDexterity() const { return this->_dexterity; }
