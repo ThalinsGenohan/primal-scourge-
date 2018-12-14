@@ -31,7 +31,7 @@ namespace discord
     handlers.disconnected = handleDiscordDisconnected;
 
     // Discord_Initialize(const char* applicationId, DiscordEventHandlers* handlers, int autoRegister, const char* optionalSteamId)
-    Discord_Initialize("515243124533231628", &handlers, 1, "1234");
+    Discord_Initialize("523128963392864262", &handlers, 1, "1234");
   }
 
   void updatePresence(std::wstring status)

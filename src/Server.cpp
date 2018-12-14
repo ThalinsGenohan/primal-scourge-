@@ -228,32 +228,6 @@ char Server::parseMessage(Message msg)
   return true;
 }
 
-//bool Server::send(Message msg)
-//{
-//  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-//  sf::Packet packet;
-//  packet << msg;
-//  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-//  {
-//    auto& user = **it;
-//    user.getSocket()->send(packet);
-//  }
-//  return false;
-//}
-//
-//bool Server::send(Message msg, User u)
-//{
-//  std::cout << msg.getUser().getUsername() << ": " << msg.getMessage() << std::endl;
-//  sf::Packet packet;
-//  packet << msg << u;
-//  for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
-//  {
-//    auto& user = **it;
-//    user.getSocket()->send(packet);
-//  }
-//  return false;
-//}
-
 bool Server::send(ServerPacket packet)
 {
   auto now = time(nullptr);
