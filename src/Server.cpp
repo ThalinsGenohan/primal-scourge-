@@ -6,9 +6,9 @@
 #include "Message.h"
 #include "ServerUser.h"
 
-std::list<User> serverUsersToUsers(std::list<ServerUser*> serverUsers)
+std::vector<User> serverUsersToUsers(std::list<ServerUser*> serverUsers)
 {
-  std::list<User> users;
+  std::vector<User> users;
   for (auto it = serverUsers.begin(); it != serverUsers.end(); ++it)
   {
     auto& su = **it;
@@ -17,7 +17,7 @@ std::list<User> serverUsersToUsers(std::list<ServerUser*> serverUsers)
   return users;
 }
 
-Server::Server() : _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0)
+Server::Server() : _futureObj(this->_exitSignal.get_future()), _serverProfile(0, "[Server]", sf::Color::Cyan), _userCount(0), _running(false)
 {
   this->_listener.listen(PORT);
   this->_selector.add(this->_listener);
@@ -62,7 +62,7 @@ bool Server::disconnectUser(std::list<ServerUser*>::iterator user)
   auto& u = **user;
   //std::cout << "Disconnecting user..." << std::endl;
   const auto str = D_STR(u.getUsername());
-  std::list<User> users;
+  std::vector<User> users;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& su = **it;
@@ -120,7 +120,7 @@ char Server::parseMessage(Message msg)
     }
     if (s == "u")
     {
-      std::list<User> users;
+      std::vector<User> users;
       for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
       {
         auto& u = **it;
@@ -217,7 +217,7 @@ char Server::parseMessage(Message msg)
   }
   else
   {
-    std::list<User> users;
+    std::vector<User> users;
     for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
     {
       auto& u = **it;
@@ -253,11 +253,10 @@ void Server::run()
 {
   std::cout << "Server connected!" << std::endl;
 
-  // ReSharper disable once CppLocalVariableMayBeConst
-  auto loop = true;
+  this->_running = true;
   auto discon = false;
   std::list<ServerUser*>::iterator disconUser;
-  while (loop)
+  while (!this->stopRequested())
   {
     if (discon)
     {
@@ -287,7 +286,7 @@ void Server::run()
           sf::Packet packet;
           sf::IpAddress ip;
           unsigned short port;
-          if (this->_connectionSocket.receive(packet, ip, port))
+          if (this->_connectionSocket.receive(packet, ip, port) == sf::Socket::Done)
           {
             std::string str = "";
             if (packet >> str && str == "ping")
@@ -334,6 +333,8 @@ void Server::run()
       }
     }
   }
+  
+  std::cout << "Stopping server..." << std::endl;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
@@ -341,4 +342,16 @@ void Server::run()
   }
   this->_selector.clear();
   this->_listener.close();
+}
+
+void Server::close()
+{
+  this->_running = false;
+}
+
+bool Server::stopRequested() const
+{
+  if (this->_futureObj.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+    return false;
+  return true;
 }

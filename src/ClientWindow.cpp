@@ -15,6 +15,7 @@ Client::ClientWindow::ClientWindow(Client& client, TextManagerRef textManager) :
   }
 
   this->addChannel(GENERAL_CHANNEL);
+  this->addChannel(GENERAL_2_CHANNEL);
   this->_chat->setPosition({ MARGIN, MARGIN });
 }
 
@@ -25,21 +26,21 @@ Channel Client::ClientWindow::getFocusedChannel() const
 
 void Client::ClientWindow::addChannel(Channel channel)
 {
-  this->_chat->addChannel(new Channel(channel));
+  this->_chat->addChannel(channel);
   this->_gui.add(this->_chat->getChatBoxes()[channel.getName()]);
 }
 
 void Client::ClientWindow::addUser(User user) const
 {
-  this->_chat->addUser(new User(user));
+  this->_chat->addUser(user);
 }
 
 void Client::ClientWindow::removeUser(User user) const
 {
-  this->_chat->removeUser(new User(user));
+  this->_chat->removeUser(user);
 }
 
-void Client::ClientWindow::setUsers(std::list<User> users) const
+void Client::ClientWindow::setUsers(std::vector<User> users) const
 {
   this->_chat->setUsers(users);
 }

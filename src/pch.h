@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <future>
 #include <iostream>
 #include <list>
 #include <sstream>

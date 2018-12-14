@@ -3,7 +3,7 @@
 
 ServerPacket::ServerPacket() {}
 
-ServerPacket::ServerPacket(Message msg, std::list<User> users, std::list<Channel> channels) : _message(msg), _users(users), _channels(channels) {}
+ServerPacket::ServerPacket(Message msg, std::vector<User> users, std::vector<Channel> channels) : _message(msg), _users(users), _channels(channels) {}
 
 User ServerPacket::getUser(int id) const
 {
@@ -42,6 +42,30 @@ Channel ServerPacket::getChannel(std::string name) const
     }
   }
   return Channel();
+}
+
+template<typename T>
+sf::Packet& operator<<(sf::Packet& p, const std::vector<T>& v)
+{
+  p << static_cast<sf::Uint32>(v.size());
+  for (auto i = 0; i < int(v.size()); i++)
+  {
+    p << v[i];
+  }
+  return p;
+}
+template<typename T>
+sf::Packet& operator>>(sf::Packet& p, std::vector<T>& v)
+{
+  sf::Uint32 size;
+  p >> size;
+  for (sf::Uint32 i = 0; i < size; i++)
+  {
+    T item;
+    p >> item;
+    v.push_back(item);
+  }
+  return p;
 }
 
 sf::Packet & operator<<(sf::Packet & p, const ServerPacket & sp)

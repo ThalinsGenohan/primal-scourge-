@@ -12,6 +12,8 @@ class Message;
 
 class Server
 {
+  std::promise<void> _exitSignal;
+  std::future<void> _futureObj;
 public:
   Server();
 
@@ -24,6 +26,12 @@ public:
   bool send(ServerPacket packet);
 
   void run();
+  void close();
+
+  void operator()() { this->run(); }
+
+  bool stopRequested() const;
+  void stop() { _exitSignal.set_value(); }
 
 private:
   User _serverProfile;
@@ -37,6 +45,8 @@ private:
   int _userCount;
   std::list<ServerUser*> _users;
   std::list<Channel*> _channels;
+
+  bool _running;
 };
 
 #endif

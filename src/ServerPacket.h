@@ -12,14 +12,14 @@ class ServerPacket
 {
 public:
   ServerPacket();
-  explicit ServerPacket(Message msg, std::list<User> users = {}, std::list<Channel> channels = {});
+  explicit ServerPacket(Message msg, std::vector<User> users = {}, std::vector<Channel> channels = {});
 
   Message getMessage() const { return this->_message; }
   void setMessage(const Message msg) { this->_message = msg; }
-  std::list<User> getUsers() const { return this->_users; }
+  std::vector<User> getUsers() const { return this->_users; }
   User getUser(int id) const;
   User getUser(std::string username) const;
-  std::list<Channel> getChannels() const { return this->_channels; }
+  std::vector<Channel> getChannels() const { return this->_channels; }
   Channel getChannel(std::string name) const;
 
   friend sf::Packet& operator<<(sf::Packet& p, const ServerPacket& sp);
@@ -27,8 +27,8 @@ public:
 
 private:
   Message _message;
-  std::list<User> _users;
-  std::list<Channel> _channels;
+  std::vector<User> _users;
+  std::vector<Channel> _channels;
 };
 
 template<typename T>
