@@ -4,14 +4,14 @@
 #include <SFML/Network.hpp>
 #include <TGUI/TGUI.hpp>
 
-#include "User.h"
+#include "ClientWindow.h"
 #include "TextManager.h"
+#include "User.h"
+#include "ChatWindow.h"
 
 class Client
 {
 public:
-  class ClientWindow;
-
   explicit Client(TextManagerRef textManager);
 
   User getUser() const { return this->_user; }
@@ -26,7 +26,7 @@ public:
 private:
   User _user;
 
-  ClientWindow* _window;
+  std::vector<ChatWindow> _chatWindows;
   sf::TcpSocket _socket;
 
   TextManagerRef _textManager;

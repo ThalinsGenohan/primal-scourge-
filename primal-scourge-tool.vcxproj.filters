@@ -16,6 +16,9 @@
     <Filter Include="Header Files\lang">
       <UniqueIdentifier>{adcb0226-8e47-44a8-b6a1-ca463183a0fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ClientWindows">
+      <UniqueIdentifier>{e9a5ba7f-99d0-4a4d-bc35-dd16835aca16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Channel.cpp">
@@ -63,6 +66,9 @@
     <ClCompile Include="src\HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChatWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Channel.h">
@@ -72,9 +78,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ClientWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CONSTANTS.h">
@@ -124,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="src\Pokemon.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ClientWindow.h">
+      <Filter>Header Files\ClientWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChatWindow.h">
+      <Filter>Header Files\ClientWindows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

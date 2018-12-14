@@ -2,12 +2,12 @@
 #include "Client.h"
 
 #include "CONSTANTS.h"
-#include "ClientWindow.h"
+#include "ChatWindow.h"
 #include "Message.h"
-#include "discord.h"
 #include "ServerPacket.h"
+#include "discord.h"
 
-Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, textManager)), _textManager(textManager)
+Client::Client(TextManagerRef textManager) : _chatWindows({}), _textManager(textManager)
 {
   std::cout << "Creating Client..." << std::endl;
   discord::updatePresence(L"Connecting...");
@@ -18,8 +18,9 @@ Client::Client(TextManagerRef textManager): _window(new ClientWindow(*this, text
     return;
   }
   this->_socket.setBlocking(false);
+  this->_chatWindows.push_back(ChatWindow(*this, textManager));
   discord::updatePresence(L"In Chat Room");
-  this->_window->run();
+  this->_chatWindows[0].run();
 }
 
 bool Client::connect(std::string ipAddress)
@@ -61,7 +62,7 @@ bool Client::send(sf::Packet& packet)
 bool Client::send(tgui::TextBox::Ptr& textbox)
 {
   sf::Packet packet;
-  packet << Message(this->_user, this->_window->getFocusedChannel(), textbox->getText());
+  packet << Message(this->_user, this->_chatWindows[0].getFocusedChannel(), textbox->getText());
 
   return this->send(packet);
 }
@@ -77,12 +78,12 @@ bool Client::receive()
       std::cout << "Packet receive error!\n";
       return false;
     }
-    this->_window->setUsers(serverPacket.getUsers());
+    this->_chatWindows[0].setUsers(serverPacket.getUsers());
     auto message = serverPacket.getMessage();
     this->_user = serverPacket.getUser(this->_user.getId());
     std::cout << message.getUser().getUsername() << ": " << message.getMessage() << std::endl;
     User u;
-    this->_window->addMessage(message);
+    this->_chatWindows[0].addMessage(message);
     //auto b = false;
     /*switch (message.getType())
     {

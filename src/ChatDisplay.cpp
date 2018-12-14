@@ -2,6 +2,7 @@
 #include "ChatDisplay.h"
 
 #include "CONSTANTS.h"
+#include "Message.h"
 
 struct ArgsContainer
 {
@@ -19,7 +20,7 @@ void sendToClient(ArgsContainer a)
   std::cout << "Message sent!" << std::endl;
 }
 
-Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, tgui::Theme theme, std::string title) : _theme(theme), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
+ChatDisplay::ChatDisplay(Client & client, tgui::Theme theme, std::string title) : _theme(theme), _focusedChat(0), _typeFocus(false), _tabs(tgui::Tabs::create()), _label(tgui::Label::create()), _memberList(tgui::ListBox::create()), _memberListLabel(tgui::Label::create()), _typeBox(tgui::TextBox::create()), _sendButton(tgui::Button::create()), _client(client)
 {
   std::cout << "Creating ChatDisplay..." << std::endl;
   this->_tabs->setSize(CHATBOX_WIDTH, TAB_HEIGHT);
@@ -48,7 +49,7 @@ Client::ClientWindow::ChatDisplay::ChatDisplay(Client & client, tgui::Theme them
   this->setPosition({ 0.f, 0.f });
 }
 
-void Client::ClientWindow::ChatDisplay::setPosition(const sf::Vector2f position)
+void ChatDisplay::setPosition(const sf::Vector2f position)
 {
   this->_position = position;
   this->_tabs->setPosition(position);
@@ -67,7 +68,7 @@ void Client::ClientWindow::ChatDisplay::setPosition(const sf::Vector2f position)
   this->_sendButton->setPosition(position.x + this->_typeBox->getSize().x + PADDING, this->_typeBox->getPosition().y);
 }
 
-void Client::ClientWindow::ChatDisplay::setTheme(const tgui::Theme theme)
+void ChatDisplay::setTheme(const tgui::Theme theme)
 {
   this->_theme = theme;
   this->_tabs->setRenderer(this->_theme.getRenderer("Tabs"));
@@ -83,13 +84,13 @@ void Client::ClientWindow::ChatDisplay::setTheme(const tgui::Theme theme)
   this->_sendButton->setRenderer(this->_theme.getRenderer("Button"));
 }
 
-void Client::ClientWindow::ChatDisplay::setTitle(const std::string title)
+void ChatDisplay::setTitle(const std::string title)
 {
   this->_title = title;
   this->_label->setText(title);
 }
 
-void Client::ClientWindow::ChatDisplay::setChannels(const std::list<Channel*> channels)
+void ChatDisplay::setChannels(const std::vector<Channel*> channels)
 {
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
@@ -103,7 +104,7 @@ void Client::ClientWindow::ChatDisplay::setChannels(const std::list<Channel*> ch
   }
 }
 
-void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User> users)
+void ChatDisplay::setUsers(const std::vector<User> users)
 {
   this->_users.clear();
   this->_memberList->removeAllItems();
@@ -119,7 +120,7 @@ void Client::ClientWindow::ChatDisplay::setUsers(const std::list<User> users)
   }
 }
 
-void Client::ClientWindow::ChatDisplay::addMessage(Message message)
+void ChatDisplay::addMessage(Message message)
 {
   if (message.getUser().getUsername() != this->_lastUser && message.getType() != Message::SERVER_COMMAND && message.getType() != Message::CLIENT_COMMAND)
   {
@@ -136,9 +137,9 @@ void Client::ClientWindow::ChatDisplay::addMessage(Message message)
   }
 }
 
-void Client::ClientWindow::ChatDisplay::addChannel(Channel* channel)
+void ChatDisplay::addChannel(Channel* channel)
 {
-  std::list<Channel*>::iterator ch;
+  std::vector<Channel*>::iterator ch;
   auto b = false;
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
@@ -181,7 +182,7 @@ bool operator==(const Channel c1, const Channel c2)
   return c1.getName() == c2.getName() && c1.getId() == c2.getId();
 }
 
-void Client::ClientWindow::ChatDisplay::removeChannel(Channel* channel)
+void ChatDisplay::removeChannel(Channel* channel)
 {
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {
@@ -195,7 +196,7 @@ void Client::ClientWindow::ChatDisplay::removeChannel(Channel* channel)
   }
 }
 
-void Client::ClientWindow::ChatDisplay::addUser(User* user)
+void ChatDisplay::addUser(User* user)
 {
   this->_users.push_back(user);
   this->_memberList->addItem(user->getUsername());
@@ -206,10 +207,10 @@ bool operator==(const User u1, const User u2)
   return u1.getUsername() == u2.getUsername() && u1.getId() == u2.getId();
 }
 
-void Client::ClientWindow::ChatDisplay::removeUser(User* user)
+void ChatDisplay::removeUser(User* user)
 {
   auto b = false;
-  std::list<User*>::iterator ue;
+  std::vector<User*>::iterator ue;
   for (auto it = this->_users.begin(); it != this->_users.end(); ++it)
   {
     auto& u = **it;
@@ -228,7 +229,7 @@ void Client::ClientWindow::ChatDisplay::removeUser(User* user)
   }
 }
 
-void Client::ClientWindow::ChatDisplay::switchChatBox()
+void ChatDisplay::switchChatBox()
 {
   this->_focusedChat = this->_tabs->getSelectedIndex();
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
@@ -245,7 +246,7 @@ void Client::ClientWindow::ChatDisplay::switchChatBox()
   }
 }
 
-void Client::ClientWindow::ChatDisplay::checkInput(sf::Event event)
+void ChatDisplay::checkInput(sf::Event event)
 {
   if (this->_typeBox->isFocused() && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter && !event.key.shift)
   {
@@ -257,7 +258,7 @@ void Client::ClientWindow::ChatDisplay::checkInput(sf::Event event)
   }
 }
 
-std::vector<tgui::Widget::Ptr> Client::ClientWindow::ChatDisplay::getWidgets() const
+std::vector<tgui::Widget::Ptr> ChatDisplay::getWidgets() const
 {
   std::vector<tgui::Widget::Ptr> v = { this->_tabs };
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
@@ -273,7 +274,7 @@ std::vector<tgui::Widget::Ptr> Client::ClientWindow::ChatDisplay::getWidgets() c
   return v;
 }
 
-bool Client::ClientWindow::ChatDisplay::isFocused()
+bool ChatDisplay::isFocused()
 {
   auto b = false;
   for (auto i = 0; i > int(this->getWidgets().size()); i++)
@@ -289,13 +290,13 @@ bool Client::ClientWindow::ChatDisplay::isFocused()
   return b;
 }
 
-void Client::ClientWindow::ChatDisplay::setFocus(bool b)
+void ChatDisplay::setFocus(bool b)
 {
   this->_typeFocus = b;
   this->_typeBox->setFocused(b);
 }
 
-Channel Client::ClientWindow::ChatDisplay::getFocusedChannel()
+Channel ChatDisplay::getFocusedChannel()
 {
   for (auto it = this->_channels.begin(); it != this->_channels.end(); ++it)
   {

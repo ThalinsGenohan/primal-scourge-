@@ -5,12 +5,11 @@
 
 #include "Channel.h"
 #include "Client.h"
-#include "ClientWindow.h"
 #include "CONSTANTS.h"
 
 class Message;
 
-class Client::ClientWindow::ChatDisplay
+class ChatDisplay
 {
 public:
   explicit ChatDisplay(Client& client, tgui::Theme theme, std::string title);
@@ -25,10 +24,10 @@ public:
   void setTheme(const std::string theme) { this->setTheme(tgui::Theme(theme)); }
   std::string getTitle() const { return this->_title; }
   void setTitle(const std::string title);
-  std::list<Channel*> getChannels() const { return this->_channels; }
-  void setChannels(const std::list<Channel*> channels);
-  std::list<User*> getUsers() const { return this->_users; }
-  void setUsers(const std::list<User> users);
+  std::vector<Channel*> getChannels() const { return this->_channels; }
+  void setChannels(const std::vector<Channel*> channels);
+  std::vector<User*> getUsers() const { return this->_users; }
+  void setUsers(const std::vector<User> users);
   std::string getLastUser() const { return this->_lastUser; }
   void setLastUser(const std::string lastUser) { this->_lastUser = lastUser; }
 
@@ -62,8 +61,8 @@ private:
 
   tgui::Theme _theme;
   std::string _title;
-  std::list<Channel*> _channels;
-  std::list<User*> _users;
+  std::vector<Channel*> _channels;
+  std::vector<User*> _users;
   std::string _lastUser;
   int _focusedChat;
   bool _typeFocus;

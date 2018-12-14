@@ -255,6 +255,7 @@ char Server::parseMessage(Message msg)
 bool Server::send(ServerPacket packet)
 {
   auto now = time(nullptr);
+  // ReSharper disable once CppDeprecatedEntity
   const auto ltm = localtime(&now);
 
   const auto user = packet.getMessage().getUser().getUsername();
