@@ -1,2 +1,4 @@
 #cmakedefine _CLIENT
 #cmakedefine _SERVER
+#cmakedefine _DEBUG
+#cmakedefine NDEBUG

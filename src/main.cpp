@@ -70,7 +70,7 @@ sf::IpAddress searchLan()
   std::cout << "Searching LAN for connection..." << std::endl;
   udp.send(packet, sf::IpAddress::Broadcast, PORT);
   packet.clear();
-  sf::IpAddress ip = "0.0.0.0";
+  sf::IpAddress ip;
   unsigned short port;
   if(udp.receive(packet, ip, port) != sf::Socket::Done)
   {

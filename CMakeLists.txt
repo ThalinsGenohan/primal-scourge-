@@ -7,6 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 option(SERVER_MODE "TRUE if building server, FALSE if building client" OFF)
 option(DEBUG_MODE "Turns on Debug mode, letting the console remain open." OFF)
+option(STATIC_LIBS "Are SFML and TGUI built statically?" OFF)
 
 set(HEADER_FILES
   src/Channel.h
@@ -61,8 +62,10 @@ else()
   list(APPEND DEFINES NDEBUG)
 endif()
 
-set(SFML_STATIC_LIBRARIES TRUE)
-set(TGUI_STATIC_LIBRARIES TRUE)
+if (STATIC_LIBS)
+  set(SFML_STATIC_LIBRARIES TRUE)
+  set(TGUI_STATIC_LIBRARIES TRUE)
+endif()
 
 find_package(SFML 2.5 COMPONENTS graphics window network system)
 find_package(TGUI 0.8)
