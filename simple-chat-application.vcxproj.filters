@@ -111,4 +111,10 @@
       <Filter>Header Files\lang</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeConfig.h.in" />
+  </ItemGroup>
 </Project>
