@@ -7,18 +7,17 @@ ChatWindow::ChatWindow(Client & client, TextManagerRef textManager): ClientWindo
 
 void ChatWindow::addChannel(Channel channel)
 {
-}
-
-void ChatWindow::removeChannel(std::string id)
-{
+  this->_chat.addChannel(channel);
 }
 
 void ChatWindow::removeChannel(Channel channel)
 {
+  this->_chat.removeChannel(channel);
 }
 
 void ChatWindow::addUser(User user) const
 {
+
 }
 
 void ChatWindow::removeUser(User user) const

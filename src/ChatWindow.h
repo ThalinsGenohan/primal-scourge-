@@ -12,7 +12,7 @@ public:
   explicit ChatWindow(Client& client, TextManagerRef textManager);
   ~ChatWindow() {}
 
-  Channel getFocusedChannel() const { return *this->_chat.getChannels()[this->_chat.getTabs()->getSelectedIndex()]; }
+  Channel getFocusedChannel() const { return this->_chat.getChannels()[this->_chat.getTabs()->getSelectedIndex()]; }
 
   void addChannel(Channel channel);
   void removeChannel(std::string id);
@@ -26,7 +26,6 @@ public:
 
 private:
   ChatDisplay _chat;
-
 };
 
 #endif

@@ -24,9 +24,9 @@ public:
   void setTheme(const std::string theme) { this->setTheme(tgui::Theme(theme)); }
   std::string getTitle() const { return this->_title; }
   void setTitle(const std::string title);
-  std::vector<Channel*> getChannels() const { return this->_channels; }
-  void setChannels(const std::vector<Channel*> channels);
-  std::vector<User*> getUsers() const { return this->_users; }
+  std::vector<Channel> getChannels() const { return this->_channels; }
+  void setChannels(const std::vector<Channel> channels);
+  std::vector<User> getUsers() const { return this->_users; }
   void setUsers(const std::vector<User> users);
   std::string getLastUser() const { return this->_lastUser; }
   void setLastUser(const std::string lastUser) { this->_lastUser = lastUser; }
@@ -40,10 +40,10 @@ public:
   tgui::Button::Ptr getSendButton() const { return this->_sendButton; }
 
   void addMessage(Message message);
-  void addChannel(Channel* channel);
-  void removeChannel(Channel* channel);
-  void addUser(User* user);
-  void removeUser(User* user);
+  void addChannel(Channel channel);
+  void removeChannel(Channel channel);
+  void addUser(User user);
+  void removeUser(User user);
 
   void switchChatBox();
 
@@ -61,8 +61,8 @@ private:
 
   tgui::Theme _theme;
   std::string _title;
-  std::vector<Channel*> _channels;
-  std::vector<User*> _users;
+  std::vector<Channel> _channels;
+  std::vector<User> _users;
   std::string _lastUser;
   int _focusedChat;
   bool _typeFocus;
