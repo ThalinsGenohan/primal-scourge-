@@ -33,8 +33,6 @@
 
 # Visual Studio
 .vs/
-*.sln
-*.vcxproj*
 Debug/
 Release/
 Debug Server/
